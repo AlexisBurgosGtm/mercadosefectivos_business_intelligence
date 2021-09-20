@@ -51,7 +51,7 @@ app.get("/",function(req,res){
 }); 
 
 app.get("/getempresas", async function(req,res){
-  let qry = `SELECT EMPNIT, NOMBRE, VENTAS,COSTO,UTILIDAD,MARGEN,OBJETIVO FROM BI_EMPRESAS_RESUMEN`
+  let qry = `SELECT EMPNIT, NOMBRE, VENTAS,COSTO,UTILIDAD,MARGEN,OBJETIVO, UNIVERSO FROM BI_EMPRESAS_RESUMEN`
   execute.Query(res,qry);
 }); 
 
