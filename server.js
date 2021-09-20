@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 4700;
 
 app.use(bodyParser.json());
 
-//app.use(express.static('build'));
+app.use(express.static('build'));
 
 var path = __dirname + '/'
 
@@ -45,9 +45,9 @@ app.use((req, res, next) => {
 
 app.get("/",function(req,res){
   //execute.start();
-	//res.sendFile(path + 'index.html');
-  let html =`<h1>Hola mundo</h1>`
-  res.send(html)
+	res.sendFile(path + 'index.html');
+  //let html =`<h1>Hola mundo</h1>`
+  //res.send(html)
 }); 
 
 app.get("/getempresas", async function(req,res){
