@@ -60,9 +60,10 @@ app.post('/getmarcas', async function(req,res){
 
   const {empnit,anio,mes} = req.body;
 
-  let qry = `SELECT CODMARCA, DESMARCA, TOTALCOSTO, TOTALPRECIO
+  let qry = `SELECT CODMARCA, DESMARCA, SUM(ISNULL(TOTALCOSTO,0)) AS TOTALCOSTO, SUM(ISNULL(TOTALPRECIO,0)) AS TOTALPRECIO
             FROM BI_RPT_GENERAL
-            WHERE (CODSUCURSAL = '${empnit}') AND (ANIO = ${anio}) AND (MES = ${mes})`
+            WHERE (CODSUCURSAL = '${empnit}') AND (ANIO = ${anio}) AND (MES = ${mes})
+            GROUP BY CODMARCA, DESMARCA`
 
   execute.Query(res,qry);
   
