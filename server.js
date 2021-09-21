@@ -72,7 +72,7 @@ app.get('/getmarcas', async function(req,res){
 
 app.get('/getdetallemarca', async function(req,res){
   const {empnit, codmarca, anio, mes} = req.query;
-  
+  let qry = ""
 })
 //Router para app NOTICIAS
 //app.use('/noticias', routerNoticias);
