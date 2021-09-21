@@ -55,7 +55,17 @@ app.get("/getempresas", async function(req,res){
   execute.Query(res,qry);
 }); 
 
+app.post('/getmarcas', async (req,res)=>{
 
+  const {empnit,codmarca,anio,mes} = req.body;
+
+  let qry = `SELECT DESMARCA, TOTALCOSTO, TOTALPRECIO
+            FROM BI_RPT_GENERAL
+            WHERE (CODMARCA = '${codmarca}') AND (CODSUCURSAL = '${empnit}') AND (ANIO = ${anio}) AND (MES = ${mes})`
+
+  execute.Query(res,qry);
+  
+})
 
 //Router para app NOTICIAS
 //app.use('/noticias', routerNoticias);
