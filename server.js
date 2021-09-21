@@ -55,9 +55,10 @@ app.get("/getempresas", async function(req,res){
   execute.Query(res,qry);
 }); 
 
-app.post('/getmarcas', async (req,res)=>{
 
-  const {empnit,codmarca,anio,mes} = req.body;
+app.post('/getmarcas', async function(req,res){
+
+  const {empnit,anio,mes} = req.body;
 
   let qry = `SELECT CODMARCA, DESMARCA, TOTALCOSTO, TOTALPRECIO
             FROM BI_RPT_GENERAL
