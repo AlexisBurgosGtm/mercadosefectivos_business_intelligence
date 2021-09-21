@@ -56,9 +56,9 @@ app.get("/getempresas", async function(req,res){
 }); 
 
 
-app.post('/getmarcas', async function(req,res){
+app.get('/getmarcas', async function(req,res){
 
-  const {empnit,anio,mes} = req.body;
+  const {empnit,anio,mes} = req.query;
 
   let qry = `SELECT CODMARCA, DESMARCA, SUM(ISNULL(TOTALCOSTO,0)) AS TOTALCOSTO, SUM(ISNULL(TOTALPRECIO,0)) AS TOTALPRECIO
             FROM BI_RPT_GENERAL
