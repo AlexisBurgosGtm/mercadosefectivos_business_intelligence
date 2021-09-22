@@ -27,9 +27,9 @@ let execute = {
 			new sql.Request(pool1)
 			.query(sqlqry, (err, result) => {
 				if(err){
-					res.send(err.message)
+					res.json(err.message)
 				}else{
-					res.send(result);
+					res.json(result);
 				}					
 			})
 			sql.close();  
@@ -40,7 +40,7 @@ let execute = {
 		  })
 		} catch (error) {
 			console.log(error)
-		  res.send('Error al ejecutar la consulta: ' + error)   
+		  res.json({error})   
 		  sql.close();
 		}
 	},
