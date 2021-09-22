@@ -74,6 +74,7 @@ app.post('/getmarcas', async function(req,res){
 
   const {empnit,anio,mes} = req.body;
 
+
   let qry = `SELECT CODMARCA, DESMARCA, ROUND(SUM(ISNULL(TOTALCOSTO,0)),2) AS TOTALCOSTO, ROUND(SUM(ISNULL(TOTALPRECIO,0)),2) AS TOTALPRECIO
             FROM BI_RPT_GENERAL
             WHERE (CODSUCURSAL = '${empnit}') AND (ANIO = ${anio}) AND (MES = ${mes})
@@ -95,8 +96,8 @@ app.get('/getdetallemarca', async function(req,res){
 app.use("/",router);
 
 app.use("*",function(req,res){
-  res.redirect('/');
-  //res.send('<h1 class="text-danger">NO DISPONIBLE</h1>');
+  //res.redirect('/');
+  res.send('<h1 class="text-danger">NO DISPONIBLE</h1>');
 });
 
 
