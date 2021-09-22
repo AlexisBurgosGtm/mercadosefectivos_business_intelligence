@@ -4,6 +4,7 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 
 const execute = require('./connection');
+const { send } = require("process");
 //var routerNoticias = require('./router/routerNoticias');
 
 var http = require('http').Server(app);
@@ -61,6 +62,7 @@ app.get("/getempresas", async function(req,res){
 }); 
 
 
+//**  REPORTE SE MARCAS ****/
 app.get('/getmarcas', async function(req,res){
 
   const {empnit,anio,mes} = req.query;
@@ -70,30 +72,76 @@ app.get('/getmarcas', async function(req,res){
             WHERE (CODSUCURSAL = '${empnit}') AND (ANIO = ${anio}) AND (MES = ${mes})
             GROUP BY CODMARCA, DESMARCA
             ORDER BY SUM(TOTALPRECIO) DESC`
-
-  execute.Query(res,qry);
+  
+  
+            execute.Query(res,qry);
   
 })
 
-app.post('/getmarcas', async function(req,res){
-
-  const {empnit,anio,mes} = req.body;
-
-
-  let qry = `SELECT CODMARCA, DESMARCA, ROUND(SUM(ISNULL(TOTALCOSTO,0)),2) AS TOTALCOSTO, ROUND(SUM(ISNULL(TOTALPRECIO,0)),2) AS TOTALPRECIO
-            FROM BI_RPT_GENERAL
-            WHERE (CODSUCURSAL = '${empnit}') AND (ANIO = ${anio}) AND (MES = ${mes})
-            GROUP BY CODMARCA, DESMARCA
-            ORDER BY SUM(TOTALPRECIO) DESC`
-
-  execute.Query(res,qry);
-  
-})
-
-app.get('/getdetallemarca', async function(req,res){
+app.get('/getclientesmarca', async function(req,res){
   const {empnit, codmarca, anio, mes} = req.query;
-  let qry = ""
+
+  let qry = `SELECT   distinct COUNT(NOMBRECLIENTE) AS CONTEO FROM BI_RPT_GENERAL WHERE
+  (CODSUCURSAL = '${empnit}') AND (ANIO = ${anio}) AND (MES = ${mes}) AND (CODMARCA=${codmarca})`
+
 })
+
+app.get('/getmarcasfecha', async function(req,res){
+
+  const {empnit, codmarca, anio, mes} = req.query;
+
+  let qry = `SELECT CODMARCA, DESMARCA, TIPO, FECHA, SUM(TOTALCOSTO) AS TOTALCOSTO, SUM(TOTALPRECIO) AS TOTALPRECIO
+          FROM BI_RPT_GENERAL
+          WHERE (CODSUCURSAL = '${empnit}') AND (ANIO = ${anio}) AND (MES = ${mes})
+          GROUP BY CODMARCA, DESMARCA, TIPO, FECHA
+          HAVING (CODMARCA = ${codmarca})`
+
+  execute.Query(res,qry);
+
+})
+
+app.get('/getmarcasvendedor', async function(req,res){
+
+  const {empnit, codmarca, anio, mes} = req.query;
+
+  let qry = `SELECT CODMARCA, DESMARCA, NOMEMPLEADO, TIPO, SUM(TOTALCOSTO) AS TOTALCOSTO, SUM(TOTALPRECIO) AS TOTALPRECIO
+              FROM BI_RPT_GENERAL
+              WHERE (CODSUCURSAL = '${empnit}') AND (ANIO = ${anio}) AND (MES = ${mes})
+              GROUP BY CODMARCA, DESMARCA, TIPO, NOMEMPLEADO
+              HAVING (CODMARCA = ${codmarca})`
+
+  execute.Query(res,qry);
+
+})
+
+
+app.get('/getmarcasmunicipio', async function(req,res){
+
+  
+  const {empnit, codmarca, anio, mes} = req.query;
+
+  let qry = `SELECT BI_RPT_GENERAL.CODMARCA, BI_RPT_GENERAL.DESMARCA, 
+        BI_RPT_GENERAL.TIPO, 
+            BI_RPT_GENERAL.MUNICIPIO, BI_RPT_GENERAL.DEPARTAMENTO, 
+            SUM(BI_RPT_GENERAL.TOTALCOSTO) AS TOTALCOSTO, 
+            SUM(BI_RPT_GENERAL.TOTALPRECIO) AS TOTALCOSTO, 
+            BI_EMPRESAS_RESUMEN.UNIVERSO
+          FROM BI_RPT_GENERAL LEFT OUTER JOIN
+            BI_EMPRESAS_RESUMEN ON BI_RPT_GENERAL.CODSUCURSAL = BI_EMPRESAS_RESUMEN.EMPNIT
+          WHERE (BI_RPT_GENERAL.CODSUCURSAL = '${empnit}') AND (BI_RPT_GENERAL.ANIO = ${anio}) AND (BI_RPT_GENERAL.MES = ${mes})
+          GROUP BY BI_RPT_GENERAL.CODMARCA, BI_RPT_GENERAL.DESMARCA, BI_RPT_GENERAL.TIPO, BI_RPT_GENERAL.MUNICIPIO, BI_RPT_GENERAL.DEPARTAMENTO, BI_EMPRESAS_RESUMEN.UNIVERSO
+          HAVING (BI_RPT_GENERAL.CODMARCA = ${codmarca})`
+
+  execute.Query(res,qry);
+
+})
+
+
+//********************** */
+//********************** */
+
+
+
 //Router para app NOTICIAS
 //app.use('/noticias', routerNoticias);
 
