@@ -1,11 +1,4 @@
-﻿const configx = {
-	user: 'iEx',
-	password: 'iEx',
-	server: '192.168.1.17\\SQLEXPRESS',
-	database: 'BI',
-	pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
-};
-
+﻿
 const config = {
 	user: 'db_a6478c_mercadosbi_admin',
 	password: 'razors1805',
@@ -27,9 +20,9 @@ let execute = {
 			new sql.Request(pool1)
 			.query(sqlqry, (err, result) => {
 				if(err){
-					res.json(err.message)
+					res.send(err.message)
 				}else{
-					res.json(result);
+					res.send(result);
 				}					
 			})
 			sql.close();  
@@ -40,7 +33,7 @@ let execute = {
 		  })
 		} catch (error) {
 			console.log(error)
-		  res.json({error})   
+		  res.send({error})   
 		  sql.close();
 		}
 	},
