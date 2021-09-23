@@ -82,8 +82,9 @@ app.get('/getclientesmarca', async function(req,res){
   const {empnit, codmarca, anio, mes} = req.query;
 
   let qry = `SELECT   distinct COUNT(NOMBRECLIENTE) AS CONTEO FROM BI_RPT_GENERAL WHERE
-  (CODSUCURSAL = '${empnit}') AND (ANIO = ${anio}) AND (MES = ${mes}) AND (CODMARCA=${codmarca})`
-
+  (CODSUCURSAL = '${empnit}') AND (ANIO = ${anio}) AND (MES = ${mes}) AND (CODMARCA=${codmarca}) AND (TIPO='FAC')`
+  execute.Query(res,qry);
+  
 })
 
 app.get('/getmarcasfecha', async function(req,res){
