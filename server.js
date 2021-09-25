@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 const execute = require('./router/connection');
 const { send } = require("process");
 var routerMarcas = require('./router/routerMarcas');
+var routerEmpresas = require('./router/routerEmpresas');
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -54,31 +55,18 @@ app.use((req, res, next) => {
 
 app.get("/",function(req,res){
   //execute.start();
-	res.sendFile(path + 'index.html');
+	//res.sendFile(path + 'index.html');
   //let html =`<h1>Hola mundo</h1>`
-  //res.send(html)
+  res.send('<h1>Acceso Restringido</h1>')
 }); 
 
 
 //Router para MARCAS
 app.use('/marcas', routerMarcas);
 
-
-app.get("/getempresas", async function(req,res){
-  let qry = `SELECT EMPNIT, NOMBRE, VENTAS,COSTO,UTILIDAD,MARGEN,OBJETIVO, UNIVERSO FROM BI_EMPRESAS_RESUMEN`
-  execute.Query(res,qry);
-}); 
+app.use('/empresas', routerEmpresas);
 
 
-
-
-
-
-
-
-
-//********************** */
-//********************** */
 
 
 
