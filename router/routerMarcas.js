@@ -9,10 +9,10 @@ router.get('/getmarcas', async function(req,res){
     const {empnit,anio,mes} = req.query;
     let qry = '';
 
-    if(empnit=='TODOS'){
+    if(empnit=='todos'){
         qry = `SELECT CODMARCA, DESMARCA, ROUND(SUM(ISNULL(TOTALCOSTO,0)),2) AS TOTALCOSTO, ROUND(SUM(ISNULL(TOTALPRECIO,0)),2) AS TOTALPRECIO
         FROM BI_RPT_GENERAL
-        WHERE ((ANIO = ${anio}) AND (MES = ${mes})
+        WHERE (ANIO = ${anio}) AND (MES = ${mes})
         GROUP BY CODMARCA, DESMARCA
         ORDER BY SUM(TOTALPRECIO) DESC`
 
