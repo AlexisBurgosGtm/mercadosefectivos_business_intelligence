@@ -55,9 +55,9 @@ app.use((req, res, next) => {
 
 app.get("/",function(req,res){
   //execute.start();
-	//res.sendFile(path + 'index.html');
-  //let html =`<h1>Hola mundo</h1>`
-  res.send('<h1>Acceso Restringido</h1>')
+	res.sendFile(path + 'favicon.png');
+ 
+  //res.send('<h1>Acceso Restringido</h1>')
 }); 
 
 
