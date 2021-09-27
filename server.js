@@ -23,7 +23,7 @@ var path = __dirname + '/'
 //manejador de rutas
 router.use(
   cors({
-        origin: ['https://business-intelligence-mercados.herokuapp.com','http://127.0.0.1:3000'],
+        origin: '*',
         method: ['POST','GET']
       })
  );
@@ -39,8 +39,8 @@ app.use(
     // Set to true if you need the website to include cookies in the requests sent
   //res.setHeader('Access-Control-Allow-Credentials', true);
   cors({
-    origin: ['https://business-intelligence-mercados.herokuapp.com','http://127.0.0.1:3000'],
-    method: ['POST','GET']
+    origin: '*',
+    method: ['GET','POST']
   })
   //next();
 );
