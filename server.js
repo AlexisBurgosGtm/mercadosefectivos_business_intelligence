@@ -21,30 +21,15 @@ app.use(express.static('build'));
 var path = __dirname + '/'
 
 //manejador de rutas
-router.use(function (req,res,next) {
-      cors({
+router.use(
+  cors({
         origin: ['https://business-intelligence-mercados.herokuapp.com','http://127.0.0.1:3000'],
         method: ['POST','GET']
       })
-  
-      // Website you wish to allow to connect
-      //res.setHeader('Access-Control-Allow-Origin', 'https://business-intelligence-mercados.herokuapp.com');
-       // Website you wish to allow to connect
-       //res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-
-      // Request methods you wish to allow
-      //res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-        // Request headers you wish to allow
-      //res.setHeader('Access-Control-Allow-Headers', 'Content-Type,X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name, pplication/json');
-        // Set to true if you need the website to include cookies in the requests sent
-      //res.setHeader('Access-Control-Allow-Credentials', true);
-  
-  console.log("/" + req.toString());
-  next();
-});
+ );
 
 // Configurar cabeceras y cors
-app.use((req, res, next) => {
+app.use(
   // Website you wish to allow to connect
   //res.setHeader('Access-Control-Allow-Origin', '*');
   // Request methods you wish to allow
@@ -53,9 +38,12 @@ app.use((req, res, next) => {
   //res.setHeader('Access-Control-Allow-Headers', 'Content-Type,X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name, pplication/json');
     // Set to true if you need the website to include cookies in the requests sent
   //res.setHeader('Access-Control-Allow-Credentials', true);
-
-  next();
-});
+  cors({
+    origin: ['https://business-intelligence-mercados.herokuapp.com','http://127.0.0.1:3000'],
+    method: ['POST','GET']
+  })
+  //next();
+);
 
 
 app.get("/",function(req,res){
