@@ -4,7 +4,6 @@ const express = require('express');
 const router = express.Router();
 
 
-
 router.get('/getfacdevempresas', async function(req,res){
 
     const {anio,mes} = req.query;

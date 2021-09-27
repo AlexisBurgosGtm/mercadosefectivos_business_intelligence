@@ -20,15 +20,9 @@ app.use(express.static('build'));
 
 var path = __dirname + '/'
 
-app.use(cors({
-  origin: '*',
-  methods:['GET','POST'],
-}))
+app.use(cors())
 
-router.use(cors({
-  origin: '*',
-  methods:['GET','POST'],
-}))
+router.use(cors())
 
 app.use("/",router);
 
