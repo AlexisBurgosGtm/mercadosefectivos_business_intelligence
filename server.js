@@ -2,10 +2,10 @@ var express = require("express");
 var app = express();
 var router = express.Router();
 var bodyParser = require('body-parser');
-//var cors = require('cors');
+var cors = require('cors');
 
 //const execute = require('./router/connection');
-//const { send } = require("process");
+const { send } = require("process");
 var routerMarcas = require('./router/routerMarcas');
 var routerEmpresas = require('./router/routerEmpresas');
 
@@ -20,40 +20,15 @@ app.use(express.static('build'));
 
 var path = __dirname + '/'
 
-//manejador de rutas
-router.use((res,req,next)=>{
-  // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  //res.setHeader('Access-Control-Allow-Origin', 'https://business-intelligence-mercados.herokuapp.com/');
-  // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-  //res.setHeader('Access-Control-Allow-Methods', 'POST');
-    // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name, pplication/json');
-    // Set to true if you need the website to include cookies in the requests sent
-  res.setHeader('Access-Control-Allow-Credentials', true);
+app.use(cors({
+  origin: '*',
+  methods:['GET','POST'],
+}))
 
-  next();
-});
-
-// Configurar cabeceras y cors
-app.use((res,req,next)=>{
-  // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  //res.setHeader('Access-Control-Allow-Origin', 'https://business-intelligence-mercados.herokuapp.com/');
-  // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-  //res.setHeader('Access-Control-Allow-Methods', 'POST');
-    // Request headers you wish to allow
-    // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name, pplication/json');
-    // Set to true if you need the website to include cookies in the requests sent
-  res.setHeader('Access-Control-Allow-Credentials', true);
- 
-
-  next();
-});
-
+router.use(cors({
+  origin: '*',
+  methods:['GET','POST'],
+}))
 
 app.use("/",router);
 
@@ -62,6 +37,9 @@ app.use("*",function(req,res){
 });
 
 app.get("/",function(req,res){
+  res.send('<h1>Mercados Efectivos</h1>')
+}); 
+app.get("/index.html",function(req,res){
   res.send('<h1>Mercados Efectivos</h1>')
 }); 
 
@@ -86,3 +64,37 @@ http.listen(PORT, function(){
   console.log('listening on *:' + PORT);
 });
 
+
+
+
+/**  
+ 
+//manejador de rutas
+router.use((res,req,next)=>{
+
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name, pplication/json');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  next();
+});
+
+// Configurar cabeceras y cors
+app.use((res,req,next)=>{
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  //res.setHeader('Access-Control-Allow-Origin', 'https://business-intelligence-mercados.herokuapp.com/');
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+  //res.setHeader('Access-Control-Allow-Methods', 'POST');
+    // Request headers you wish to allow
+    // Request headers you wish to allow
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name, pplication/json');
+    // Set to true if you need the website to include cookies in the requests sent
+  res.setHeader('Access-Control-Allow-Credentials', true);
+ 
+
+  next();
+});
+*/
