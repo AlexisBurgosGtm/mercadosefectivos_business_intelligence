@@ -37,11 +37,9 @@ app.use("*",function(req,res){
 });
 
 app.get("/",function(req,res){
-  res.send('<h1>Mercados Efectivos</h1>')
+  res.sendFile(path + 'index.html');
 }); 
-app.get("/index.html",function(req,res){
-  res.send('<h1>Mercados Efectivos</h1>')
-}); 
+
 
 
 //Router para MARCAS
