@@ -81,7 +81,8 @@ app.use("/",router);
 
 app.use("*",function(req,res){
   //res.redirect('/');
-  res.send('<h1 class="text-danger">NO DISPONIBLE</h1>');
+  //res.send('<h1 class="text-danger">NO DISPONIBLE</h1>');
+	res.sendFile(path + 'favicon.png');
 });
 
 
@@ -90,8 +91,8 @@ app.use("*",function(req,res){
 // SOCKET HANDLER
 io.on('connection', function(socket){
   
-  socket.on('avisos', (tipo,mensaje)=>{
-    io.emit('avisos', tipo, mensaje);
+  socket.on('navegar', (vista)=>{
+    io.emit('navegar', vista);
   });
    
   
