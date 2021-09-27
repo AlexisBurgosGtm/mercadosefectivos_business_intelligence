@@ -1,7 +1,14 @@
 const execute = require('./connection');
 const express = require('express');
+const cors = require('cors');
 const router = express.Router();
 
+router.use(
+    cors({
+          origin: ['https://business-intelligence-mercados.herokuapp.com','http://127.0.0.1:3000'],
+          method: ['POST','GET']
+        })
+   );
 
 //**  REPORTE SE MARCAS ****/
 router.get('/getmarcas', async function(req,res){
