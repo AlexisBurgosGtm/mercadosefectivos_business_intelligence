@@ -23,11 +23,11 @@ var path = __dirname + '/'
 //manejador de rutas
 router.use((res,req,next)=>{
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:3000');
-  res.setHeader('Access-Control-Allow-Origin', 'https://business-intelligence-mercados.herokuapp.com/');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  //res.setHeader('Access-Control-Allow-Origin', 'https://business-intelligence-mercados.herokuapp.com/');
   // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET');
-  res.setHeader('Access-Control-Allow-Methods', 'POST');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+  //res.setHeader('Access-Control-Allow-Methods', 'POST');
     // Request headers you wish to allow
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type,X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name, pplication/json');
     // Set to true if you need the website to include cookies in the requests sent
@@ -39,11 +39,11 @@ router.use((res,req,next)=>{
 // Configurar cabeceras y cors
 app.use((res,req,next)=>{
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:3000');
-  res.setHeader('Access-Control-Allow-Origin', 'https://business-intelligence-mercados.herokuapp.com/');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  //res.setHeader('Access-Control-Allow-Origin', 'https://business-intelligence-mercados.herokuapp.com/');
   // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET');
-  res.setHeader('Access-Control-Allow-Methods', 'POST');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+  //res.setHeader('Access-Control-Allow-Methods', 'POST');
     // Request headers you wish to allow
     // Request headers you wish to allow
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type,X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name, pplication/json');
@@ -58,15 +58,10 @@ app.use((res,req,next)=>{
 app.use("/",router);
 
 app.use("*",function(req,res){
-  //res.redirect('/');
   res.send('<h1 class="text-danger">NO DISPONIBLE</h1>');
-	//res.sendFile(path + 'favicon.png');
 });
 
 app.get("/",function(req,res){
-  //execute.start();
-	//res.sendFile(path + 'favicon.png');
- 
   res.send('<h1>Mercados Efectivos</h1>')
 }); 
 
