@@ -17,16 +17,11 @@ app.use(express.static('build'));
 
 var path = __dirname + '/'
 
-
-
-app.use("/",router);
-
-
 //manejador de rutas
 router.use(function (req,res,next) {
   
       // Website you wish to allow to connect
-      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:3000, https://business-intelligence-mercados.herokuapp.com/');
       // Request methods you wish to allow
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
         // Request headers you wish to allow
@@ -39,15 +34,9 @@ router.use(function (req,res,next) {
 });
 
 
-
-app.use("*",function(req,res){
-  res.send('<h1 class="text-danger">NO DISPONIBLE</h1>');
-});
-
 app.get("/",function(req,res){
-  res.sendFile(path + 'index.html');
+  res.send('<h1>Inicio...</h1>');
 }); 
-
 
 
 //Router para MARCAS
@@ -55,6 +44,13 @@ app.use('/marcas', routerMarcas);
 
 app.use('/empresas', routerEmpresas);
 
+
+app.use("/",router);
+
+
+app.use("*",function(req,res){
+  res.send('<h1 class="text-danger">NO DISPONIBLE</h1>');
+});
 
 
 
