@@ -45,6 +45,13 @@ app.use(
   //next();
 );
 
+app.use("/",router);
+
+app.use("*",function(req,res){
+  //res.redirect('/');
+  //res.send('<h1 class="text-danger">NO DISPONIBLE</h1>');
+	res.sendFile(path + 'favicon.png');
+});
 
 app.get("/",function(req,res){
   //execute.start();
@@ -60,18 +67,6 @@ app.use('/marcas', routerMarcas);
 app.use('/empresas', routerEmpresas);
 
 
-
-
-
-
-
-app.use("/",router);
-
-app.use("*",function(req,res){
-  //res.redirect('/');
-  //res.send('<h1 class="text-danger">NO DISPONIBLE</h1>');
-	res.sendFile(path + 'favicon.png');
-});
 
 
 
