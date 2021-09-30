@@ -19,7 +19,9 @@ router.get('/getfacdevempresas', async function(req,res){
 });
 
 router.get("/getempresas", async function(req,res){
-    let qry = `SELECT EMPNIT, NOMBRE, VENTAS,COSTO,UTILIDAD,MARGEN,OBJETIVO, UNIVERSO FROM BI_EMPRESAS_RESUMEN`
+    const {empresas} = req.query;
+
+    let qry = `SELECT EMPNIT, NOMBRE, VENTAS,COSTO,UTILIDAD,MARGEN,OBJETIVO, UNIVERSO FROM BI_EMPRESAS_RESUMEN WHERE EMPNIT IN(${empresas})`
     execute.Query(res,qry);
 });
 
