@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="google" content="notranslate">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Mercados Efectivos</title>
+    <link rel="canonical" href="#" />
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon.png">
+    <!-- Custom CSS -->
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    
+    	<!-- service worker -->
+	<meta name="application-name" content="MERCADOS-EFECTIVOS" />
+	<meta name="theme-color" content="#ffffff">
+    <link rel="manifest" href="manifest.json">
+
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-header-position="absolute" data-boxed-layout="full">    <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar" data-navbarbg="skin5">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+           
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin3">
+                
+
+                    <!-- ============================================================== -->
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav">
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="#" id="navbarDropdown" role="button" >
+                                <img src="./favicon.png" width="20" height="20" class="profile-pic me-2">Mercados Efectivos
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </nav>
+        </header>
+
+      
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+
+        <div class="container-fluid" style="margin-top: 30px;">
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="row" id="root">
+               
+
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <!--
+            <footer class="footer text-center foot">
+                © 2021 Alexis Burgoss
+            </footer>
+            -->
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+       
+        </div>
+
+             
+        <div class="circular-menu">
+            <a class="floating-btn">
+                <i class="fas fa-plus"></i>
+            </a>
+            <menu class="items-wrapper">
+                <a href="#" 
+                    data-toggle="tooltip" data-placement="left" title="Análisis de Productos" 
+                    class="menu-item  fas fa-box">P</a>
+                <a href="#" 
+                    data-toggle="tooltip" data-placement="left" title="Análisis de Marcas"  
+                    class="menu-item  fas fa-briefcase">M</a>
+                <a href="#" 
+                    data-toggle="tooltip" data-placement="left" title="Análisis por Municipio"  
+                    class="menu-item  fas fa-map-marker-alt">U</a>
+                <a href="#"
+                 data-toggle="tooltip" data-placement="left" title="Historial"  
+                 class="menu-item  fas fa-chart-line">H</a>
+            </menu>
+
+        </div>
+
+        
+        <button class="btn btn-outline-dark leftbutton"  data-toggle="modal" data-target="#modalParametros">
+            <i class="fas fa-filter"></i>Filtrar
+        </button>
+
+        <div class="modal fade" id="modalParametros" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog " role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Parámetros</h5>
+                    </div>
+                    <div class="modal-body row">
+                
+                        <div class="card p-2 col-4">
+                            <h5>Sede</h5>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"  id="paramZ"></input>
+                                <label class="form-check-label">
+                                    ZACAPA
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"  id="paramI"></input>
+                                <label class="form-check-label">
+                                    IZABAL
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"   id="paramJ"></input>
+                                <label class="form-check-label">
+                                    JUTIAPA
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="paramC"></input>
+                                <label class="form-check-label">
+                                    COBAN
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="paramP"></input>
+                                <label class="form-check-label">
+                                    PETEN
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="card p-2 col-4">
+                            <h5>Mes</h5>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" id="paramM1"></input>
+                                <label class="form-check-label">
+                                    Enero
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="2" id="paramM2"></input>
+                                <label class="form-check-label">
+                                    Febrero
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="3" id="paramM3"></input>
+                                <label class="form-check-label">
+                                    Marzo
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"  value="4" id="paramM4"></input>
+                                <label class="form-check-label">
+                                    Abril
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="5" id="paramM5"></input>
+                                <label class="form-check-label">
+                                    Mayo
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"   value="6" id="paramM6"></input>
+                                <label class="form-check-label">
+                                    Junio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"  value="7" id="paramM7"></input>
+                                <label class="form-check-label">
+                                    Julio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="8" id="paramM8"></input>
+                                <label class="form-check-label">
+                                    Agosto
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"  value="9" id="paramM9"></input>
+                                <label class="form-check-label">
+                                    Septiembre
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"  value="10" id="paramM10"></input>
+                                <label class="form-check-label">
+                                    Octubre
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"  value="11" id="paramM11"></input>
+                                <label class="form-check-label">
+                                    Noviembre
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="12" id="paramM12"></input>
+                                <label class="form-check-label">
+                                    Diciembre
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="card p-2 col-4">
+                            <h5>Año</h5>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="2018" id="paramA2018"></input>
+                                <label class="form-check-label">
+                                    2018
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"  value="2019" id="paramA2019"></input>
+                                <label class="form-check-label">
+                                    2019
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"  value="2020" id="paramA2020"></input>
+                                <label class="form-check-label">
+                                    2020
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="2021" id="paramA2021"></input>
+                                <label class="form-check-label">
+                                    2021
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"  value="2022" id="paramA2022"></input>
+                                <label class="form-check-label">
+                                    2022
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="2023" id="paramA2023"></input>
+                                <label class="form-check-label">
+                                    2023
+                                </label>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary btn-lg" data-dissmiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-lg btn-primary shadow">
+                            <i class="fas fa-check"></i>Aplicar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="./assets/plugins/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="./assets/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app-style-switcher.js"></script>
+    <script src="./libs/axios.min.js"></script>
+    <script src="./libs/sweetalert.min.js"></script>
+    <script src="./libs/chart.min.js"></script>
+    <script src="./libs/chartjs-plugin-datalabels.min.js"></script>
+    <script src="./libs/toastr.js"></script>
+    <script src="./libs/funciones.js"></script>
+    <script src="./libs/jsstore/jsstore.worker.min.js"></script>
+    <script src="./libs/jsstore/jsstore.min.js"></script>
+    <script src="./controllers/vars.js"></script>    
+    <script src="./controllers/classNavegar.js"></script>
+    <script src="./index.js"></script>
+    
+    
+    <!--Wave Effects -->
+    <script src="js/waves.js"></script>
+   <!--Menu sidebar 
+   <script src="js/sidebarmenu.js"></script>
+   -->
+    <!--Custom JavaScript -->
+    <script src="js/custom.js"></script>
+
+
+
+</body>
+
+</html>

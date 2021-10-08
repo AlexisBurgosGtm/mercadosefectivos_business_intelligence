@@ -40,7 +40,7 @@ app.use(function (req,res,next) {
 
 
 app.get("/",function(req,res){
-  res.send('<h1>Inicio...</h1>');
+  res.send(path + '/index.html');
 }); 
 
 
@@ -57,7 +57,7 @@ app.use("/",router);
 
 
 app.use("*",function(req,res){
-  res.send('<h1 class="text-danger">NO DISPONIBLE</h1>');
+  res.send(path + '/404.html');
 });
 
 
