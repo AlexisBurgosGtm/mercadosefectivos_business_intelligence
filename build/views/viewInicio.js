@@ -12,13 +12,17 @@ function getView(){
                 </div>
 
                 <div class="col-sm-12 col-lg-4 col-xl-4 col-md-4 card shadow border-top-rounded border-bottom-rounded">
-                    aaa
+                    <canvas id="myChart" width="50" height="50"></canvas>
                 </div>
             </div>
             `
         },
         listado:()=>{
-
+            return `
+            <div class="row">
+                tabla
+            </div>
+            `
         }
     }
 
