@@ -102,10 +102,11 @@
         </div>
 
              
-        <div class="circular-menu">
-            <a class="floating-btn">
-                <i class="fas fa-plus"></i>
-            </a>
+        <div class="circular-menu" id="circularmenu">
+            <a class="floating-btn" onclick="document.getElementById('circularmenu').classList.toggle('active');">
+                <i class="fa fa-plus"></i>
+              </a>
+
             <menu class="items-wrapper">
                 <a href="#" 
                     data-toggle="tooltip" data-placement="left" title="Análisis de Productos" 
@@ -124,11 +125,11 @@
         </div>
 
         
-        <button class="btn btn-outline-dark leftbutton"  data-toggle="modal" data-target="#modalParametros">
+        <button class="btn btn-outline-dark leftbutton" id="btnFiltro">
             <i class="fas fa-filter"></i>Filtrar
         </button>
 
-        <div class="modal fade" id="modalParametros" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade shadow border-top-rounded border-bottom-rounded" id="modalParametros" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog " role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -288,8 +289,10 @@
                         
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary btn-lg" data-dissmiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-lg btn-primary shadow">
+                        <button class="btn btn-outline-secondary btn-lg btn-rounded" id="btnFiltroCerrar">
+                            Cerrar
+                        </button>
+                        <button class="btn btn-lg btn-primary btn-rounded shadow">
                             <i class="fas fa-check"></i>Aplicar
                         </button>
                     </div>

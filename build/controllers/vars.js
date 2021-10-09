@@ -1,5 +1,7 @@
 let root = document.getElementById('root');
 
+
+
 function getLoader(texto){
     return `
         <div class="preloader">

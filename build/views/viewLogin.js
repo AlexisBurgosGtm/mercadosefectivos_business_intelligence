@@ -2,8 +2,8 @@ function getView(){
     let view = {
         login: ()=>{
             return `
-            <div class="card shadow p-4">
-                <div class="card-header bg-white">
+            <div class="card shadow p-4 col-sm-12 col-md-4 col-xl-4 col-lg-4">
+                <div class="card-header bg-white text-center">
                     <img src="../favicon.png" width="40" height="40">
                 </div>
                 <div class="card-body">
@@ -17,14 +17,14 @@ function getView(){
                     </div>
                     <div class="form-group">
                         <label class="negrita">Usuario</label>
-                        <input type="text" class="form-control border-secondary" id="txtU">
+                        <input type="text" class="form-control" id="txtU">
                     </div>
                     <div class="form-group">
                         <label class="negrita">Clave</label>
-                        <input type="password" class="form-control border-secondary" id="txtP">    
+                        <input type="password" class="form-control" id="txtP">    
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-info btn-lg" id="btnIngresar">
+                        <button class="btn btn-info btn-lg btn-shadow" id="btnIngresar">
                             <i class="fas fa-lock"></i>Ingresar
                         </button>
                     </div>
