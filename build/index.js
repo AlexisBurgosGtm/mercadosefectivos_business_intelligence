@@ -11,6 +11,7 @@ btnFiltroCerrar.addEventListener('click',()=>{
 
 let btnMenu = document.getElementById('circularmenu');
 
+//Chart.register(ChartDataLabels);
 
 
 Navegar.login();
