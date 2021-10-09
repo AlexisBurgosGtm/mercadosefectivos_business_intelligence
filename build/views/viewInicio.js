@@ -4,11 +4,11 @@ function getView(){
             return `
             <div class="row">
                 <div class="col-sm-12 col-lg-4 col-xl-4 col-md-4 card shadow border-top-rounded border-bottom-rounded">
-                    <canvas id="myChart" width="100" height="100"></canvas>
+                    <canvas id="myChart" width="50" height="50"></canvas>
                 </div>
 
                 <div class="col-sm-12 col-lg-4 col-xl-4 col-md-4 card shadow border-top-rounded border-bottom-rounded">
-                    <canvas id="myChart2" width="100" height="100"></canvas>
+                    <canvas id="myChart2" width="50" height="50"></canvas>
                 </div>
 
                 <div class="col-sm-12 col-lg-4 col-xl-4 col-md-4 card shadow border-top-rounded border-bottom-rounded">
