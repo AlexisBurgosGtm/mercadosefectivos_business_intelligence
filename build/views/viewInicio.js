@@ -3,16 +3,20 @@ function getView(){
         encabezado:()=>{
             return `
             <div class="row">
-                <div class="col-sm-12 col-lg-4 col-xl-4 col-md-4 card shadow border-top-rounded border-bottom-rounded">
-                    <canvas id="myChart" width="50" height="50"></canvas>
+                <div class="col-sm-6 col-lg-3 col-xl-3 col-md-3">
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf1"></div>
                 </div>
 
-                <div class="col-sm-12 col-lg-4 col-xl-4 col-md-4 card shadow border-top-rounded border-bottom-rounded">
-                    <canvas id="myChart3" width="50" height="50"></canvas>
+                <div class="col-sm-6 col-lg-3 col-xl-3 col-md-3">
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf2"></div>
                 </div>
 
-                <div class="col-sm-12 col-lg-4 col-xl-4 col-md-4 card shadow border-top-rounded border-bottom-rounded">
-                    <canvas id="myChart2" width="50" height="50"></canvas>
+                <div class="col-sm-6 col-lg-3 col-xl-3 col-md-3">
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf3"></div>
+                </div>
+
+                <div class="col-sm-6 col-lg-3 col-xl-3 col-md-3">
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf4"></div>
                 </div>
             </div>
             `
@@ -33,6 +37,16 @@ function getView(){
 
 function addListeners(){
 
+
+    getParametros();
+   
+    viewInicioObtenerDatos();
+
+};
+
+function viewInicioObtenerDatos(){
+  
+
     getDataResumen()
     .then((empresas)=>{
         getPieCharVentas(empresas);
@@ -44,7 +58,6 @@ function addListeners(){
     .then((datos)=>{
         getTblVentasFecha(datos)
     })
-  
 };
 
 function initView(){
@@ -56,8 +69,8 @@ function getDataResumen(){
 
     return new Promise((resolve, reject)=>{
         //obtiene los datos de la card empresas
-        let str = `'ME-IZABAL','ME-PETEN','ME-ZACAPA','ME-JUTIAPA','ME-COBAN'`;
-        axios.get(`/empresas/getempresas?empresas=${str}`)
+      
+        axios.get(`/empresas/getempresas?empresas=${parametrosEmpresas}&anio=${parametrosAnio}&mes=${parametrosMes}`)
         .then(res => {
             const empresas = res.data.recordset;
            
@@ -76,10 +89,8 @@ function getDataResumen(){
 function getDataFechas(){
 
     return new Promise((resolve, reject)=>{
-        let anio = 2021; let mes = 9;
-        //obtiene los datos de la card empresas
-        let str = `'ME-IZABAL','ME-PETEN','ME-ZACAPA','ME-JUTIAPA','ME-COBAN'`;
-        axios.get(`/empresas/getVentasFechaEmpresas?filtro=${str}&anio=${anio}&mes=${mes}`)
+      
+        axios.get(`/empresas/getVentasFechaEmpresas?empresas=${parametrosEmpresas}&anio=${parametrosAnio}&mes=${parametrosMes}`)
         .then(res => {
             const datos = res.data.recordset;
            
@@ -98,7 +109,10 @@ function getDataFechas(){
 
 function getPieCharVentas(data){
    
-
+    let container = document.getElementById('containerGraf1');
+    container.innerHTML = '';
+    container.innerHTML = '<canvas id="myChart" width="40" height="40"></canvas>';
+  
     let label = []; let valor = []; let bgColor = [];
     let total = 0;
     data.map((r)=>{
@@ -173,7 +187,11 @@ function getPieCharVentas(data){
 };
 
 function getPieCharDevoluciones(data){
-   
+
+    let container = document.getElementById('containerGraf2');
+    container.innerHTML = '';
+    container.innerHTML = '<canvas id="myChart2" width="40" height="40"></canvas>';
+  
 
     let label = []; let valor = []; let bgColor = [];
     let total = 0;
@@ -188,7 +206,7 @@ function getPieCharDevoluciones(data){
     })
 
   
-    var ctx = document.getElementById('myChart3').getContext('2d');
+    var ctx = document.getElementById('myChart2').getContext('2d');
     var myChart = new Chart(ctx, {
         plugins: [ChartDataLabels],
         type: 'doughnut',
@@ -250,7 +268,11 @@ function getPieCharDevoluciones(data){
 
 function getBarCharUtilidades(data){
    
-
+    let container = document.getElementById('containerGraf3');
+    container.innerHTML = '';
+    container.innerHTML = '<canvas id="myChart3" width="40" height="40"></canvas>';
+  
+    
     let label = []; let valor = []; let bgColor = [];
     let total = 0;
     data.map((r)=>{
@@ -264,7 +286,7 @@ function getBarCharUtilidades(data){
     })
 
 
-    var ctx = document.getElementById('myChart2').getContext('2d');
+    var ctx = document.getElementById('myChart3').getContext('2d');
     var myChart = new Chart(ctx, {
         plugins: [ChartDataLabels],
         type: 'bar',
@@ -326,6 +348,8 @@ function getBarCharUtilidades(data){
 
 function getLineChartFechas(data){
    
+    document.getElementById('myChart4').innerHTML = '';
+    
 
     let label = []; let valor = []; let bgColor = [];
     let total = 0;
@@ -340,7 +364,7 @@ function getLineChartFechas(data){
     })
 
 
-    var ctx = document.getElementById('myChart2').getContext('2d');
+    var ctx = document.getElementById('myChart4').getContext('2d');
     var myChart = new Chart(ctx, {
         plugins: [ChartDataLabels],
         type: 'line',
@@ -419,7 +443,6 @@ function getTblVentasFecha(data){
                     <thead>
                         <tr>
                             <td>FECHA</td>
-                            <td>SUCURSAL</td>
                             <td>COSTO</td>
                             <td>VENTA</td>
                             <td>UTILIDAD</td>
@@ -434,8 +457,7 @@ function getTblVentasFecha(data){
     data.map((r)=>{
         dat += `
             <tr>
-                <td>${funciones.cleanFecha(r.FECHA)}</td>
-                <td>${r.CODSUCURSAL}</td>
+                <td><i class="fas fa-hand-point-up"></i> ${funciones.cleanFecha(r.FECHA)}</td>
                 <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
                 <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
                 <td>${funciones.setMoneda(r.TOTALUTILIDAD,'Q')}</td>
