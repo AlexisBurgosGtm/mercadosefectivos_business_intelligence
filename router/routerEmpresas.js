@@ -7,15 +7,15 @@ router.get('/getVentasFechaEmpresas', async function(req,res){
 
     const {anio,mes,filtro} = req.query;
 
-    filtro = `'ME-ZACAPA', 'ME-PETEN', 'ME-COBAN', 'ME-IZABAL', 'ME-JUTIAPA'`;
-
+   
     let qry = `SELECT        CODSUCURSAL, FECHA, 
                 SUM(TOTALCOSTO) AS TOTALCOSTO, 
                 SUM(TOTALPRECIO) AS TOTALPRECIO, 
                 (SUM(TOTALPRECIO) - SUM(TOTALCOSTO)) AS TOTALUTILIDAD 
     FROM            BI_RPT_GENERAL
     GROUP BY CODSUCURSAL, FECHA, ANIO, MES
-    HAVING        (CODSUCURSAL IN (${filtro})) AND (ANIO = ${anio}) AND (MES = ${mes})`;
+    HAVING        (CODSUCURSAL IN (${filtro})) AND (ANIO = ${anio}) AND (MES = ${mes}) 
+    ORDER BY FECHA`;
 
     execute.Query(res,qry);
 

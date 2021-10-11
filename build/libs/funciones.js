@@ -1335,6 +1335,9 @@ rand:()=>{
     },
     gotoGoogleMaps:(lat,long)=>{
       window.open(`https://www.google.com/maps?q=${lat},${long}`);
+    },
+    cleanFecha:(f)=>{
+      return f.replace('T00:00:00.000Z','')
     }
 };
 

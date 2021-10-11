@@ -20,7 +20,7 @@ function getView(){
         listado:()=>{
             return `
             <div class="row">
-                <div class="table-responsive" id="tblTabla">
+                <div class="table-responsive card-shadow" id="tblTabla">
                 
                 </div>
             </div>
@@ -412,10 +412,10 @@ function getRandomColor() {
 
 function getTblVentasFecha(data){
     
-    let container = document.createElement('tblTabla');
+    let container = document.getElementById('tblTabla');
     container.innerHTML = getLoader();
 
-    let head = `<table class="table table-responsive table-hover table-striped>
+    let head = `<table class="table table-responsive table-hover table-striped">
                     <thead>
                         <tr>
                             <td>FECHA</td>
