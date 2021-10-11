@@ -43,13 +43,14 @@ router.get("/getempresas", async function(req,res){
     const {empresas,anio,mes} = req.query;
 
     let qry = `SELECT EMPNIT, NOMBRE, 
-                COSTO,VENTAS,
-                COSTODEV,DEVOLUCIONES,
-                UTILIDAD,MARGEN,OBJETIVO, 
-                UNIVERSO 
+                SUM(COSTO) AS COSTO,SUM(VENTAS) AS VENTAS,
+                SUM(COSTODEV) AS COSTODEV,SUM(DEVOLUCIONES) AS DEVOLUCIONES,
+                SUM(UTILIDAD) AS UTILIDAD,SUM(MARGEN) AS MARGEN,0 AS OBJETIVO, 
+                AVG(UNIVERSO) AS UNIVERSO 
                 FROM BI_EMPRESAS_RESUMEN 
                 WHERE EMPNIT IN(${empresas})
-                 AND MES IN(${mes}) AND ANIO IN(${anio})`
+                 AND MES IN(${mes}) AND ANIO IN(${anio})
+                GROUP BY EMPNIT,NOMBRE`
     
     execute.Query(res,qry);
 });

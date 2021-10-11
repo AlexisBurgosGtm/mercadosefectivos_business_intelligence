@@ -58,6 +58,9 @@ function viewInicioObtenerDatos(){
     .then((datos)=>{
         getTblVentasFecha(datos)
     })
+    .catch(()=>{
+        
+    })
 };
 
 function initView(){
@@ -121,7 +124,7 @@ function getPieCharVentas(data){
    
     data.map((r)=>{
             label.push(r.EMPNIT);
-            valor.push( Number((Number(r.VENTAS)/total).toFixed(2))*100);
+            valor.push(Number(((Number(r.VENTAS)/total))*100).toFixed(2));
             bgColor.push(getRandomColor())
     })
 
@@ -150,7 +153,7 @@ function getPieCharVentas(data){
                   },
                   title: {
                     display: true,
-                    text: 'VENTAS por Sede'
+                    text: 'VENTAS por Sede. Total: ' + funciones.setMoneda(total,'Q')
                   },
                 // Change options for ALL labels of THIS CHART
                 datalabels: {
@@ -201,7 +204,7 @@ function getPieCharDevoluciones(data){
    
     data.map((r)=>{
             label.push(r.EMPNIT);
-            valor.push( Number((Number(r.DEVOLUCIONES)/total).toFixed(2))*100);
+            valor.push( Number(((Number(r.DEVOLUCIONES)/total))*100).toFixed(2));
             bgColor.push(getRandomColor())
     })
 
@@ -230,7 +233,7 @@ function getPieCharDevoluciones(data){
                   },
                   title: {
                     display: true,
-                    text: 'DEVOLUCIONES por Sede'
+                    text: 'DEVOLUCIONES por Sede. Total: ' + funciones.setMoneda(total,'Q')
                   },
                 // Change options for ALL labels of THIS CHART
                 datalabels: {
@@ -423,6 +426,9 @@ function getLineChartFechas(data){
     
 
 };
+
+
+
 
 function getRandomColor() {
     var letters = '0123456789ABCDEF'.split('');
