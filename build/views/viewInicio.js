@@ -3,19 +3,19 @@ function getView(){
         encabezado:()=>{
             return `
             <div class="row">
-                <div class="col-sm-6 col-lg-3 col-xl-3 col-md-3">
+                <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">
                     <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf1"></div>
                 </div>
 
-                <div class="col-sm-6 col-lg-3 col-xl-3 col-md-3">
+                <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">
                     <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf2"></div>
                 </div>
 
-                <div class="col-sm-6 col-lg-3 col-xl-3 col-md-3">
+                <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">
                     <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf3"></div>
                 </div>
 
-                <div class="col-sm-6 col-lg-3 col-xl-3 col-md-3">
+                <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">
                     <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf4"></div>
                 </div>
             </div>
@@ -28,6 +28,11 @@ function getView(){
                 
                 </div>
             </div>
+            `
+        },
+        modalExpandir:()=>{
+            return `
+            
             `
         }
     }
@@ -61,6 +66,16 @@ function viewInicioObtenerDatos(){
     .catch(()=>{
         
     })
+
+    getDataClientes()
+    .then((datos)=>{
+        getBarCharClientesAlcanzados(datos)
+    })
+    .catch(()=>{
+        
+    });
+
+
 };
 
 function initView(){
@@ -109,6 +124,26 @@ function getDataFechas(){
 
 };
 
+function getDataClientes(){
+
+    return new Promise((resolve, reject)=>{
+        //obtiene los datos de la card empresas
+      
+        axios.get(`/empresas/getempresas?empresas=${parametrosEmpresas}&anio=${parametrosAnio}&mes=${parametrosMes}`)
+        .then(res => {
+            const empresas = res.data.recordset;
+           
+            resolve(empresas);
+        })
+        .catch(()=>{
+            reject();
+        })
+
+
+    })
+     
+
+};
 
 function getPieCharVentas(data){
    
@@ -346,6 +381,84 @@ function getBarCharUtilidades(data){
 
 
     
+
+};
+
+
+function getBarCharClientesAlcanzados(data){
+   
+    let container = document.getElementById('containerGraf4');
+    container.innerHTML = '';
+    container.innerHTML = '<canvas id="myChart4" width="40" height="40"></canvas>';
+  
+    let label = []; let valor = []; let bgColor = [];
+    let total = 0;
+    data.map((r)=>{
+        total = total + Number(r.VENTAS);
+    });
+   
+    data.map((r)=>{
+            label.push(r.EMPNIT);
+            valor.push(Number(((Number(r.VENTAS)/total))*100).toFixed(2));
+            bgColor.push(getRandomColor())
+    })
+
+  
+    var ctx = document.getElementById('myChart4').getContext('2d');
+    var myChart = new Chart(ctx, {
+        plugins: [ChartDataLabels],
+        type: 'bar',
+        data: {
+            labels: label,
+            datasets: [{
+                data:valor,
+                borderColor: 'white',
+                backgroundColor:bgColor
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                  },
+                  title: {
+                    display: true,
+                    text: 'Clientes Alcanzados. Total: ' + total.toString()
+                  },
+                // Change options for ALL labels of THIS CHART
+                datalabels: {
+                  anchor:'end',
+                  align:'end',
+                  listeners: {
+                    click: function(context) {
+                      // Receives `click` events only for labels of the first dataset.
+                      // The clicked label index is available in `context.dataIndex`.
+                      console.log(context);
+                    }
+                  },
+                  formatter: function(value) {
+                    return value + '%';
+                    // eq. return ['line1', 'line2', value]
+                  },
+                  color: function(context) {
+                    return context.dataset.backgroundColor;
+                  },
+                  borderColor: 'white',
+                  borderRadius: 25,
+                  borderWidth: 0,
+                  font: {
+                    weight: 'bold'
+                  }
+                }
+            }
+        }
+    });
+  
 
 };
 
