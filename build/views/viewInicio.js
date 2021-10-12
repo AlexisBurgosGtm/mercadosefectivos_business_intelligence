@@ -24,7 +24,10 @@ function getView(){
         listado:()=>{
             return `
             <div class="row">
-                <div class="table-responsive card-shadow" id="tblTabla">
+                <div class="table-responsive card-shadow col-sm-12 col-lg-6 col-xl-6 col-md-6" id="tblTabla">
+                
+                </div>
+                <div class="table-responsive card-shadow col-sm-12 col-lg-6 col-xl-6 col-md-6" id="tblTabla2">
                 
                 </div>
             </div>
@@ -62,6 +65,14 @@ function viewInicioObtenerDatos(){
     getDataFechas()
     .then((datos)=>{
         getTblVentasFecha(datos)
+    })
+    .catch(()=>{
+        
+    })
+
+    getDataMarcas()
+    .then((datos)=>{
+        getTblVentasMarcas(datos)
     })
     .catch(()=>{
         
@@ -124,12 +135,32 @@ function getDataFechas(){
 
 };
 
+function getDataMarcas(){
+
+    return new Promise((resolve, reject)=>{
+      
+        axios.get(`/empresas/getVentasMarcas?empresas=${parametrosEmpresas}&anio=${parametrosAnio}&mes=${parametrosMes}`)
+        .then(res => {
+            const datos = res.data.recordset;
+           
+            resolve(datos);
+        })
+        .catch(()=>{
+            reject();
+        })
+
+
+    })
+     
+
+};
+
 function getDataClientes(){
 
     return new Promise((resolve, reject)=>{
         //obtiene los datos de la card empresas
       
-        axios.get(`/empresas/getempresas?empresas=${parametrosEmpresas}&anio=${parametrosAnio}&mes=${parametrosMes}`)
+        axios.get(`/empresas/getClientesVisitados?anio=${parametrosAnio}&mes=${parametrosMes}`)
         .then(res => {
             const empresas = res.data.recordset;
            
@@ -394,12 +425,12 @@ function getBarCharClientesAlcanzados(data){
     let label = []; let valor = []; let bgColor = [];
     let total = 0;
     data.map((r)=>{
-        total = total + Number(r.VENTAS);
+        total = total + Number(r.VISITADOS);
     });
    
     data.map((r)=>{
-            label.push(r.EMPNIT);
-            valor.push(Number(((Number(r.VENTAS)/total))*100).toFixed(2));
+            label.push(r.CODSUCURSAL);
+            valor.push(Number(((Number(r.VISITADOS)/Number(r.UNIVERSO)))*100).toFixed(2));
             bgColor.push(getRandomColor())
     })
 
@@ -407,7 +438,7 @@ function getBarCharClientesAlcanzados(data){
     var ctx = document.getElementById('myChart4').getContext('2d');
     var myChart = new Chart(ctx, {
         plugins: [ChartDataLabels],
-        type: 'bar',
+        type: 'doughnut',
         data: {
             labels: label,
             datasets: [{
@@ -428,7 +459,7 @@ function getBarCharClientesAlcanzados(data){
                   },
                   title: {
                     display: true,
-                    text: 'Clientes Alcanzados. Total: ' + total.toString()
+                    text: 'Efectividad de Clientes. Total: ' + total.toString()
                   },
                 // Change options for ALL labels of THIS CHART
                 datalabels: {
@@ -461,6 +492,7 @@ function getBarCharClientesAlcanzados(data){
   
 
 };
+
 
 function getLineChartFechas(data){
    
@@ -558,8 +590,9 @@ function getTblVentasFecha(data){
     let container = document.getElementById('tblTabla');
     container.innerHTML = getLoader();
 
-    let head = `<table class="table table-responsive table-hover table-striped">
-                    <thead>
+    let head = `<h3>VENTAS POR FECHA</h3>
+            <table class="table table-responsive table-hover table-striped">
+                    <thead class="bg-info text-white">
                         <tr>
                             <td>FECHA</td>
                             <td>COSTO</td>
@@ -587,4 +620,43 @@ function getTblVentasFecha(data){
     container.innerHTML = head + dat + foot
 
 
-}
+};
+
+function getTblVentasMarcas(data){
+    
+    let container = document.getElementById('tblTabla2');
+    container.innerHTML = getLoader();
+
+    let head = `<h3>VENTAS POR MARCA</h3>
+                <table class="table table-responsive table-hover table-striped">
+                    <thead class="bg-secondary text-white">
+                        <tr>
+                            <td>MARCA</td>
+                            <td>COSTO</td>
+                            <td>VENTA</td>
+                            <td>UTILIDAD</td>
+                            <td>MARG</td>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+    let foot = `</tbody></table>`
+
+    let dat = '';
+
+    data.map((r)=>{
+        dat += `
+            <tr>
+                <td><i class="fas fa-hand-point-up"></i> ${r.DESMARCA}</td>
+                <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
+                <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
+                <td>${funciones.setMoneda(r.UTILIDAD,'Q')}</td>
+                <td>${funciones.setMargen((Number(r.UTILIDAD)/Number(r.TOTALPRECIO)).toFixed(2),'%')}</td>
+            </tr>
+        `
+    })
+
+    container.innerHTML = head + dat + foot
+
+
+};

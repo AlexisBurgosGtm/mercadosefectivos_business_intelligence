@@ -8,6 +8,16 @@ const config = {
 };
 
 
+
+const configL = {
+	user: 'iEx',
+	password: 'iEx',
+	server: 'DESKTOP-0F9UF5S\\SQLEXPRESS',
+	database: 'db_a6478c_mercadosbi',
+	pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
+};
+
+
 const sql = require('mssql');
 
 let execute = {

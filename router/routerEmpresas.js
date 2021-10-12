@@ -4,6 +4,42 @@ const express = require('express');
 const router = express.Router();
 
 
+router.get('/getVentasMarcas', async function(req,res){
+
+    const {empresas,anio,mes} = req.query;
+   
+    let qry = `SELECT CODMARCA, DESMARCA, 
+        SUM(TOTALCOSTO) AS TOTALCOSTO, 
+        SUM(TOTALPRECIO) AS TOTALPRECIO, 
+        (SUM(TOTALPRECIO)-SUM(TOTALCOSTO)) AS UTILIDAD 
+    FROM            BI_RPT_GENERAL
+    WHERE (ANIO IN(${anio})) AND (MES IN(${mes})) AND (CODSUCURSAL IN(${empresas}))
+    GROUP BY CODMARCA, DESMARCA
+    ORDER BY DESMARCA`;
+
+    execute.Query(res,qry);
+
+});
+
+
+router.get('/getClientesVisitados', async function(req,res){
+
+    const {anio,mes} = req.query;
+   
+    let qry = `SELECT  BI_RPT_GENERAL.CODSUCURSAL, COUNT(DISTINCT BI_RPT_GENERAL.CODIGO) AS VISITADOS, BI_EMPRESAS_RESUMEN.UNIVERSO
+                        FROM  BI_RPT_GENERAL LEFT OUTER JOIN
+                             BI_EMPRESAS_RESUMEN ON BI_RPT_GENERAL.MES = BI_EMPRESAS_RESUMEN.MES AND BI_RPT_GENERAL.ANIO = BI_EMPRESAS_RESUMEN.ANIO AND 
+                             BI_RPT_GENERAL.CODSUCURSAL = BI_EMPRESAS_RESUMEN.CODSUCURSAL
+    WHERE        (BI_RPT_GENERAL.TIPO = 'FAC')
+    GROUP BY BI_RPT_GENERAL.CODSUCURSAL, BI_RPT_GENERAL.ANIO, BI_RPT_GENERAL.MES, BI_EMPRESAS_RESUMEN.UNIVERSO
+    HAVING        (BI_RPT_GENERAL.ANIO IN(${anio})) AND (BI_RPT_GENERAL.MES IN(${mes}))`;
+
+    execute.Query(res,qry);
+
+});
+
+
+
 router.get('/getVentasFechaEmpresas', async function(req,res){
 
     const {anio,mes,empresas} = req.query;
