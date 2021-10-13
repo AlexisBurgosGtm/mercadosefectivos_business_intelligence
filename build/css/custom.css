@@ -1,4 +1,6 @@
-
+.bg-gris {
+  background-color: rgb(221, 221, 221)
+}
 .my-node-enter {
   opacity: 0;
 }

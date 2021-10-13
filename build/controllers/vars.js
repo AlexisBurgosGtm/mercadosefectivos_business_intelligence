@@ -1,5 +1,10 @@
 let root = document.getElementById('root');
+let GlobalSelectedForm = 'LOGIN';
 
+
+let GlobalSelectedCodMarca = 0;
+let GlobalSelectedDesMarca = '';
+let GlobalSelectedFecha ='';
 
 
 function getLoader(texto){

@@ -12,11 +12,11 @@ function getView(){
                 </div>
 
                 <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">
-                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf3"></div>
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf3"  onclick="expandir('containerGraf3')"></div>
                 </div>
 
                 <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">
-                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf4"></div>
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf4" onclick="expandir('containerGraf4')"></div>
                 </div>
             </div>
             `
@@ -35,12 +35,27 @@ function getView(){
         },
         modalExpandir:()=>{
             return `
-            
+            <div class="modal fade" id="modalExpandir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-lg" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                       
+                    </div>
+                    <div class="modal-body" id="containerExpandir">
+                       
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary form-control" data-dismiss="modal" onclick="$('#modalExpandir').modal('hide')">Cerrar</button>
+        
+                    </div>
+                    </div>
+                </div>
+                </div>
             `
         }
     }
 
-    root.innerHTML = view.encabezado() + view.listado();
+    root.innerHTML = view.encabezado() + view.listado() + view.modalExpandir();
 }; 
 
 function addListeners(){
@@ -89,9 +104,15 @@ function viewInicioObtenerDatos(){
 
 };
 
+
 function initView(){
     getView();
     addListeners();
+};
+
+function expandir(idcontainer){
+    $('#modalExpandir').modal('show');
+    document.getElementById('containerExpandir').innerHTML = document.getElementById(idcontainer).innerHTML;
 };
 
 function getDataResumen(){
@@ -590,8 +611,10 @@ function getTblVentasFecha(data){
     let container = document.getElementById('tblTabla');
     container.innerHTML = getLoader();
 
+    let totalcosto=0; let totalventa =0; let totalutilidad=0;
+
     let head = `<h3>VENTAS POR FECHA</h3>
-            <table class="table table-responsive table-hover table-striped">
+            <table class="table table-responsive table-hover table-striped"  style="font-size:80%;" id="tblFVentas">
                     <thead class="bg-info text-white">
                         <tr>
                             <td>FECHA</td>
@@ -602,13 +625,15 @@ function getTblVentasFecha(data){
                     </thead>
                     <tbody>`;
 
-    let foot = `</tbody></table>`
 
     let dat = '';
 
     data.map((r)=>{
+        totalcosto += Number(r.TOTALCOSTO);
+        totalventa += Number(r.TOTALPRECIO);
+        totalutilidad += Number(r.TOTALUTILIDAD);
         dat += `
-            <tr>
+            <tr class="hand" onclick="gotoFecha('${funciones.cleanFecha(r.FECHA)}')">
                 <td><i class="fas fa-hand-point-up"></i> ${funciones.cleanFecha(r.FECHA)}</td>
                 <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
                 <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
@@ -617,18 +642,41 @@ function getTblVentasFecha(data){
         `
     })
 
-    container.innerHTML = head + dat + foot
+    let foot = `</tbody>
+                    <tfoot class="negrita text-danger bg-gris">
+                        <tr>
+                            <td></td>
+                            <td>${funciones.setMoneda(totalcosto,'Q')}</td>
+                            <td>${funciones.setMoneda(totalventa,'Q')}</td>
+                            <td>${funciones.setMoneda(totalutilidad,'Q')}</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                `
 
+    container.innerHTML = head + dat + foot
+    $('#tblFVentas').DataTable({
+        paging: false
+    });
 
 };
+
+function gotoFecha(fecha){
+    GlobalSelectedFecha = fecha;
+    Navegar.analisis_fecha();
+};
+
+
 
 function getTblVentasMarcas(data){
     
     let container = document.getElementById('tblTabla2');
     container.innerHTML = getLoader();
 
+    let totalcosto = 0; let totalventa = 0; let totalutilidad = 0;
     let head = `<h3>VENTAS POR MARCA</h3>
-                <table class="table table-responsive table-hover table-striped">
+                <table class="table table-responsive table-hover table-striped"  style="font-size:80%;" id="tblVMarcas">
                     <thead class="bg-secondary text-white">
                         <tr>
                             <td>MARCA</td>
@@ -640,23 +688,47 @@ function getTblVentasMarcas(data){
                     </thead>
                     <tbody>`;
 
-    let foot = `</tbody></table>`
-
     let dat = '';
 
     data.map((r)=>{
+        totalcosto += Number(r.TOTALCOSTO);
+        totalventa += Number(r.TOTALPRECIO);
+        totalutilidad += Number(r.UTILIDAD);
         dat += `
-            <tr>
+            <tr class="hand" onclick="gotoMarca('${r.CODMARCA}','${r.DESMARCA}')">
                 <td><i class="fas fa-hand-point-up"></i> ${r.DESMARCA}</td>
                 <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
                 <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
                 <td>${funciones.setMoneda(r.UTILIDAD,'Q')}</td>
-                <td>${funciones.setMargen((Number(r.UTILIDAD)/Number(r.TOTALPRECIO)).toFixed(2),'%')}</td>
+                <td>${funciones.setMargen(((Number(r.UTILIDAD)/Number(r.TOTALPRECIO))*100).toFixed(2),'%')}</td>
             </tr>
         `
     })
 
-    container.innerHTML = head + dat + foot
+    let foot = `</tbody>
+                    <tfoot class="negrita text-danger bg-gris">
+                        <tr>
+                            <td></td>
+                            <td>${funciones.setMoneda(totalcosto,'Q')}</td>
+                            <td>${funciones.setMoneda(totalventa,'Q')}</td>
+                            <td>${funciones.setMoneda(totalutilidad,'Q')}</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                `
 
+    container.innerHTML = head + dat + foot
+    $('#tblVMarcas').DataTable({
+        paging: false,
+        responsive:true
+    });
 
 };
+
+function gotoMarca(codigo, descripcion){
+    GlobalSelectedCodMarca = codigo;
+    GlobalSelectedDesMarca = descripcion;
+    Navegar.analisis_marca();
+};
+

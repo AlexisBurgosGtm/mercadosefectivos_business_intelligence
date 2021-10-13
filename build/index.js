@@ -13,11 +13,28 @@ let btnFiltroAceptar = document.getElementById('btnFiltroAceptar');
 btnFiltroAceptar.addEventListener('click',()=>{
     $('#modalParametros').modal('hide');
     getParametros();
-    try {
-        viewInicioObtenerDatos();
-    } catch (error) {
-        
+
+    switch (GlobalSelectedForm) {
+        case 'INICIO':
+            try {
+                viewInicioObtenerDatos();
+            } catch (error) {
+                
+            }        
+            break;
+        case 'ANALISIS_MARCA': 
+            try {
+                getDataMarca();
+            } catch (error) {
+                
+            }
+            break;
+        default:
+            break;
     }
+
+    
+    
 });
 
 let btnMenu = document.getElementById('circularmenu');

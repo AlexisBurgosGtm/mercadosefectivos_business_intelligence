@@ -4,6 +4,26 @@ const express = require('express');
 const router = express.Router();
 
 
+
+router.get('/getFechaMarca', async function(req,res){
+
+    const {empresas,anio,mes,codmarca} = req.query;
+   
+    let qry = `SELECT CODCLAUNO, DESCLAUNO, FECHA,  
+        SUM(TOTALUNIDADES) AS TOTALUNIDADES, 
+        SUM(TOTALCOSTO) AS TOTALCOSTO, 
+        SUM(TOTALPRECIO) AS TOTALPRECIO,
+        (SUM(TOTALPRECIO)-SUM(TOTALCOSTO)) AS UTILIDAD
+    FROM            BI_RPT_GENERAL
+    WHERE  (CODCLAUNO = ${codmarca}) AND (CODSUCURSAL IN(${empresas})) AND (ANIO IN(${anio})) AND (MES IN(${mes}))
+    GROUP BY CODCLAUNO, DESCLAUNO, FECHA
+    ORDER BY FECHA`;
+
+    execute.Query(res,qry);
+
+});
+
+
 router.get('/getVentasMarcas', async function(req,res){
 
     const {empresas,anio,mes} = req.query;

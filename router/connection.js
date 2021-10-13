@@ -9,7 +9,7 @@ const config = {
 
 
 
-const configL = {
+const configw = {
 	user: 'iEx',
 	password: 'iEx',
 	server: 'DESKTOP-0F9UF5S\\SQLEXPRESS',
@@ -23,7 +23,7 @@ const sql = require('mssql');
 let execute = {
 	Query : (res,sqlqry)=>{	
 		
-		console.log('ejecutando consulta... ' + sqlqry);		
+		//console.log('ejecutando consulta... ' + sqlqry);		
 
 		try {
 		  const pool1 = new sql.ConnectionPool(config, err => {
