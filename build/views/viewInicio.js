@@ -697,9 +697,9 @@ function getTblVentasMarcas(data){
         dat += `
             <tr class="hand" onclick="gotoMarca('${r.CODMARCA}','${r.DESMARCA}')">
                 <td><i class="fas fa-hand-point-up"></i> ${r.DESMARCA}</td>
-                <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
-                <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
-                <td>${funciones.setMoneda(r.UTILIDAD,'Q')}</td>
+                <td>${Number(r.TOTALCOSTO.toFixed(2))}</td>
+                <td>${Number(r.TOTALPRECIO.toFixed(2))}</td>
+                <td>${Number(r.UTILIDAD.toFixed(2))}</td>
                 <td>${funciones.setMargen(((Number(r.UTILIDAD)/Number(r.TOTALPRECIO))*100).toFixed(2),'%')}</td>
             </tr>
         `
