@@ -685,6 +685,8 @@ function getTblVentasMarcas(data){
     container.innerHTML = getLoader();
 
     let totalcosto = 0; let totalventa = 0; let totalutilidad = 0;
+    let conteo = 0;
+
     let head = `<h3>VENTAS POR MARCA</h3>
                 <table class="table table-responsive table-hover table-striped"  style="font-size:80%;" id="tblVMarcas">
                     <thead class="bg-secondary text-white">
@@ -694,6 +696,7 @@ function getTblVentasMarcas(data){
                             <td>VENTA</td>
                             <td>UTILIDAD</td>
                             <td>MARG</td>
+                            <td>PART</td>
                         </tr>
                     </thead>
                     <tbody>`;
@@ -701,9 +704,14 @@ function getTblVentasMarcas(data){
     let dat = '';
 
     data.map((r)=>{
+        conteo += 1;
         totalcosto += Number(r.TOTALCOSTO);
         totalventa += Number(r.TOTALPRECIO);
         totalutilidad += Number(r.UTILIDAD);
+    })
+
+    data.map((r)=>{
+        console.log(r);
         dat += `
             <tr class="hand" onclick="gotoMarca('${r.CODMARCA}','${r.DESMARCA}')">
                 <td><i class="fas fa-hand-point-up"></i> ${r.DESMARCA}</td>
@@ -711,6 +719,9 @@ function getTblVentasMarcas(data){
                 <td>${Number(r.TOTALPRECIO.toFixed(2))}</td>
                 <td>${Number(r.UTILIDAD.toFixed(2))}</td>
                 <td>${funciones.setMargen(((Number(r.UTILIDAD)/Number(r.TOTALPRECIO))*100).toFixed(2),'%')}</td>
+                <td>${
+                    ((Number(r.TOTALPRECIO)/totalventa)*100).toFixed(2)
+                    }%</td>
             </tr>
         `
     })
@@ -723,6 +734,7 @@ function getTblVentasMarcas(data){
                             <td>${funciones.setMoneda(totalventa,'Q')}</td>
                             <td>${funciones.setMoneda(totalutilidad,'Q')}</td>
                             <td></td>
+                            <td></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -730,8 +742,8 @@ function getTblVentasMarcas(data){
 
     container.innerHTML = head + dat + foot
     $('#tblVMarcas').DataTable({
-        paging: false,
-        responsive:true
+            paging: false,
+            responsive:true
     });
 
 };
