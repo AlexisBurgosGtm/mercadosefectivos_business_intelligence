@@ -17,8 +17,30 @@ function getView(){
                     
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-8 col-lg-8 col-xl-8">
+                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf1"  onclick="expandir('containerGraf1')"></div>
+                </div>
+
+                <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
                     
+                    <div class="row">
+                      
+        
+                        <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">
+                            <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf2"  onclick="expandir('containerGraf2')"></div>
+                        </div>
+        
+                        <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">
+                            
+                            <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf3"  onclick="expandir('containerGraf3')"></div>
+                        </div>
+        
+                        <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">
+                            
+                            <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf4" onclick="expandir('containerGraf4')"></div>
+                        </div>
+                    </div>
+                
 
                 </div>    
             </div>
@@ -45,6 +67,11 @@ function getDataMarca(){
     getDataFechas()
     .then((datos)=>{
         getTblFechas(datos)
+    });
+
+    getDataMunicipios()
+    .then((datos)=>{
+        getPieChartMunicipios(datos);
     })
 
 };
@@ -127,4 +154,103 @@ function getTblFechas(data){
     $('#tblVFMarcas').DataTable({
         paging: false
     });
+};
+
+function getDataMunicipios(){
+    return new Promise((resolve, reject)=>{
+        //obtiene los datos de la card empresas
+      
+        axios.get(`/marcas/getMunicipiosMarca?empresas=${parametrosEmpresas}&anio=${parametrosAnio}&mes=${parametrosMes}&codmarca=${GlobalSelectedCodMarca}`)
+        .then(res => {
+            const datos = res.data.recordset;
+           
+            resolve(datos);
+        })
+        .catch(()=>{
+            reject();
+        })
+
+
+    })
+
+};
+
+function getPieChartMunicipios(data){
+   
+    let container = document.getElementById('containerGraf1');
+    container.innerHTML = '';
+    container.innerHTML = '<canvas id="myChart" width="100" height="auto"></canvas>';
+  
+    let label = []; let valor = []; let bgColor = [];
+    let total = 0;
+    data.map((r)=>{
+        total = total + Number(r.VENTAS);
+    });
+   
+    data.map((r)=>{
+            label.push(r.MUNICIPIO);
+            valor.push(Number(r.TOTALPRECIO.toFixed(2)));
+            bgColor.push(getRandomColor())
+    })
+
+  
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        plugins: [ChartDataLabels],
+        type: 'bar',
+        data: {
+            labels: label,
+            datasets: [{
+                data:valor,
+                borderColor: 'white',
+                backgroundColor:bgColor
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                  },
+                  title: {
+                    display: true,
+                    text: 'Ventas por Municipio. Total: ' + funciones.setMoneda(total,'Q')
+                  },
+                // Change options for ALL labels of THIS CHART
+                datalabels: {
+                  anchor:'end',
+                  align:'end',
+                  listeners: {
+                    click: function(context) {
+                      // Receives `click` events only for labels of the first dataset.
+                      // The clicked label index is available in `context.dataIndex`.
+                      console.log(context);
+                    }
+                  },
+                  formatter: function(value) {
+                    return 'Q' + value;
+                    // eq. return ['line1', 'line2', value]
+                  },
+                  color: function(context) {
+                    return context.dataset.backgroundColor;
+                  },
+                  borderColor: 'white',
+                  borderRadius: 25,
+                  borderWidth: 0,
+                  font: {
+                    weight: 'bold'
+                  }
+                }
+            }
+        }
+    });
+
+
+    
+
 };

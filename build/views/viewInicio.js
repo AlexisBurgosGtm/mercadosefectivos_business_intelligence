@@ -4,18 +4,22 @@ function getView(){
             return `
             <div class="row">
                 <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">
-                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf1"></div>
+                    <i class="fas fa-hand-up"></i>
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf1"  onclick="expandir('containerGraf1')"></div>
                 </div>
 
                 <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">
-                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf2"></div>
+                    <i class="fas fa-hand-up"></i>
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf2"  onclick="expandir('containerGraf2')"></div>
                 </div>
 
                 <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">
+                    <i class="fas fa-hand-up"></i>
                     <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf3"  onclick="expandir('containerGraf3')"></div>
                 </div>
 
                 <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">
+                    <i class="fas fa-hand-up"></i>
                     <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf4" onclick="expandir('containerGraf4')"></div>
                 </div>
             </div>
@@ -36,21 +40,21 @@ function getView(){
         modalExpandir:()=>{
             return `
             <div class="modal fade" id="modalExpandir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-lg" role="document">
+                <div class="modal-dialog modal-xl" role="document">
                     <div class="modal-content">
-                    <div class="modal-header">
-                       
-                    </div>
-                    <div class="modal-body" id="containerExpandir">
-                       
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary form-control" data-dismiss="modal" onclick="$('#modalExpandir').modal('hide')">Cerrar</button>
-        
-                    </div>
+                        <div class="modal-header">
+                        
+                        </div>
+                        <div class="modal-body" id="containerExpandir">
+                        
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary form-control" data-dismiss="modal" onclick="$('#modalExpandir').modal('hide')">Cerrar</button>
+            
+                        </div>
                     </div>
                 </div>
-                </div>
+            </div>
             `
         }
     }
@@ -111,8 +115,14 @@ function initView(){
 };
 
 function expandir(idcontainer){
+
+    document.getElementById(idcontainer).requestFullscreen();
+    return;
+
     $('#modalExpandir').modal('show');
-    document.getElementById('containerExpandir').innerHTML = document.getElementById(idcontainer).innerHTML;
+    let element = document.getElementById(idcontainer).cloneNode(true);
+    document.getElementById('containerExpandir').appendChild(element);
+
 };
 
 function getDataResumen(){

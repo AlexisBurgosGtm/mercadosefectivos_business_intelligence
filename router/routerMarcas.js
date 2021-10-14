@@ -3,6 +3,25 @@ const express = require('express');
 const router = express.Router();
 
 
+router.get('/getMunicipiosMarca', async function(req,res){
+
+    const {empresas, codmarca, anio, mes} = req.query;
+  
+    let qry = `SELECT MUNICIPIO,  COUNT(DISTINCT CODIGO) AS CONTEO, SUM(TOTALCOSTO) AS TOTALCOSTO, SUM(TOTALPRECIO) AS TOTALPRECIO 
+    FROM BI_RPT_GENERAL 
+    WHERE
+    (CODSUCURSAL IN(${empresas})) AND (ANIO IN(${anio})) AND (MES IN(${mes})) 
+    AND (CODMARCA=${codmarca}) AND (TIPO='FAC')
+    GROUP BY MUNICIPIO`
+
+    execute.Query(res,qry);
+    
+});
+
+
+
+
+
 //**  REPORTE SE MARCAS ****/
 router.get('/getmarcas', async function(req,res){
 
