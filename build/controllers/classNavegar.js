@@ -5,7 +5,8 @@ let Navegar = {
             GlobalSelectedForm = 'LOGIN';
             btnFiltro.style='visibility:hidden';
             btnFiltroCerrar.style='visibility:hidden';
-            btnMenu.style='visibility:hidden';
+            //btnMenu.style='visibility:hidden';
+            btnHome.style='visibility:hidden';
             initView();
         })
     },
@@ -15,7 +16,8 @@ let Navegar = {
             GlobalSelectedForm = 'INICIO';
             btnFiltro.style='visibility:visible';
             btnFiltroCerrar.style='visibility:visible';
-            btnMenu.style='visibility:visible';
+            //btnMenu.style='visibility:visible';
+            btnHome.style='visibility:hidden';
             initView();
         })
     },
@@ -25,7 +27,8 @@ let Navegar = {
             GlobalSelectedForm = 'MARCAS';
             btnFiltro.style='visibility:visible';
             btnFiltroCerrar.style='visibility:visible';
-            btnMenu.style='visibility:visible';
+            //btnMenu.style='visibility:visible';
+            btnHome.style='visibility:visible';
             initView();
         })
     },
@@ -35,7 +38,8 @@ let Navegar = {
             GlobalSelectedForm = 'ANALISIS_MARCA';
             btnFiltro.style='visibility:visible';
             btnFiltroCerrar.style='visibility:visible';
-            btnMenu.style='visibility:visible';
+            //btnMenu.style='visibility:visible';
+            btnHome.style='visibility:visible';
             initView(data);
         })
     },
@@ -45,7 +49,8 @@ let Navegar = {
             GlobalSelectedForm = 'ANALISIS_FECHA';
             btnFiltro.style='visibility:visible';
             btnFiltroCerrar.style='visibility:visible';
-            btnMenu.style='visibility:visible';
+            //btnMenu.style='visibility:visible';
+            btnHome.style='visibility:visible';
             initView(data);
         })
     }

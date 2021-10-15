@@ -1,36 +1,13 @@
 
 var CACHE = 'mercadosefectivosbi1';
 const staticAssets = [  
-  './css/vendors.bundle.css',
-  './css/app.bundle.css',
-  './css/.../styles.css',
-  './css/btn.css',
-  './libs/leaflet/leaflet.css',
-  './libs/leaflet/leaflet.js',
-  './libs/noty/noty.min.css',
-  './manifest.json',
-  './js/vendors.bundle.js',
-  './js/app.bundle.js',
-  './js/../script.js',
-  './libs/noty/noty.min.js',
-  './libs/sweetalert.min.js',
-  './libs/jsstore/jsstore.min.js',
-  './libs/jsstore/jsstore.worker.min.js',
-  './libs/funciones.js',
-  './controllers/classNavegar.js',
-  './controllers/GlobalVars.js',
-  './controllers/classDb.js',
-  './controllers/dbcalls.js',
-  './models/classEmpleados.js',
-  './models/classTipoDocumentos.js',
-  './controllers/apicallsx.js',
   './index.js',
   './favicon.png',
   './index.html',
    './sw.js',
-   './views/vendedor/facturacion.js',
-   './views/vendedor/vendedor.js',
-   './views/login/index.js'
+   './views/viewLogin.js',
+   './views/viewInicio.js',
+   './views/viewAnalisisMarca.js'
 ];
 
 self.addEventListener('install', function(evt) {
@@ -44,6 +21,8 @@ self.addEventListener('install', function(evt) {
 
 self.addEventListener('fetch', async evt => {
 
+  return;
+  
   var req = evt.request.clone();
   if (navigator.onLine){
     if (req.clone().method == "GET") {

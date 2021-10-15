@@ -114,16 +114,6 @@ function initView(){
     addListeners();
 };
 
-function expandir(idcontainer){
-
-    document.getElementById(idcontainer).requestFullscreen();
-    return;
-
-    $('#modalExpandir').modal('show');
-    let element = document.getElementById(idcontainer).cloneNode(true);
-    document.getElementById('containerExpandir').appendChild(element);
-
-};
 
 function getDataResumen(){
 
@@ -711,13 +701,12 @@ function getTblVentasMarcas(data){
     })
 
     data.map((r)=>{
-        console.log(r);
         dat += `
             <tr class="hand" onclick="gotoMarca('${r.CODMARCA}','${r.DESMARCA}')">
                 <td><i class="fas fa-hand-point-up"></i> ${r.DESMARCA}</td>
-                <td>${Number(r.TOTALCOSTO.toFixed(2))}</td>
-                <td>${Number(r.TOTALPRECIO.toFixed(2))}</td>
-                <td>${Number(r.UTILIDAD.toFixed(2))}</td>
+                <td>Q ${Number(r.TOTALCOSTO.toFixed(2))}</td>
+                <td>Q ${Number(r.TOTALPRECIO.toFixed(2))}</td>
+                <td>Q ${Number(r.UTILIDAD.toFixed(2))}</td>
                 <td>${funciones.setMargen(((Number(r.UTILIDAD)/Number(r.TOTALPRECIO))*100).toFixed(2),'%')}</td>
                 <td>${
                     ((Number(r.TOTALPRECIO)/totalventa)*100).toFixed(2)

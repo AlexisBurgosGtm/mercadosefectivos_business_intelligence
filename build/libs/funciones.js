@@ -1,34 +1,42 @@
 let funciones = {
-  animateCSS: (element, animation, prefix = 'animate__') =>
-  // We create a Promise and return it
-  new Promise((resolve, reject) => {
-    const animationName = `${prefix}${animation}`;
-    const node = document.getElementById(element);
+    getMargenUtilidad:(venta,costo)=>{
+      let utilidad = venta-costo;
+      return Number((utilidad/costo) * 100).toFixed(2) + '%'
+    },
+    getParticipacion:(valor,total)=>{
+      let peso = (valor / total) * 100;
+      return peso.toFixed(2) + '%'
+    },
+    animateCSS: (element, animation, prefix = 'animate__') =>
+    // We create a Promise and return it
+    new Promise((resolve, reject) => {
+      const animationName = `${prefix}${animation}`;
+      const node = document.getElementById(element);
 
-    node.classList.add(`${prefix}animated`, animationName);
+      node.classList.add(`${prefix}animated`, animationName);
 
-    // When the animation ends, we clean the classes and resolve the Promise
-    function handleAnimationEnd(event) {
-      event.stopPropagation();
-      node.classList.remove(`${prefix}animated`, animationName);
-      resolve('Animation ended');
-    }
+      // When the animation ends, we clean the classes and resolve the Promise
+      function handleAnimationEnd(event) {
+        event.stopPropagation();
+        node.classList.remove(`${prefix}animated`, animationName);
+        resolve('Animation ended');
+      }
 
-    node.addEventListener('animationend', handleAnimationEnd, {once: true});
-  }),
-  getStringParametros:(data)=>{
-    let param = data;
-    let str = '';
-    for (let i = 0; i < param.length; i++) {
-        str = str + "'" + param[i].toString() + "'" + ','
-    }
-    var n = str.lastIndexOf(",");
-    str = str.substring(0,n); 
-    return str;
-},
-rand:()=>{
-    return Math.floor(Math.random() * 255)
-},
+      node.addEventListener('animationend', handleAnimationEnd, {once: true});
+    }),
+    getStringParametros:(data)=>{
+      let param = data;
+      let str = '';
+      for (let i = 0; i < param.length; i++) {
+          str = str + "'" + param[i].toString() + "'" + ','
+      }
+      var n = str.lastIndexOf(",");
+      str = str.substring(0,n); 
+      return str;
+    },
+    rand:()=>{
+        return Math.floor(Math.random() * 255)
+    },
     enviarPedidoWhatsapp2: function(fecha,coddoc,correlativo){
     swal({
       text: 'Escriba el número a donde se enviará:',

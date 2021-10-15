@@ -3,16 +3,41 @@ const express = require('express');
 const router = express.Router();
 
 
+router.get('/getClientesMarca', async function(req,res){
+
+    const {empresas, codmarca, anio, mes} = req.query;
+  
+    let qry = `SELECT BI_RPT_GENERAL.CODSUCURSAL, COUNT(DISTINCT BI_RPT_GENERAL.CODIGO) AS CONTEO, AVG(BI_EMPRESAS_RESUMEN.UNIVERSO) AS UNIVERSO
+    FROM            BI_RPT_GENERAL LEFT OUTER JOIN
+                             BI_EMPRESAS_RESUMEN ON BI_RPT_GENERAL.MES = BI_EMPRESAS_RESUMEN.MES AND BI_RPT_GENERAL.ANIO = BI_EMPRESAS_RESUMEN.ANIO AND 
+                             BI_RPT_GENERAL.CODSUCURSAL = BI_EMPRESAS_RESUMEN.CODSUCURSAL
+    WHERE  (BI_RPT_GENERAL.CODSUCURSAL IN (${empresas})) 
+        AND (BI_RPT_GENERAL.ANIO IN (${anio})) 
+        AND (BI_RPT_GENERAL.MES IN (${mes})) 
+        AND (BI_RPT_GENERAL.CODMARCA = ${codmarca}) AND 
+                             (BI_RPT_GENERAL.TIPO = 'FAC')
+    GROUP BY BI_RPT_GENERAL.CODSUCURSAL
+    ORDER BY BI_RPT_GENERAL.CODSUCURSAL`
+
+    execute.Query(res,qry);
+    
+});
+
 router.get('/getMunicipiosMarca', async function(req,res){
 
     const {empresas, codmarca, anio, mes} = req.query;
   
-    let qry = `SELECT MUNICIPIO,  COUNT(DISTINCT CODIGO) AS CONTEO, SUM(TOTALCOSTO) AS TOTALCOSTO, SUM(TOTALPRECIO) AS TOTALPRECIO 
+    let qry = `SELECT DEPARTAMENTO, MUNICIPIO, 
+                COUNT(DISTINCT CODIGO) AS CONTEO, 
+                SUM(TOTALCOSTO) AS TOTALCOSTO, 
+                SUM(TOTALPRECIO) AS TOTALPRECIO,
+                (SUM(TOTALPRECIO)-SUM(TOTALCOSTO)) AS UTILIDAD
     FROM BI_RPT_GENERAL 
     WHERE
     (CODSUCURSAL IN(${empresas})) AND (ANIO IN(${anio})) AND (MES IN(${mes})) 
     AND (CODMARCA=${codmarca}) AND (TIPO='FAC')
-    GROUP BY MUNICIPIO`
+    GROUP BY DEPARTAMENTO,MUNICIPIO 
+    ORDER BY DEPARTAMENTO, MUNICIPIO`
 
     execute.Query(res,qry);
     
