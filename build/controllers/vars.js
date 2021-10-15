@@ -6,6 +6,7 @@ let GlobalSelectedCodMarca = 0;
 let GlobalSelectedDesMarca = '';
 let GlobalSelectedFecha ='';
 
+let GlobalIconoDobleClick = `<i class="fas fa-hand-point-up"></i><i class="fas fa-hand-point-up"></i>`
 
 function getLoader(texto){
     return `

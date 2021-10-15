@@ -7,10 +7,10 @@ function getView(){
                     <h3 class="text-danger">ANÁLISIS ${GlobalSelectedDesMarca}</h3>
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-6 col-lg-6">
-                    <button class="btn btn-outline-secondary" id="btnTabHome">
+                    <button class="btn hidden btn-outline-secondary" id="btnTabHome">
                         Inicio
                     </button>
-                    <button class="btn btn-outline-info" id="btnTab2">
+                    <button class="hidden btn btn-outline-info" id="btnTab2">
                         Tab 2
                     </button>
                 </div>
@@ -21,7 +21,7 @@ function getView(){
             return `
             <br>
             <div class="row">
-                <div class="tab-content" id="pills-tabContent">
+                <div class="tab-content col-12" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="tabHome" role="tabpanel" aria-labelledby="pills-home-tab">
                         ${view.home()}
                     </div>
@@ -37,15 +37,16 @@ function getView(){
         home:()=>{
             return `
             <div class="row">
-                <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf1"  onclick="expandir('containerGraf1')">
+                <div class="card shadow border-top-rounded border-bottom-rounded col-12" id="containerGraf1"  onclick="expandir('containerGraf1')">
                 </div>
             </div>
 
             <div class="row">
-                <div class="card shadow col-6" id="containerTblMunicipios">
-                
+                <div class="card shadow col-sm-12 col-xl-6 col-lg-6 col-md-6">
+                    <div class="table-responsive"  id="containerTblMunicipios">
+                    </div>
                 </div>
-                <div class="col-6">
+                <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
                     <div class="row">
                         <div class="col-6">
                             <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf2"  onclick="expandir('containerGraf2')">
@@ -190,7 +191,7 @@ function getLineChartFechas(data){
    
     let container = document.getElementById('containerGraf1');
     container.innerHTML = '';
-    container.innerHTML = '<canvas id="myChart1" width="100" height="20"></canvas>';
+    container.innerHTML = '<canvas id="myChart1" width="100" height="40"></canvas>';
   
     let label = []; let valor = []; let bgColor = [];
     let total = 0;
@@ -309,7 +310,7 @@ function getTblMunicipios(data){
     let totalutilidad = 0;
 
     let head = `<h5>VENTAS POR MUNICIPIO</h5>
-                <table class="table table-responsive table-hover" style="font-size:80%;" id="tblVFMunicipios">
+                <table class="table table-responsive" style="font-size:80%;" id="tblVFMunicipios">
                     <thead class="bg-secondary text-white">
                         <tr>
                             <td>MUNICIPIO</td>
@@ -363,11 +364,12 @@ function getTblMunicipios(data){
 
     container.innerHTML = head + dat + foot 
 
-    $('#tblVFMunicipios').DataTable({
+    var table = $('#tblVFMunicipios').DataTable({
         paging: false,
-        responsive:true,
         bFilter:false
     });
+
+    new $.fn.dataTable.Responsive(table);
 };
 
 function getPieChartClientesEmpresas(data){

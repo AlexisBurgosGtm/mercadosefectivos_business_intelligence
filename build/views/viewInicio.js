@@ -4,23 +4,23 @@ function getView(){
             return `
             <div class="row">
                 <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">
-                    <i class="fas fa-hand-up"></i>
-                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf1"  onclick="expandir('containerGraf1')"></div>
+                    ${GlobalIconoDobleClick}
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf1"  ondblclick="expandir('containerGraf1')"></div>
                 </div>
 
                 <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">
-                    <i class="fas fa-hand-up"></i>
-                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf2"  onclick="expandir('containerGraf2')"></div>
+                    ${GlobalIconoDobleClick}
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf2"  ondblclick="expandir('containerGraf2')"></div>
                 </div>
 
                 <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">
-                    <i class="fas fa-hand-up"></i>
-                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf3"  onclick="expandir('containerGraf3')"></div>
+                    ${GlobalIconoDobleClick}
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf3"  ondblclick="expandir('containerGraf3')"></div>
                 </div>
 
-                <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">
-                    <i class="fas fa-hand-up"></i>
-                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf4" onclick="expandir('containerGraf4')"></div>
+                <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">                       
+                    ${GlobalIconoDobleClick}   
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf4" ondblclick="expandir('containerGraf4')"></div>
                 </div>
             </div>
             `
@@ -614,7 +614,7 @@ function getTblVentasFecha(data){
     let totalcosto=0; let totalventa =0; let totalutilidad=0;
 
     let head = `<h3>VENTAS POR FECHA</h3>
-            <table class="table table-responsive table-hover table-striped"  style="font-size:80%;" id="tblFVentas">
+            <table class="table table-responsive"  style="font-size:80%;" id="tblFVentas">
                     <thead class="bg-info text-white">
                         <tr>
                             <td>FECHA</td>
@@ -633,8 +633,8 @@ function getTblVentasFecha(data){
         totalventa += Number(r.TOTALPRECIO);
         totalutilidad += Number(r.TOTALUTILIDAD);
         dat += `
-            <tr class="hand" onclick="gotoFecha('${funciones.cleanFecha(r.FECHA)}')">
-                <td><i class="fas fa-hand-point-up"></i> ${funciones.cleanFecha(r.FECHA)}</td>
+            <tr class="hand" ondblclick="gotoFecha('${funciones.cleanFecha(r.FECHA)}')">
+                <td>${GlobalIconoDobleClick} ${funciones.cleanFecha(r.FECHA)}</td>
                 <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
                 <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
                 <td>${funciones.setMoneda(r.TOTALUTILIDAD,'Q')}</td>
@@ -656,10 +656,15 @@ function getTblVentasFecha(data){
                 `
 
     container.innerHTML = head + dat + foot
-    $('#tblFVentas').DataTable({
-        paging: false
+    var table = $('#tblFVentas').DataTable({
+        paging: true, 
+        bFilter:false
     });
 
+    new $.fn.dataTable.Responsive(table, {
+        details: true
+    } );
+  
 };
 
 function gotoFecha(fecha){
@@ -678,7 +683,7 @@ function getTblVentasMarcas(data){
     let conteo = 0;
 
     let head = `<h3>VENTAS POR MARCA</h3>
-                <table class="table table-responsive table-hover table-striped"  style="font-size:80%;" id="tblVMarcas">
+                <table class="table display responsive nowrap"  style="font-size:80%;" id="tblVMarcas">
                     <thead class="bg-secondary text-white">
                         <tr>
                             <td>MARCA</td>
@@ -702,8 +707,8 @@ function getTblVentasMarcas(data){
 
     data.map((r)=>{
         dat += `
-            <tr class="hand" onclick="gotoMarca('${r.CODMARCA}','${r.DESMARCA}')">
-                <td><i class="fas fa-hand-point-up"></i> ${r.DESMARCA}</td>
+            <tr class="hand border-bottom border.secondary" ondblclick="gotoMarca('${r.CODMARCA}','${r.DESMARCA}')">
+                <td>${GlobalIconoDobleClick} ${r.DESMARCA}</td>
                 <td>Q ${Number(r.TOTALCOSTO.toFixed(2))}</td>
                 <td>Q ${Number(r.TOTALPRECIO.toFixed(2))}</td>
                 <td>Q ${Number(r.UTILIDAD.toFixed(2))}</td>
@@ -731,10 +736,8 @@ function getTblVentasMarcas(data){
 
     container.innerHTML = head + dat + foot
     $('#tblVMarcas').DataTable({
-            paging: false,
-            responsive:true
+                    paging: false,
     });
-
 };
 
 function gotoMarca(codigo, descripcion){
