@@ -1,5 +1,5 @@
 let funciones = {
-    imprimirSelec:(nombre)=>{
+    imprimirSelec:(nombreDiv)=>{
       var contenido= document.getElementById(nombreDiv).innerHTML;
       var contenidoOriginal= document.body.innerHTML;
  

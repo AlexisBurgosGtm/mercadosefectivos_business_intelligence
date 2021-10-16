@@ -11,7 +11,7 @@ router.get('/getProductosMarca', async function(req,res){
                 SUM(TOTALPRECIO) AS TOTALPRECIO,
                 (SUM(TOTALPRECIO)-SUM(TOTALCOSTO)) AS UTILIDAD
                 FROM  BI_RPT_GENERAL
-                GROUP BY CODPRODUCTO, PRODUCTO, CODMARCA, CODSUCURSAL, ANIO, MES
+                GROUP BY CODPRODUCTO, PRODUCTO, CODMARCA
                 HAVING  (CODMARCA = ${codmarca}) AND (CODSUCURSAL IN(${empresas})) AND (ANIO IN(${anio})) AND (MES IN(${mes}))`
 
     execute.Query(res,qry);
