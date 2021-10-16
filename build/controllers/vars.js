@@ -1,6 +1,8 @@
 let root = document.getElementById('root');
 let GlobalSelectedForm = 'LOGIN';
 
+let titulo = document.getElementById('navbarDropdown');
+
 
 let GlobalSelectedCodMarca = 0;
 let GlobalSelectedDesMarca = '';

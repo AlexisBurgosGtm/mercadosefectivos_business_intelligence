@@ -1,4 +1,14 @@
 let funciones = {
+    imprimirSelec:(nombre)=>{
+      var contenido= document.getElementById(nombreDiv).innerHTML;
+      var contenidoOriginal= document.body.innerHTML;
+ 
+      document.body.innerHTML = contenido;
+ 
+      window.print();
+ 
+      document.body.innerHTML = contenidoOriginal;
+    },
     getMargenUtilidad:(venta,costo)=>{
       let utilidad = venta-costo;
       return Number((utilidad/costo) * 100).toFixed(2) + '%'

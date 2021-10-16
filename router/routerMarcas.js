@@ -2,6 +2,44 @@ const execute = require('./connection');
 const express = require('express');
 const router = express.Router();
 
+router.get('/getProductosMarca', async function(req,res){
+
+    const {empresas, codmarca, anio, mes} = req.query;
+  
+    let qry = `SELECT CODPRODUCTO, PRODUCTO, SUM(FARDOS) AS FARDOS, 
+                SUM(TOTALCOSTO) AS TOTALCOSTO, 
+                SUM(TOTALPRECIO) AS TOTALPRECIO,
+                (SUM(TOTALPRECIO)-SUM(TOTALCOSTO)) AS UTILIDAD
+                FROM  BI_RPT_GENERAL
+                GROUP BY CODPRODUCTO, PRODUCTO, CODMARCA, CODSUCURSAL, ANIO, MES
+                HAVING  (CODMARCA = ${codmarca}) AND (CODSUCURSAL IN(${empresas})) AND (ANIO IN(${anio})) AND (MES IN(${mes}))`
+
+    execute.Query(res,qry);
+    
+});
+
+
+router.get('/getVendedoresMarca', async function(req,res){
+
+    const {empresas, codmarca, anio, mes} = req.query;
+  
+    let qry = `SELECT NOMEMPLEADO AS VENDEDOR, 
+                SUM(TOTALCOSTO) AS TOTALCOSTO, 
+                SUM(TOTALPRECIO) AS TOTALPRECIO, 
+                (SUM(TOTALPRECIO) - SUM(TOTALCOSTO)) AS UTILIDAD
+            FROM BI_RPT_GENERAL
+            WHERE (CODMARCA = ${codmarca}) 
+            AND (CODSUCURSAL IN(${empresas})) 
+            AND (ANIO IN(${anio})) 
+            AND (MES IN(${mes}))
+            GROUP BY NOMEMPLEADO 
+            ORDER BY NOMEMPLEADO`
+
+    execute.Query(res,qry);
+    
+});
+
+
 
 router.get('/getClientesMarca', async function(req,res){
 
@@ -27,7 +65,22 @@ router.get('/getMunicipiosMarca', async function(req,res){
 
     const {empresas, codmarca, anio, mes} = req.query;
   
-    let qry = `SELECT DEPARTAMENTO, MUNICIPIO, 
+
+    let qry = `
+            SELECT BI_RPT_GENERAL.DEPARTAMENTO, BI_RPT_GENERAL.MUNICIPIO, COUNT(DISTINCT BI_RPT_GENERAL.CODIGO) AS CONTEO, SUM(BI_RPT_GENERAL.TOTALCOSTO) AS TOTALCOSTO, 
+                                SUM(BI_RPT_GENERAL.TOTALPRECIO) AS TOTALPRECIO, SUM(BI_RPT_GENERAL.TOTALPRECIO) - SUM(BI_RPT_GENERAL.TOTALCOSTO) AS UTILIDAD, 
+                                BI_GENERALES_MUNICIPIOS.UNIVERSO AS TOTALMUNICIPIO
+            FROM BI_RPT_GENERAL LEFT OUTER JOIN
+                                    BI_GENERALES_MUNICIPIOS ON BI_RPT_GENERAL.DEPARTAMENTO = BI_GENERALES_MUNICIPIOS.DESDEPARTAMENTO AND 
+                                    BI_RPT_GENERAL.MUNICIPIO = BI_GENERALES_MUNICIPIOS.DESMUNICIPIO AND BI_RPT_GENERAL.CODSUCURSAL = BI_GENERALES_MUNICIPIOS.CODSUCURSAL
+            WHERE (BI_RPT_GENERAL.CODSUCURSAL IN (${empresas})) AND (BI_RPT_GENERAL.ANIO IN (${anio})) AND (BI_RPT_GENERAL.MES IN (${mes})) 
+                    AND (BI_RPT_GENERAL.CODMARCA = ${codmarca}) AND (BI_RPT_GENERAL.TIPO = 'FAC')
+            GROUP BY BI_RPT_GENERAL.DEPARTAMENTO, BI_RPT_GENERAL.MUNICIPIO, BI_GENERALES_MUNICIPIOS.UNIVERSO
+            ORDER BY BI_RPT_GENERAL.DEPARTAMENTO, BI_RPT_GENERAL.MUNICIPIO
+    `
+
+
+    let qryold = `SELECT DEPARTAMENTO, MUNICIPIO, 
                 COUNT(DISTINCT CODIGO) AS CONTEO, 
                 SUM(TOTALCOSTO) AS TOTALCOSTO, 
                 SUM(TOTALPRECIO) AS TOTALPRECIO,
