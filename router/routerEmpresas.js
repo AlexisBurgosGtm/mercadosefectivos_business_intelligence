@@ -4,6 +4,25 @@ const express = require('express');
 const router = express.Router();
 
 
+router.get('/getHistorialVenta', async function(req,res){
+
+    const {empresas,anio} = req.query;
+   
+    let qry = `SELECT CODSUCURSAL, CONCAT(MES, '-', ANIO) AS NOMMES, MES, ANIO,
+    SUM(TOTALCOSTO) AS TOTALCOSTO,
+    SUM(TOTALPRECIO) AS TOTALPRECIO,
+     (SUM(TOTALPRECIO)-SUM(TOTALCOSTO)) AS UTILIDAD
+   FROM            BI_RPT_GENERAL
+   GROUP BY CODSUCURSAL, ANIO, MES
+   HAVING        (ANIO IN(${anio})) AND (CODSUCURSAL IN(${empresas}))
+   ORDER BY MES,ANIO`;
+
+    execute.Query(res,qry);
+
+});
+
+
+
 
 router.get('/getFechaMarca', async function(req,res){
 
