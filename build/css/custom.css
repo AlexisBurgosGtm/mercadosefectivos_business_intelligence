@@ -1,6 +1,11 @@
 .bg-gris {
   background-color: rgb(221, 221, 221)
 }
+
+.bg-foot-table {
+  background-color: rgb(255, 238, 233)
+}
+
 .my-node-enter {
   opacity: 0;
 }

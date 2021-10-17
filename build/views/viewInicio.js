@@ -693,7 +693,7 @@ function getTblVentasMarcas(data){
     let conteo = 0;
 
     let head = `<h3>VENTAS POR MARCA</h3>
-                <table class="table display responsive nowrap"  style="font-size:80%;" id="tblVMarcas">
+                <table class="table-condensed table-bordered"  style="font-size:85%;" id="tblVMarcas">
                     <thead class="bg-secondary text-white">
                         <tr>
                             <td>MARCA</td>
@@ -717,7 +717,7 @@ function getTblVentasMarcas(data){
 
     data.map((r)=>{
         dat += `
-            <tr class="hand border-bottom border.secondary" ondblclick="gotoMarca('${r.CODMARCA}','${r.DESMARCA}')">
+            <tr class="hand border-bottom border-dark" ondblclick="gotoMarca('${r.CODMARCA}','${r.DESMARCA}')">
                 <td>${GlobalIconoDobleClick} ${r.DESMARCA}</td>
                 <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
                 <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
@@ -729,7 +729,7 @@ function getTblVentasMarcas(data){
     })
 
     let foot = `</tbody>
-                    <tfoot class="negrita text-danger bg-gris">
+                    <tfoot class="text-danger bg-foot-table table-bordered">
                         <tr>
                             <td></td>
                             <td>${funciones.setMoneda(totalcosto,'Q')}</td>

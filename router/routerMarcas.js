@@ -6,13 +6,18 @@ router.get('/getProductosMarca', async function(req,res){
 
     const {empresas, codmarca, anio, mes} = req.query;
   
-    let qry = `SELECT CODPRODUCTO, PRODUCTO, SUM(FARDOS) AS FARDOS, 
+    let qry = `SELECT CODPRODUCTO, PRODUCTO, 
+                SUM(FARDOS) AS FARDOS, 
                 SUM(TOTALCOSTO) AS TOTALCOSTO, 
                 SUM(TOTALPRECIO) AS TOTALPRECIO,
                 (SUM(TOTALPRECIO)-SUM(TOTALCOSTO)) AS UTILIDAD
                 FROM  BI_RPT_GENERAL
+                WHERE (CODMARCA = ${codmarca}) 
+                    AND (CODSUCURSAL IN(${empresas})) 
+                    AND (ANIO IN(${anio})) 
+                    AND (MES IN(${mes}))
                 GROUP BY CODPRODUCTO, PRODUCTO, CODMARCA
-                HAVING  (CODMARCA = ${codmarca}) AND (CODSUCURSAL IN(${empresas})) AND (ANIO IN(${anio})) AND (MES IN(${mes}))`
+                `
 
     execute.Query(res,qry);
     
@@ -74,7 +79,7 @@ router.get('/getMunicipiosMarca', async function(req,res){
                                     BI_GENERALES_MUNICIPIOS ON BI_RPT_GENERAL.DEPARTAMENTO = BI_GENERALES_MUNICIPIOS.DESDEPARTAMENTO AND 
                                     BI_RPT_GENERAL.MUNICIPIO = BI_GENERALES_MUNICIPIOS.DESMUNICIPIO AND BI_RPT_GENERAL.CODSUCURSAL = BI_GENERALES_MUNICIPIOS.CODSUCURSAL
             WHERE (BI_RPT_GENERAL.CODSUCURSAL IN (${empresas})) AND (BI_RPT_GENERAL.ANIO IN (${anio})) AND (BI_RPT_GENERAL.MES IN (${mes})) 
-                    AND (BI_RPT_GENERAL.CODMARCA = ${codmarca}) AND (BI_RPT_GENERAL.TIPO = 'FAC')
+                    AND (BI_RPT_GENERAL.CODMARCA = ${codmarca})
             GROUP BY BI_RPT_GENERAL.DEPARTAMENTO, BI_RPT_GENERAL.MUNICIPIO, BI_GENERALES_MUNICIPIOS.UNIVERSO
             ORDER BY BI_RPT_GENERAL.DEPARTAMENTO, BI_RPT_GENERAL.MUNICIPIO
     `
