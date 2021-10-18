@@ -624,7 +624,7 @@ function getTblVentasFecha(data){
     let totalcosto=0; let totalventa =0; let totalutilidad=0;
 
     let head = `<h3>VENTAS POR FECHA</h3>
-            <table class="table table-responsive"  style="font-size:80%;" id="tblFVentas">
+            <table class="table-responsive table-bordered table-striped"  style="font-size:90%;" id="tblFVentas">
                     <thead class="bg-info text-white">
                         <tr>
                             <td>FECHA</td>
@@ -643,8 +643,8 @@ function getTblVentasFecha(data){
         totalventa += Number(r.TOTALPRECIO);
         totalutilidad += Number(r.TOTALUTILIDAD);
         dat += `
-            <tr class="hand" ondblclick="gotoFecha('${funciones.cleanFecha(r.FECHA)}')">
-                <td>${GlobalIconoDobleClick} ${funciones.cleanFecha(r.FECHA)}</td>
+            <tr class="hand border-bottom border-info" ondblclick="gotoFecha('${funciones.cleanFecha(r.FECHA)}')">
+                <td>${GlobalIconoDobleClick} ${funciones.convertDateNormal(r.FECHA)}</td>
                 <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
                 <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
                 <td>${funciones.setMoneda(r.TOTALUTILIDAD,'Q')}</td>
@@ -653,7 +653,7 @@ function getTblVentasFecha(data){
     })
 
     let foot = `</tbody>
-                    <tfoot class="negrita text-danger bg-gris">
+                    <tfoot class="negrita text-danger bg-foot-table">
                         <tr>
                             <td></td>
                             <td>${funciones.setMoneda(totalcosto,'Q')}</td>
@@ -776,6 +776,92 @@ function getDataMeses(){
 };
 
 function getLineChartMeses(data){
+   
+    let container = document.getElementById('containerGraf5');
+    container.innerHTML = '';
+    container.innerHTML = '<canvas id="myChart5" width="100" height="35"></canvas>';
+  
+    let label = [];
+    let total = 0; 
+
+    let ds = [];
+    let datas = [];
+
+    GlobalSelectedEmpresas.forEach(function(empr, index) {
+        var V = []; 
+        data.map((r2)=>{
+            if(r2.CODSUCURSAL==empr){
+                V.push(Number(r2.TOTALPRECIO.toFixed(2)));
+            } 
+        });
+        let color = getRandomColor();
+        ds = {label: empr, borderColor:color, backgroundColor:color,data:V}
+        datas.push(ds);    
+    });
+
+    
+
+    data.map((r)=>{
+        total = total + Number(r.TOTALPRECIO);
+        label.push(r.NOMMES);
+    });
+   
+    console.log(GlobalSelectedAnioMes);
+    console.log(datas);
+    
+  
+    var ctx = document.getElementById('myChart5').getContext('2d');
+    var myChart = new Chart(ctx, {
+        plugins: [ChartDataLabels],
+        type: 'line',
+        data: {
+            labels: GlobalSelectedAnioMes,
+            datasets: datas
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'Ventas por Mes. Total: ' + funciones.setMoneda(total,'Q')
+            },
+            // Change options for ALL labels of THIS CHART
+            datalabels: {
+                anchor:'end',
+                align:'end',
+                listeners: {
+                  click: function(context) {
+                    // Receives `click` events only for labels of the first dataset.
+                    // The clicked label index is available in `context.dataIndex`.
+                    console.log(context);
+                  }
+                },
+                formatter: function(value) {
+                  return funciones.setMoneda(value,'Q');
+                  // eq. return ['line1', 'line2', value]
+                },
+                color: function(context) {
+                  return context.dataset.backgroundColor;
+                },
+                borderColor: 'white',
+                borderRadius: 25,
+                borderWidth: 0,
+                font: {
+                  weight: 'bold'
+                }
+              }
+          }
+        }
+    });
+
+
+
+};
+
+function getLineChartMeses2(data){
    
     let container = document.getElementById('containerGraf5');
     container.innerHTML = '';

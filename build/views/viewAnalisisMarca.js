@@ -250,7 +250,7 @@ function getLineChartFechas(data){
     });
    
     data.map((r)=>{
-            label.push(funciones.cleanFecha(r.FECHA));
+            label.push(funciones.convertDateNormal(r.FECHA));
             valor.push(Number(r.TOTALPRECIO.toFixed(2)));
             bgColor.push(getRandomColor())
     })
