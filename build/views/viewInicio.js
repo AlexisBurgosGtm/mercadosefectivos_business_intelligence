@@ -775,22 +775,39 @@ function getDataMeses(){
 
 };
 
+
+function dsEmpresaData(obj){
+   console.log(obj);
+    let venta = [];
+    GlobalSelectedAnioMes.forEach(function(mes, index) {
+        obj.map((r)=>{
+            venta.push(Number(r.TOTALPRECIO.toFixed(2)));
+        })
+    })
+};
+
 function getLineChartMeses(data){
    
     let container = document.getElementById('containerGraf5');
     container.innerHTML = '';
     container.innerHTML = '<canvas id="myChart5" width="100" height="35"></canvas>';
   
+    //--------------------------------------------------------------
+    //--------------------------------------------------------------
+
+
     let label = [];
     let total = 0; 
 
     let ds = [];
     let datas = [];
 
+
     GlobalSelectedEmpresas.forEach(function(empr, index) {
         var V = []; 
         data.map((r2)=>{
             if(r2.CODSUCURSAL==empr){
+               
                 V.push(Number(r2.TOTALPRECIO.toFixed(2)));
             } 
         });
@@ -798,17 +815,17 @@ function getLineChartMeses(data){
         ds = {label: empr, borderColor:color, backgroundColor:color,data:V}
         datas.push(ds);    
     });
+   
 
+    //--------------------------------------------------------------
+    //--------------------------------------------------------------
     
-
     data.map((r)=>{
         total = total + Number(r.TOTALPRECIO);
         label.push(r.NOMMES);
     });
    
-    console.log(GlobalSelectedAnioMes);
-    console.log(datas);
-    
+   
   
     var ctx = document.getElementById('myChart5').getContext('2d');
     var myChart = new Chart(ctx, {

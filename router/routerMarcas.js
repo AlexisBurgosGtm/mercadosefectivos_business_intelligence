@@ -24,11 +24,34 @@ router.get('/getProductosMarca', async function(req,res){
 });
 
 
+router.get('/getProductosMarcaVendedor', async function(req,res){
+
+    const {empresas, codruta, codmarca, anio, mes} = req.query;
+  
+    let qry = `SELECT CODPRODUCTO, PRODUCTO, 
+                SUM(FARDOS) AS FARDOS, 
+                SUM(TOTALCOSTO) AS TOTALCOSTO, 
+                SUM(TOTALPRECIO) AS TOTALPRECIO,
+                (SUM(TOTALPRECIO)-SUM(TOTALCOSTO)) AS UTILIDAD
+                FROM  BI_RPT_GENERAL
+                WHERE (CODIGO_RUTA=${codruta})
+                    AND (CODMARCA = ${codmarca}) 
+                    AND (CODSUCURSAL IN(${empresas})) 
+                    AND (ANIO IN(${anio})) 
+                    AND (MES IN(${mes}))
+                GROUP BY CODPRODUCTO, PRODUCTO, CODMARCA
+                `
+
+    execute.Query(res,qry);
+    
+});
+
 router.get('/getVendedoresMarca', async function(req,res){
 
     const {empresas, codmarca, anio, mes} = req.query;
   
-    let qry = `SELECT NOMEMPLEADO AS VENDEDOR, 
+    let qry = `SELECT CODIGO_RUTA AS CODRUTA, DESRUTA AS VENDEDOR,
+                SUM(FARDOS) AS FARDOS, 
                 SUM(TOTALCOSTO) AS TOTALCOSTO, 
                 SUM(TOTALPRECIO) AS TOTALPRECIO, 
                 (SUM(TOTALPRECIO) - SUM(TOTALCOSTO)) AS UTILIDAD
@@ -37,8 +60,8 @@ router.get('/getVendedoresMarca', async function(req,res){
             AND (CODSUCURSAL IN(${empresas})) 
             AND (ANIO IN(${anio})) 
             AND (MES IN(${mes}))
-            GROUP BY NOMEMPLEADO 
-            ORDER BY NOMEMPLEADO`
+            GROUP BY CODIGO_RUTA, DESRUTA 
+            ORDER BY DESRUTA`
 
     execute.Query(res,qry);
     

@@ -86,7 +86,9 @@ function getView(){
                     </div>   
                 </div>
                 <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
-                                      
+                    <div class="table-responsive card shadow border-top-rounded border-bottom-rounded" id="containertblVendedoresProductos">
+                        
+                    </div>            
                 </div>
                     
             </div>
@@ -533,15 +535,18 @@ function getTblVendedores(data){
        
     let container = document.getElementById('containertblVendedores');
     container.innerHTML = getLoader();
+
     let totalventa = 0;
     let totalcosto = 0;
     let totalutilidad = 0;
+    let totalfardos = 0;
 
     let head = `<h5>VENTAS POR VENDEDOR</h5>
                 <table class="table table-responsive" style="font-size:80%;" id="tblVVendedores">
                     <thead class="bg-secondary text-white">
                         <tr>
                             <td>VENDEDOR</td>
+                            <td>FARDOS</td>
                             <td>COSTO</td>
                             <td>VENTA</td>
                             <td>UTILIDAD</td>
@@ -556,6 +561,7 @@ function getTblVendedores(data){
     let dat = '';
 
     data.map((r)=>{
+        totalfardos += Number(r.FARDOS);
         totalventa += Number(r.TOTALPRECIO);
         totalcosto += Number(r.TOTALCOSTO);
         totalutilidad += Number(r.UTILIDAD);
@@ -563,8 +569,9 @@ function getTblVendedores(data){
 
     data.map((r)=>{
         dat += `
-            <tr class="hand border-bottom border-secondary">
-                <td>${r.VENDEDOR}</td>
+            <tr class="hand border-bottom border-secondary" onclick="getDataProductosVendedor('${r.CODRUTA}','${r.VENDEDOR}')">
+                <td><i class="fas fa-hand-point-up"></i>${r.VENDEDOR}</td>
+                <td>${r.FARDOS.toFixed(2)}</td>
                 <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
                 <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
                 <td>${funciones.setMoneda(r.UTILIDAD,'Q')}</td>
@@ -578,6 +585,7 @@ function getTblVendedores(data){
                     <tfoot class="negrita bg-gris text-danger">
                         <tr>
                             <td></td>
+                            <td>${totalfardos.toFixed(2)}</td>
                             <td>${funciones.setMoneda(totalcosto,'Q')}</td>
                             <td>${funciones.setMoneda(totalventa,'Q')}</td>
                             <td>${funciones.setMoneda(totalutilidad,'Q')}</td>
@@ -595,7 +603,91 @@ function getTblVendedores(data){
     });
 
 };
+function getDataProductosVendedor(codruta,nomven){
 
+    let container = document.getElementById('containertblVendedoresProductos');
+    container.innerHTML = getLoader();
+
+    let totalventa = 0;
+    let totalcosto = 0;
+    let totalutilidad = 0;
+    let totalcajas = 0;
+
+    axios.get(`/marcas/getProductosMarcaVendedor?empresas=${parametrosEmpresas}&anio=${parametrosAnio}&mes=${parametrosMes}&codmarca=${GlobalSelectedCodMarca}&codruta=${codruta}`)
+    .then(res => {
+        const data = res.data.recordset;
+       
+        let head = `<h5>PRODUCTOS VENDIDOS</h5>
+                <h5 class="text-danger">${nomven}</h5>
+                <table class="table table-responsive" style="font-size:80%;" id="tblVProductosV">
+                    <thead class="bg-info text-white">
+                        <tr>
+                            <td>PRODUCTO</td>
+                            <td>FARDOS</td>
+                            <td>COSTO</td>
+                            <td>VENTA</td>
+                            <td>UTILIDAD</td>
+                            <td>MARG</td>
+                            <td>PART</td>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+        let dat = '';
+
+        data.map((r)=>{
+            totalcajas += Number(r.FARDOS);
+            totalventa += Number(r.TOTALPRECIO);
+            totalcosto += Number(r.TOTALCOSTO);
+            totalutilidad += Number(r.UTILIDAD);
+        })
+
+        data.map((r)=>{
+            dat += `
+                <tr class="hand border-bottom border-secondary">
+                    <td>${r.PRODUCTO}
+                        <br>
+                        <small class="negrita text-danger">${r.CODPRODUCTO}</small>
+                    </td>
+                    <td>${Number(r.FARDOS).toFixed(2)}</td>
+                    <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
+                    <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
+                    <td>${funciones.setMoneda(r.UTILIDAD,'Q')}</td>
+                    <td>${funciones.getMargenUtilidad(Number(r.TOTALPRECIO),Number(r.TOTALCOSTO))}</td>
+                    <td>${funciones.getParticipacion(Number(r.TOTALPRECIO),totalventa)}</td>
+                </tr>
+            `
+        })
+
+        let foot = `</tbody>
+                        <tfoot class="negrita bg-foot-table text-danger">
+                            <tr>
+                                <td></td>
+                                <td>${totalcajas.toFixed(2)}</td>
+                                <td>${funciones.setMoneda(totalcosto,'Q')}</td>
+                                <td>${funciones.setMoneda(totalventa,'Q')}</td>
+                                <td>${funciones.setMoneda(totalutilidad,'Q')}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    `
+
+        container.innerHTML = head + dat + foot 
+
+        $('#tblVProductosV').DataTable({
+            paging: false,
+            bFilter:true
+        });
+    })
+    .catch(()=>{
+        container.innerHTML = `No se pudieron cargar los datos...`
+    })
+
+
+
+};
 
 
 function getDataProductos(){
@@ -628,7 +720,7 @@ function getTblProductos(data){
     let totalcajas = 0;
 
     let head = `<h5>VENTAS POR PRODUCTOS</h5>
-                <table class="table table-responsive" style="font-size:80%;" id="tblVProductos">
+                <table class="table table-responsive" style="font-size:100%;" id="tblVProductos">
                     <thead class="bg-info text-white">
                         <tr>
                             <td>PRODUCTO</td>
@@ -671,7 +763,7 @@ function getTblProductos(data){
     })
 
     let foot = `</tbody>
-                    <tfoot class="negrita bg-gris text-danger">
+                    <tfoot class="negrita bg-foot-table text-danger">
                         <tr>
                             <td></td>
                             <td>${totalcajas.toFixed(2)}</td>
@@ -693,3 +785,6 @@ function getTblProductos(data){
     });
 
 };
+
+
+

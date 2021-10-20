@@ -1,4 +1,13 @@
 let funciones = {
+  filtrarJson:(my_object, my_criteria)=>{
+
+    return my_object.filter(function(obj) {
+      return Object.keys(my_criteria).every(function(c) {
+        return obj[c] == my_criteria[c];
+      });
+    });
+  
+  },
     convertDateNormal(date) {
       const [yy, mm, dd] = date.split(/-/g);
       return `${dd}/${mm}/${yy}`.replace('T00:00:00.000Z', '');
