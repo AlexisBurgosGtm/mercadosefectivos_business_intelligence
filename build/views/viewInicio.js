@@ -624,6 +624,7 @@ function getTblVentasFecha(data){
     let totalcosto=0; let totalventa =0; let totalutilidad=0;
 
     let head = `<h3>VENTAS POR FECHA</h3>
+            <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('tblTabla')">Expandir</button>
             <table class="table-responsive table-bordered table-striped"  style="font-size:90%;" id="tblFVentas">
                     <thead class="bg-info text-white">
                         <tr>
@@ -693,6 +694,7 @@ function getTblVentasMarcas(data){
     let conteo = 0;
 
     let head = `<h3>VENTAS POR MARCA</h3>
+    <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('tblTabla2')">Expandir</button>
                 <table class="table-condensed table-bordered"  style="font-size:85%;" id="tblVMarcas">
                     <thead class="bg-secondary text-white">
                         <tr>

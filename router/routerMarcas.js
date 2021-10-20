@@ -2,6 +2,28 @@ const execute = require('./connection');
 const express = require('express');
 const router = express.Router();
 
+router.get('/getProductosMarcaMunicipio', async function(req,res){
+
+    const {empresas, municipio, departamento, codmarca, anio, mes} = req.query;
+  
+    let qry = `SELECT CODPRODUCTO, PRODUCTO, 
+                SUM(FARDOS) AS FARDOS, 
+                SUM(TOTALCOSTO) AS TOTALCOSTO, 
+                SUM(TOTALPRECIO) AS TOTALPRECIO,
+                (SUM(TOTALPRECIO)-SUM(TOTALCOSTO)) AS UTILIDAD
+                FROM  BI_RPT_GENERAL
+                WHERE (MUNICIPIO='${municipio}') AND (DEPARTAMENTO='${departamento}')
+                    AND (CODMARCA = ${codmarca}) 
+                    AND (CODSUCURSAL IN(${empresas})) 
+                    AND (ANIO IN(${anio})) 
+                    AND (MES IN(${mes}))
+                GROUP BY CODPRODUCTO, PRODUCTO, CODMARCA
+                `
+
+    execute.Query(res,qry);
+    
+});
+
 router.get('/getProductosMarca', async function(req,res){
 
     const {empresas, codmarca, anio, mes} = req.query;

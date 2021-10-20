@@ -62,6 +62,12 @@ function getView(){
                     </div>
                 </div>
                 <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
+                    
+                    <div class="row">
+                        <div class="table-responsive"  id="containertblMunicipiosProductos">
+                        </div>
+                    </div>
+                    
                     <div class="row">
                         <div class="col-6">
                             <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf2"  onclick="expandir('containerGraf2')">
@@ -188,6 +194,7 @@ function getTblFechas(data){
     let totalutilidad = 0;
 
     let head = `<h5>VENTAS POR FECHA</h5>
+    <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('containerFechas')">Expandir</button>
                 <table class="table table-responsive table-hover table-striped" style="font-size:80%;" id="tblVFMarcas">
                     <thead class="bg-secondary text-white">
                         <tr>
@@ -362,6 +369,7 @@ function getTblMunicipios(data){
     let totalutilidad = 0;
 
     let head = `<h5>VENTAS POR MUNICIPIO</h5>
+    <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('containerTblMunicipios')">Expandir</button>
                 <table class="table table-responsive" style="font-size:80%;" id="tblVFMunicipios">
                     <thead class="bg-secondary text-white">
                         <tr>
@@ -388,8 +396,8 @@ function getTblMunicipios(data){
 
     data.map((r)=>{
         dat += `
-            <tr class="hand border-bottom border-secondary">
-                <td>${r.MUNICIPIO}
+            <tr class="hand border-bottom border-secondary" onclick="getDataProductosMunicipio('${r.DEPARTAMENTO}','${r.MUNICIPIO}')">
+                <td><i class="fas fa-hand-point-up"></i>${r.MUNICIPIO}
                     <br>               
                     <small class="negrita">${r.DEPARTAMENTO}</small>
                 </td>
@@ -509,6 +517,92 @@ function getPieChartClientesEmpresas(data){
 
 };
 
+function getDataProductosMunicipio(departamento,municipio){
+
+    let container = document.getElementById('containertblMunicipiosProductos');
+    container.innerHTML = getLoader();
+
+    let totalventa = 0;
+    let totalcosto = 0;
+    let totalutilidad = 0;
+    let totalcajas = 0;
+
+    axios.get(`/marcas/getProductosMarcaMunicipio?empresas=${parametrosEmpresas}&anio=${parametrosAnio}&mes=${parametrosMes}&codmarca=${GlobalSelectedCodMarca}&municipio=${municipio}&departamento=${departamento}`)
+    .then(res => {
+        const data = res.data.recordset;
+       
+        let head = `<h5>PRODUCTOS VENDIDOS</h5>
+                <h5 class="text-danger">${municipio},${departamento}</h5>
+                <table class="table table-responsive" style="font-size:80%;" id="tblVProductosM">
+                    <thead class="bg-info text-white">
+                        <tr>
+                            <td>PRODUCTO</td>
+                            <td>FARDOS</td>
+                            <td>COSTO</td>
+                            <td>VENTA</td>
+                            <td>UTILIDAD</td>
+                            <td>MARG</td>
+                            <td>PART</td>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+        let dat = '';
+
+        data.map((r)=>{
+            totalcajas += Number(r.FARDOS);
+            totalventa += Number(r.TOTALPRECIO);
+            totalcosto += Number(r.TOTALCOSTO);
+            totalutilidad += Number(r.UTILIDAD);
+        })
+
+        data.map((r)=>{
+            dat += `
+                <tr class="hand border-bottom border-secondary">
+                    <td>${r.PRODUCTO}
+                        <br>
+                        <small class="negrita text-danger">${r.CODPRODUCTO}</small>
+                    </td>
+                    <td>${Number(r.FARDOS).toFixed(2)}</td>
+                    <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
+                    <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
+                    <td>${funciones.setMoneda(r.UTILIDAD,'Q')}</td>
+                    <td>${funciones.getMargenUtilidad(Number(r.TOTALPRECIO),Number(r.TOTALCOSTO))}</td>
+                    <td>${funciones.getParticipacion(Number(r.TOTALPRECIO),totalventa)}</td>
+                </tr>
+            `
+        })
+
+        let foot = `</tbody>
+                        <tfoot class="negrita bg-foot-table text-danger">
+                            <tr>
+                                <td></td>
+                                <td>${totalcajas.toFixed(2)}</td>
+                                <td>${funciones.setMoneda(totalcosto,'Q')}</td>
+                                <td>${funciones.setMoneda(totalventa,'Q')}</td>
+                                <td>${funciones.setMoneda(totalutilidad,'Q')}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    `
+
+        container.innerHTML = head + dat + foot 
+
+        $('#tblVProductosM').DataTable({
+            paging: false,
+            bFilter:true
+        });
+    })
+    .catch(()=>{
+        container.innerHTML = `No se pudieron cargar los datos...`
+    })
+
+
+
+};
+
 
 
 function getDataVendedores(){
@@ -542,6 +636,7 @@ function getTblVendedores(data){
     let totalfardos = 0;
 
     let head = `<h5>VENTAS POR VENDEDOR</h5>
+    <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('containertblVendedores')">Expandir</button>
                 <table class="table table-responsive" style="font-size:80%;" id="tblVVendedores">
                     <thead class="bg-secondary text-white">
                         <tr>
@@ -603,6 +698,7 @@ function getTblVendedores(data){
     });
 
 };
+
 function getDataProductosVendedor(codruta,nomven){
 
     let container = document.getElementById('containertblVendedoresProductos');
@@ -690,6 +786,7 @@ function getDataProductosVendedor(codruta,nomven){
 };
 
 
+
 function getDataProductos(){
     return new Promise((resolve, reject)=>{
         //obtiene los datos de la card empresas
@@ -720,6 +817,7 @@ function getTblProductos(data){
     let totalcajas = 0;
 
     let head = `<h5>VENTAS POR PRODUCTOS</h5>
+    <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('containertblProductos')">Expandir</button>
                 <table class="table table-responsive" style="font-size:100%;" id="tblVProductos">
                     <thead class="bg-info text-white">
                         <tr>
