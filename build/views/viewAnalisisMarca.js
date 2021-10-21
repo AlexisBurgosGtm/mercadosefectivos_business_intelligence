@@ -9,7 +9,10 @@ function getView(){
                 
                 <div class="col-sm-12 col-md-6 col-xl-6 col-lg-6">
                     <button class="btn btn-outline-secondary" id="btnTabHome">
-                        <i class="fas fa-shopping-cart"></i>Sales Overview
+                        <i class="fas fa-chart"></i>Sales Overview
+                    </button>
+                    <button class="btn btn-outline-danger" id="btnTab1">
+                        <i class="fas fa-shopping-cart"></i>Products
                     </button>
                     <button class="btn btn-outline-info" id="btnTab2">
                         <i class="fas fa-address-book"></i>Customers
@@ -30,6 +33,9 @@ function getView(){
                     <div class="tab-pane fade show active" id="tabHome" role="tabpanel" aria-labelledby="pills-home-tab">
                         ${view.home()}
                     </div>
+                    <div class="tab-pane fade" id="tab1" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        ${view.products()}
+                    </div>
                     <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="pills-profile-tab">
                         ${view.customers()}
                     </div>
@@ -48,11 +54,27 @@ function getView(){
             </div>
 
             <div class="row">
-                <div class="card shadow table-responsive col-12"  id="containertblProductos">
-              
-                </div>
+                
             </div>
             `
+        },
+        products:()=>{
+            return `
+            <div class="row">
+                <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
+
+                    <div class="card shadow table-responsive col-12"  id="containertblProductos">
+                    
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
+
+                    <div class="card shadow table-responsive col-12"  id="containertblMunicipiosProductos">
+                    
+                    </div>
+                </div>
+            </div>
+           `
         },
         customers:()=>{
             return `
@@ -110,16 +132,25 @@ function getView(){
 function addListeners(){
     document.getElementById('btnTabHome').addEventListener('click',()=>{
         document.getElementById('tabHome').classList.add('show','active');
+        document.getElementById('tab1').classList.remove('show','active');
+        document.getElementById('tab2').classList.remove('show','active');
+        document.getElementById('tab3').classList.remove('show','active');
+    })
+    document.getElementById('btnTab1').addEventListener('click',()=>{
+        document.getElementById('tabHome').classList.remove('show','active');
+        document.getElementById('tab1').classList.add('show','active');
         document.getElementById('tab2').classList.remove('show','active');
         document.getElementById('tab3').classList.remove('show','active');
     })
     document.getElementById('btnTab2').addEventListener('click',()=>{
         document.getElementById('tabHome').classList.remove('show','active');
+        document.getElementById('tab1').classList.remove('show','active');
         document.getElementById('tab2').classList.add('show','active');
         document.getElementById('tab3').classList.remove('show','active');
     })
     document.getElementById('btnTab3').addEventListener('click',()=>{
         document.getElementById('tabHome').classList.remove('show','active');
+        document.getElementById('tab1').classList.remove('show','active');
         document.getElementById('tab2').classList.remove('show','active');
         document.getElementById('tab3').classList.add('show','active');
     })
@@ -369,7 +400,7 @@ function getTblMunicipios(data){
     let totalutilidad = 0;
 
     let head = `<h5>VENTAS POR MUNICIPIO</h5>
-    <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('containerTblMunicipios')">Expandir</button>
+    <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('tab2')">Expandir</button>
                 <table class="table table-responsive" style="font-size:80%;" id="tblVFMunicipios">
                     <thead class="bg-secondary text-white">
                         <tr>
@@ -817,8 +848,8 @@ function getTblProductos(data){
     let totalcajas = 0;
 
     let head = `<h5>VENTAS POR PRODUCTOS</h5>
-    <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('containertblProductos')">Expandir</button>
-                <table class="table table-responsive" style="font-size:100%;" id="tblVProductos">
+                <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('tab1')">Expandir</button>   
+                <table class="table table-responsive" style="font-size:90%;" id="tblVProductos">
                     <thead class="bg-info text-white">
                         <tr>
                             <td>PRODUCTO</td>
@@ -845,8 +876,8 @@ function getTblProductos(data){
 
     data.map((r)=>{
         dat += `
-            <tr class="hand border-bottom border-secondary">
-                <td>${r.PRODUCTO}
+            <tr class="hand border-bottom border-secondary" onclick="getTblMunicipiosProducto('${r.CODPRODUCTO}','${r.PRODUCTO}')">
+                <td><i class="fas fa-hand-point-up"></i>${r.PRODUCTO}
                     <br>
                     <small class="negrita text-danger">${r.CODPRODUCTO}</small>
                 </td>
@@ -884,5 +915,95 @@ function getTblProductos(data){
 
 };
 
+
+function getTblMunicipiosProducto(codprod,desprod){
+
+       
+    let container = document.getElementById('containertblMunicipiosProductos');
+    container.innerHTML = getLoader();
+    let totalventa = 0;
+    let totalcosto = 0;
+    let totalutilidad = 0;
+    let totalfardos = 0;
+
+    axios.get(`/marcas/getMunicipiosMarcaProd?empresas=${parametrosEmpresas}&anio=${parametrosAnio}&mes=${parametrosMes}&codmarca=${GlobalSelectedCodMarca}&codprod=${codprod}`)
+    .then(res => {
+        const data = res.data.recordset;
+       
+        let head = `<h5>VENTAS POR MUNICIPIO</h5>
+        <h5 class="text-danger">${desprod} (${codprod})</h5>
+        <table class="table table-responsive" style="font-size:80%;" id="tblVFMunicipiosP">
+            <thead class="bg-success text-white">
+                <tr>
+                    <td>MUNICIPIO</td>
+                    <td>CAJAS</td>
+                    <td>COSTO</td>
+                    <td>VENTA</td>
+                    <td>UTILIDAD</td>
+                    <td>MARG</td>
+                    <td>PART</td>
+                    <td>ALCANCE</td>
+                </tr>
+            </thead>
+            <tbody>`;
+
+        let dat = '';
+
+        data.map((r)=>{
+            totalfardos += Number(r.FARDOS);
+            totalventa += Number(r.TOTALPRECIO);
+            totalcosto += Number(r.TOTALCOSTO);
+            totalutilidad += Number(r.UTILIDAD);
+        })
+
+        data.map((r)=>{
+            dat += `
+            <tr class="hand border-bottom border-secondary" onclick="getDataProductosMunicipio('${r.DEPARTAMENTO}','${r.MUNICIPIO}')">
+                <td><i class="fas fa-hand-point-up"></i>${r.MUNICIPIO}
+                    <br>               
+                    <small class="negrita">${r.DEPARTAMENTO}</small>
+                </td>
+                <td>${Number(r.FARDOS).toFixed(2)}</td>
+                <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
+                <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
+                <td>${funciones.setMoneda(r.UTILIDAD,'Q')}</td>
+                <td>${funciones.getMargenUtilidad(Number(r.TOTALPRECIO),Number(r.TOTALCOSTO))}</td>
+                <td>${funciones.getParticipacion(Number(r.TOTALPRECIO),totalventa)}</td>
+                <td class="text-danger">${funciones.getParticipacion(Number(r.CONTEO), Number(r.TOTALMUNICIPIO))}
+                    <br>
+                    <small>${r.CONTEO}/${Number(r.TOTALMUNICIPIO)}</small>               
+                </td>
+            </tr>
+        `
+        })
+
+        let foot = `</tbody>
+                    <tfoot class="negrita bg-gris text-danger">
+                        <tr>
+                            <td></td>
+                            <td>${Number(totalfardos).toFixed(2)}</td>
+                            <td>${funciones.setMoneda(totalcosto,'Q')}</td>
+                            <td>${funciones.setMoneda(totalventa,'Q')}</td>
+                            <td>${funciones.setMoneda(totalutilidad,'Q')}</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                `
+        container.innerHTML = head + dat + foot 
+
+        $('#tblVFMunicipiosP').DataTable({
+        paging: false,
+        bFilter:false
+        });
+
+    })
+    .catch(()=>{
+        container.innerHTML = 'No se pudieron cargar los datos...';
+    })
+
+
+    
+};
 
 

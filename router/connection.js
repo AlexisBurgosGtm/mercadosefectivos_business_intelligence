@@ -1,5 +1,5 @@
 ﻿
-const config= {
+const config = {
 	user: 'db_a6478c_mercadosbi_admin',
 	password: 'razors1805',
 	server: 'sql5061.site4now.net',

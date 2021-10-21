@@ -146,6 +146,32 @@ router.get('/getMunicipiosMarca', async function(req,res){
     
 });
 
+router.get('/getMunicipiosMarcaProd', async function(req,res){
+
+    const {empresas, codmarca, anio, mes,codprod} = req.query;
+  
+
+    let qry = `
+            SELECT BI_RPT_GENERAL.DEPARTAMENTO, BI_RPT_GENERAL.MUNICIPIO, COUNT(DISTINCT BI_RPT_GENERAL.CODIGO) AS CONTEO, 
+                                SUM(BI_RPT_GENERAL.FARDOS) AS FARDOS,
+                                SUM(BI_RPT_GENERAL.TOTALCOSTO) AS TOTALCOSTO, 
+                                SUM(BI_RPT_GENERAL.TOTALPRECIO) AS TOTALPRECIO, SUM(BI_RPT_GENERAL.TOTALPRECIO) - SUM(BI_RPT_GENERAL.TOTALCOSTO) AS UTILIDAD, 
+                                BI_GENERALES_MUNICIPIOS.UNIVERSO AS TOTALMUNICIPIO
+            FROM BI_RPT_GENERAL LEFT OUTER JOIN
+                                    BI_GENERALES_MUNICIPIOS ON BI_RPT_GENERAL.DEPARTAMENTO = BI_GENERALES_MUNICIPIOS.DESDEPARTAMENTO AND 
+                                    BI_RPT_GENERAL.MUNICIPIO = BI_GENERALES_MUNICIPIOS.DESMUNICIPIO AND BI_RPT_GENERAL.CODSUCURSAL = BI_GENERALES_MUNICIPIOS.CODSUCURSAL
+            WHERE (BI_RPT_GENERAL.CODSUCURSAL IN (${empresas})) 
+                    AND (BI_RPT_GENERAL.CODPRODUCTO='${codprod}')
+                    AND (BI_RPT_GENERAL.ANIO IN (${anio})) 
+                    AND (BI_RPT_GENERAL.MES IN (${mes})) 
+                    AND (BI_RPT_GENERAL.CODMARCA = ${codmarca})
+            GROUP BY BI_RPT_GENERAL.DEPARTAMENTO, BI_RPT_GENERAL.MUNICIPIO, BI_GENERALES_MUNICIPIOS.UNIVERSO
+            ORDER BY BI_RPT_GENERAL.DEPARTAMENTO, BI_RPT_GENERAL.MUNICIPIO
+    `
+
+    execute.Query(res,qry);
+    
+});
 
 
 

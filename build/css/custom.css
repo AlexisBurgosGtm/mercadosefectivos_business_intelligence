@@ -1,3 +1,9 @@
+::backdrop
+{
+  /* evita que el color de fondo se vuelva negro al maximizar */
+    background-color: white;
+}
+
 .bg-gris {
   background-color: rgb(221, 221, 221)
 }
