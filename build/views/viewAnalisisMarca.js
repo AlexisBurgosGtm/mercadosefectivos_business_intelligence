@@ -918,6 +918,7 @@ function getTblProductos(data){
 
 function getTblMunicipiosProducto(codprod,desprod){
 
+    location.hash = "#containertblMunicipiosProductos"; 
        
     let container = document.getElementById('containertblMunicipiosProductos');
     container.innerHTML = getLoader();

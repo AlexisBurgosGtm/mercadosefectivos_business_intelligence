@@ -76,17 +76,17 @@ function addListeners(){
 
 };
 
-function viewInicioObtenerDatos(){
+async function viewInicioObtenerDatos(){
   
 
-    getDataResumen()
+    await getDataResumen()
     .then((empresas)=>{
         getPieCharVentas(empresas);
         getPieCharDevoluciones(empresas);
         getBarCharUtilidades(empresas);
     })
 
-    getDataFechas()
+    await getDataFechas()
     .then((datos)=>{
         getTblVentasFecha(datos)
     })
@@ -94,7 +94,7 @@ function viewInicioObtenerDatos(){
         
     })
 
-    getDataMarcas()
+    await getDataMarcas()
     .then((datos)=>{
         getTblVentasMarcas(datos)
     })
@@ -102,7 +102,7 @@ function viewInicioObtenerDatos(){
         
     })
 
-    getDataClientes()
+    await getDataClientes()
     .then((datos)=>{
         getBarCharClientesAlcanzados(datos)
     })
@@ -110,7 +110,7 @@ function viewInicioObtenerDatos(){
         
     });
 
-    getDataMeses()
+    await getDataMeses()
     .then((datos)=>{
         getLineChartMeses(datos);
     })
