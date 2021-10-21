@@ -49,14 +49,29 @@ function getView(){
         home:()=>{
             return `
             <div class="row">
-                <div class="card shadow border-top-rounded border-bottom-rounded col-12" id="containerGraf1"  ondblclick="expandir('containerGraf1')">
+                <div class="col-sm-6 col-md-3 col-xl-3 col-lg-3">
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf2"  onclick="expandir('containerGraf2')">
+                
+                    </div>    
+                </div>
+            
+                <div class="col-sm-6 col-md-3 col-xl-3 col-lg-3">
+                        
+                </div>
+
+                <div class="col-sm-6 col-md-3 col-xl-3 col-lg-3">
+                        
+                </div>
+
+                <div class="col-sm-6 col-md-3 col-xl-3 col-lg-3">
+                        
                 </div>
             </div>
 
             <div class="row">
-                
-            </div>
-            `
+                <div class="card shadow border-top-rounded border-bottom-rounded col-12" id="containerGraf1"  ondblclick="expandir('containerGraf1')">
+                </div>
+            </div>`
         },
         products:()=>{
             return `
@@ -83,23 +98,10 @@ function getView(){
                     <div class="table-responsive"  id="containerTblMunicipios">
                     </div>
                 </div>
-                <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
-                    
-                    <div class="row">
-                        <div class="table-responsive"  id="containertblMunicipiosProductos">
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf2"  onclick="expandir('containerGraf2')">
-                            </div>    
-                        </div>
-                        <div class="col-6">
-                        
-                        </div>
-                    </div>
-                    
+
+                <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">  
+                    <div class="table-responsive"  id="containertblMunicipiosProductos">
+                    </div>  
                 </div>
                     
             </div>
@@ -667,7 +669,10 @@ function getTblVendedores(data){
     let totalfardos = 0;
 
     let head = `<h5>VENTAS POR VENDEDOR</h5>
-    <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('containertblVendedores')">Expandir</button>
+                <div class="col-3">
+                    <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('containertblVendedores')">Expandir</button>            
+                </div>
+    
                 <table class="table table-responsive" style="font-size:80%;" id="tblVVendedores">
                     <thead class="bg-secondary text-white">
                         <tr>
@@ -848,7 +853,10 @@ function getTblProductos(data){
     let totalcajas = 0;
 
     let head = `<h5>VENTAS POR PRODUCTOS</h5>
-                <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('tab1')">Expandir</button>   
+                <div class="col-3">
+                    <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('tab1')">Expandir</button>
+                </div>
+                   
                 <table class="table table-responsive" style="font-size:90%;" id="tblVProductos">
                     <thead class="bg-info text-white">
                         <tr>
@@ -959,8 +967,8 @@ function getTblMunicipiosProducto(codprod,desprod){
 
         data.map((r)=>{
             dat += `
-            <tr class="hand border-bottom border-secondary" onclick="getDataProductosMunicipio('${r.DEPARTAMENTO}','${r.MUNICIPIO}')">
-                <td><i class="fas fa-hand-point-up"></i>${r.MUNICIPIO}
+            <tr class="hand border-bottom border-secondary">
+                <td>${r.MUNICIPIO}
                     <br>               
                     <small class="negrita">${r.DEPARTAMENTO}</small>
                 </td>

@@ -72,7 +72,7 @@ router.get('/getVendedoresMarca', async function(req,res){
 
     const {empresas, codmarca, anio, mes} = req.query;
   
-    let qry = `SELECT CODIGO_RUTA AS CODRUTA, DESRUTA AS VENDEDOR,
+    let qry = `SELECT CODIGO_RUTA AS CODRUTA, NOMEMPLEADO AS VENDEDOR,
                 SUM(FARDOS) AS FARDOS, 
                 SUM(TOTALCOSTO) AS TOTALCOSTO, 
                 SUM(TOTALPRECIO) AS TOTALPRECIO, 
@@ -82,8 +82,8 @@ router.get('/getVendedoresMarca', async function(req,res){
             AND (CODSUCURSAL IN(${empresas})) 
             AND (ANIO IN(${anio})) 
             AND (MES IN(${mes}))
-            GROUP BY CODIGO_RUTA, DESRUTA 
-            ORDER BY DESRUTA`
+            GROUP BY CODIGO_RUTA, NOMEMPLEADO 
+            ORDER BY NOMEMPLEADO`
 
     execute.Query(res,qry);
     
