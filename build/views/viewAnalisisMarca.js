@@ -58,6 +58,13 @@ function getView(){
             
                 <div class="col-sm-6 col-md-3 col-xl-3 col-lg-3">
                     ${GlobalIconoDobleClick}
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf8"  ondblclick="expandir('containerGraf8')">
+                    
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-3 col-xl-3 col-lg-3">
+                    ${GlobalIconoDobleClick}
                     <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf6"  ondblclick="expandir('containerGraf6')">
                     
                     </div>
@@ -70,9 +77,6 @@ function getView(){
                     </div>
                 </div>
 
-                <div class="col-sm-6 col-md-3 col-xl-3 col-lg-3">
-                        
-                </div>
             </div>
 
             <div class="row">
@@ -189,8 +193,13 @@ function getDataMarca(){
     .then((datos)=>{
         getPieChartClientesEmpresas(datos);
         getPieChartClientesEmpresasConteo(datos);
-        getPieChartVentasEmpresa(datos);
     });
+
+    getDataVentasMarca()
+    .then((datos)=>{
+        getPieChartVentasEmpresa(datos);
+        getPieChartOportunidadEmpresa(datos);
+    })
 
     getDataVendedores()
     .then((datos)=>{
@@ -642,6 +651,25 @@ function getPieChartClientesEmpresasConteo(data){
 
 };
 
+
+function getDataVentasMarca(){
+    return new Promise((resolve, reject)=>{
+        //obtiene los datos de la card empresas
+      
+        axios.get(`/marcas/getVentasMesMarca?empresas=${parametrosEmpresas}&anio=${parametrosAnio}&mes=${parametrosMes}&codmarca=${GlobalSelectedCodMarca}`)
+        .then(res => {
+            const datos = res.data.recordset;
+           
+            resolve(datos);
+        })
+        .catch(()=>{
+            reject();
+        })
+
+
+    })
+
+};
 function getPieChartVentasEmpresa(data){
    
     let container = document.getElementById('containerGraf7');
@@ -722,6 +750,87 @@ function getPieChartVentasEmpresa(data){
     
 
 };
+function getPieChartOportunidadEmpresa(data){
+   
+    let container = document.getElementById('containerGraf8');
+    container.innerHTML = '';
+    container.innerHTML = '<canvas id="myChart8" width="50" height="50"></canvas>';
+  
+    let label = []; let valor = []; let bgColor = [];
+    let total = 0; let totaluniversos = 0;
+    data.map((r)=>{
+        total = total + ((Number(r.TOTALPRECIO)/Number(r.CONTEO))* Number(r.UNIVERSO))-Number(r.CONTEO);
+        totaluniversos += Number(r.UNIVERSO);
+    });
+   
+    data.map((r)=>{
+            label.push(r.CODSUCURSAL);
+            valor.push(((Number(r.TOTALPRECIO)/Number(r.CONTEO))* Number(r.UNIVERSO))-Number(r.CONTEO));
+            bgColor.push(getRandomColor())
+    })
+
+  
+    var ctx = document.getElementById('myChart8').getContext('2d');
+    var myChart = new Chart(ctx, {
+        plugins: [ChartDataLabels],
+        type: 'doughnut',
+        data: {
+            labels: label,
+            datasets: [{
+                data:valor,
+                borderColor: 'white',
+                backgroundColor:bgColor
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                  },
+                  title: {
+                    display: true,
+                    text: 'Oportunidad Perdida. Total: ' + funciones.setMoneda(total,'Q')
+                  },
+                // Change options for ALL labels of THIS CHART
+                datalabels: {
+                  anchor:'end',
+                  align:'end',
+                  listeners: {
+                    click: function(context) {
+                      // Receives `click` events only for labels of the first dataset.
+                      // The clicked label index is available in `context.dataIndex`.
+                      console.log(context);
+                    }
+                  },
+                  formatter: function(value) {
+                    return funciones.setMoneda(value,'Q');
+                    // eq. return ['line1', 'line2', value]
+                  },
+                  color: function(context) {
+                    return context.dataset.backgroundColor;
+                  },
+                  borderColor: 'white',
+                  borderRadius: 25,
+                  borderWidth: 0,
+                  font: {
+                    weight: 'bold'
+                  }
+                }
+            }
+        }
+    });
+
+
+    
+
+};
+
 
 function getDataProductosMunicipio(departamento,municipio){
 

@@ -94,16 +94,19 @@ router.get('/getVentasMesMarca', async function(req,res){
 
     const {empresas, codmarca, anio, mes} = req.query;
   
-    let qry = `SELECT MES, ANIO,
-                SUM(TOTALCOSTO) AS TOTALCOSTO, 
-                SUM(TOTALPRECIO) AS TOTALPRECIO
-    FROM            BI_RPT_GENERAL
-    WHERE  (CODSUCURSAL IN (${empresas})) 
-        AND (ANIO IN (${anio})) 
-        AND (MES IN (${mes})) 
-        AND (CODMARCA = ${codmarca}) 
-    GROUP BY MES, ANIO
-    ORDER BY MES, ANIO`
+    let qry = `SELECT BI_RPT_GENERAL.CODSUCURSAL, 
+            COUNT(DISTINCT BI_RPT_GENERAL.CODIGO) AS CONTEO, 
+            SUM(BI_RPT_GENERAL.TOTALCOSTO) AS TOTALCOSTO, SUM(BI_RPT_GENERAL.TOTALPRECIO) AS TOTALPRECIO, BI_EMPRESAS_RESUMEN.OBJETIVO, 
+                    BI_EMPRESAS_RESUMEN.UNIVERSO 
+                FROM            BI_RPT_GENERAL LEFT OUTER JOIN
+                BI_EMPRESAS_RESUMEN ON BI_RPT_GENERAL.MES = BI_EMPRESAS_RESUMEN.MES AND BI_RPT_GENERAL.ANIO = BI_EMPRESAS_RESUMEN.ANIO AND 
+                BI_RPT_GENERAL.CODSUCURSAL = BI_EMPRESAS_RESUMEN.CODSUCURSAL
+                WHERE  (BI_RPT_GENERAL.CODSUCURSAL IN (${empresas})) 
+                AND (BI_RPT_GENERAL.ANIO IN (${anio})) 
+                AND (BI_RPT_GENERAL.MES IN (${mes})) 
+                AND (BI_RPT_GENERAL.CODMARCA = ${codmarca})
+                GROUP BY  BI_EMPRESAS_RESUMEN.OBJETIVO, 
+                BI_EMPRESAS_RESUMEN.UNIVERSO, BI_RPT_GENERAL.CODSUCURSAL`
 
     execute.Query(res,qry);
     
