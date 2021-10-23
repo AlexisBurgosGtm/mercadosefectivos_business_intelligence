@@ -21,6 +21,23 @@ router.get('/getHistorialVenta', async function(req,res){
 
 });
 
+router.get('/getVentasVendedores', async function(req,res){
+
+    const {empresas,anio,mes} = req.query;
+   
+    let qry = `SELECT        CODVEN, NOMEMPLEADO AS NOMVEN, 
+    SUM(TOTALCOSTO) AS TOTALCOSTO, 
+    SUM(TOTALPRECIO) AS TOTALPRECIO,
+    (SUM(TOTALPRECIO)-SUM(TOTALCOSTO)) AS UTILIDAD,
+    CODSUCURSAL
+        FROM            BI_RPT_GENERAL
+        WHERE        (CODSUCURSAL IN(${empresas})) AND (ANIO  IN(${anio})) AND (MES  IN(${mes}))
+        GROUP BY CODVEN, NOMEMPLEADO, CODSUCURSAL
+        ORDER BY NOMEMPLEADO`;
+
+    execute.Query(res,qry);
+
+});
 
 
 

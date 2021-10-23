@@ -198,10 +198,10 @@ function expandir(idcontainer){
   element = document.getElementById(idcontainer);
   element.requestFullscreen();
 
-  element.style = "overflow:scroll";
-  element.style = "overflow:hidden";
+  //element.style = "overflow:scroll";
+  //element.style = "overflow:hidden";
+  //return;
 
-  return;
     if (
         document.fullscreenElement ||
         document.webkitFullscreenElement ||
@@ -220,7 +220,7 @@ function expandir(idcontainer){
         }
       } else {
         element.style = "overflow:scroll";
-        element.style = "overflow:hidden";
+        //element.style = "overflow:hidden";
         if (element.requestFullscreen) {
           element.requestFullscreen();
         } else if (element.mozRequestFullScreen) {

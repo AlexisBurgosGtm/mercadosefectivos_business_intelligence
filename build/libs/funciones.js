@@ -24,7 +24,7 @@ let funciones = {
     },
     getMargenUtilidad:(venta,costo)=>{
       let utilidad = venta-costo;
-      return Number((utilidad/costo) * 100).toFixed(2) + '%'
+      return Number((utilidad/venta) * 100).toFixed(2) + '%'
     },
     getParticipacion:(valor,total)=>{
       let peso = (valor / total) * 100;

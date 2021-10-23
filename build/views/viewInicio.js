@@ -33,10 +33,13 @@ function getView(){
             </div>
 
             <div class="row">
-                <div class="table-responsive card-shadow col-sm-12 col-lg-6 col-xl-6 col-md-6" id="tblTabla">
+                <div class="table-responsive card-shadow col-sm-12 col-lg-4 col-xl-4 col-md-4" id="tblTabla">
                 
                 </div>
-                <div class="table-responsive card-shadow col-sm-12 col-lg-6 col-xl-6 col-md-6" id="tblTabla2">
+                <div class="table-responsive card-shadow col-sm-12 col-lg-4 col-xl-4 col-md-4" id="tblTablaV">
+                
+                </div>
+                <div class="table-responsive card-shadow col-sm-12 col-lg-4 col-xl-4 col-md-4" id="tblTabla2">
                 
                 </div>
             </div>
@@ -115,6 +118,10 @@ async function viewInicioObtenerDatos(){
         getLineChartMeses(datos);
     })
 
+    await getDataVendedores()
+    .then((datos)=>{
+        getTblVentasVendedores(datos);
+    })
 
 };
 
@@ -623,7 +630,7 @@ function getTblVentasFecha(data){
 
     let totalcosto=0; let totalventa =0; let totalutilidad=0;
 
-    let head = `<h3>VENTAS POR FECHA</h3>
+    let head = `<h5 class="text-info">VENTAS POR FECHA</h5>
             <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('tblTabla')">Expandir</button>
             <table class="table-responsive table-bordered table-striped"  style="font-size:90%;" id="tblFVentas">
                     <thead class="bg-info text-white">
@@ -685,6 +692,97 @@ function gotoFecha(fecha){
 
 
 
+function getDataVendedores(){
+    return new Promise((resolve, reject)=>{
+        //obtiene los datos de la card empresas
+      
+        axios.get(`/empresas/getVentasVendedores?empresas=${parametrosEmpresas}&mes=${parametrosMes}&anio=${parametrosAnio}`)
+        .then(res => {
+            const datos = res.data.recordset;
+           
+            resolve(datos);
+        })
+        .catch(()=>{
+            reject();
+        })
+
+
+    })
+
+};
+
+function getTblVentasVendedores(data){
+    
+    let container = document.getElementById('tblTablaV');
+    container.innerHTML = getLoader();
+
+    let totalcosto = 0; let totalventa = 0; let totalutilidad = 0;
+    let conteo = 0;
+
+    let head = `<h5 class="text-danger">VENTAS POR VENDEDOR</h5>
+            <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('tblTablaV')">Expandir</button>
+                <table class="table-condensed table-bordered"  style="font-size:80%;" id="tblTablaVendedores">
+                    <thead class="bg-danger text-white">
+                        <tr>
+                            <td>VENDEDOR</td>
+                            <td>COSTO</td>
+                            <td>VENTA</td>
+                            <td>UTILIDAD</td>
+                            <td>PART</td>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+    let dat = '';
+
+    data.map((r)=>{
+        conteo += 1;
+        totalcosto += Number(r.TOTALCOSTO);
+        totalventa += Number(r.TOTALPRECIO);
+        totalutilidad += Number(r.UTILIDAD);
+    })
+
+    data.map((r)=>{
+        dat += `
+            <tr class="hand border-bottom border-dark" ondblclick="gotoVendedor('${r.CODVEN}','${r.NOMVEN}')">
+                <td>${GlobalIconoDobleClick} ${r.NOMVEN}
+                    <br>
+                    <small class="negrita">${r.CODSUCURSAL}</small>
+                </td>
+                <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
+                <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
+                <td>${funciones.setMoneda(r.UTILIDAD,'Q')}</td>
+                <td>${((Number(r.TOTALPRECIO)/totalventa)*100).toFixed(2)}%</td>
+            </tr>
+        `
+    })
+
+    let foot = `</tbody>
+                    <tfoot class="text-danger bg-foot-table table-bordered">
+                        <tr>
+                            <td></td>
+                            <td>${funciones.setMoneda(totalcosto,'Q')}</td>
+                            <td>${funciones.setMoneda(totalventa,'Q')}</td>
+                            <td>${funciones.setMoneda(totalutilidad,'Q')}</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                `
+
+    container.innerHTML = head + dat + foot
+    $('#tblTablaVendedores').DataTable({
+                    paging: true,
+    });
+};
+
+function gotoVendedor(codven, nomven){
+   
+    //Navegar.analisis_fecha();
+};
+
+
+
 function getTblVentasMarcas(data){
     
     let container = document.getElementById('tblTabla2');
@@ -693,7 +791,7 @@ function getTblVentasMarcas(data){
     let totalcosto = 0; let totalventa = 0; let totalutilidad = 0;
     let conteo = 0;
 
-    let head = `<h3>VENTAS POR MARCA</h3>
+    let head = `<h5>VENTAS POR MARCA</h5>
     <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('tblTabla2')">Expandir</button>
                 <table class="table-condensed table-bordered"  style="font-size:85%;" id="tblVMarcas">
                     <thead class="bg-secondary text-white">
@@ -832,7 +930,7 @@ function getLineChartMeses(data){
     var ctx = document.getElementById('myChart5').getContext('2d');
     var myChart = new Chart(ctx, {
         plugins: [ChartDataLabels],
-        type: 'line',
+        type: 'bar',
         data: {
             labels: GlobalSelectedAnioMes,
             datasets: datas

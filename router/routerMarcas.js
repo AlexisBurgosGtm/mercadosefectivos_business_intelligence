@@ -90,12 +90,33 @@ router.get('/getVendedoresMarca', async function(req,res){
 });
 
 
+router.get('/getVentasMesMarca', async function(req,res){
+
+    const {empresas, codmarca, anio, mes} = req.query;
+  
+    let qry = `SELECT MES, ANIO,
+                SUM(TOTALCOSTO) AS TOTALCOSTO, 
+                SUM(TOTALPRECIO) AS TOTALPRECIO
+    FROM            BI_RPT_GENERAL
+    WHERE  (CODSUCURSAL IN (${empresas})) 
+        AND (ANIO IN (${anio})) 
+        AND (MES IN (${mes})) 
+        AND (CODMARCA = ${codmarca}) 
+    GROUP BY MES, ANIO
+    ORDER BY MES, ANIO`
+
+    execute.Query(res,qry);
+    
+});
 
 router.get('/getClientesMarca', async function(req,res){
 
     const {empresas, codmarca, anio, mes} = req.query;
   
-    let qry = `SELECT BI_RPT_GENERAL.CODSUCURSAL, COUNT(DISTINCT BI_RPT_GENERAL.CODIGO) AS CONTEO, AVG(BI_EMPRESAS_RESUMEN.UNIVERSO) AS UNIVERSO
+    let qry = `SELECT BI_RPT_GENERAL.CODSUCURSAL, 
+                COUNT(DISTINCT BI_RPT_GENERAL.CODIGO) AS CONTEO, 
+                AVG(BI_EMPRESAS_RESUMEN.UNIVERSO) AS UNIVERSO,
+                SUM(TOTALPRECIO) AS TOTALPRECIO
     FROM            BI_RPT_GENERAL LEFT OUTER JOIN
                              BI_EMPRESAS_RESUMEN ON BI_RPT_GENERAL.MES = BI_EMPRESAS_RESUMEN.MES AND BI_RPT_GENERAL.ANIO = BI_EMPRESAS_RESUMEN.ANIO AND 
                              BI_RPT_GENERAL.CODSUCURSAL = BI_EMPRESAS_RESUMEN.CODSUCURSAL

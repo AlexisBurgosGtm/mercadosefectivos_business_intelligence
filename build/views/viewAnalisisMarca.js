@@ -50,17 +50,24 @@ function getView(){
             return `
             <div class="row">
                 <div class="col-sm-6 col-md-3 col-xl-3 col-lg-3">
-                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf2"  onclick="expandir('containerGraf2')">
+                    ${GlobalIconoDobleClick}
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf2"  ondblclick="expandir('containerGraf2')">
                 
                     </div>    
                 </div>
             
                 <div class="col-sm-6 col-md-3 col-xl-3 col-lg-3">
-                        
+                    ${GlobalIconoDobleClick}
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf6"  ondblclick="expandir('containerGraf6')">
+                    
+                    </div>
                 </div>
 
                 <div class="col-sm-6 col-md-3 col-xl-3 col-lg-3">
-                        
+                    ${GlobalIconoDobleClick}
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf7"  ondblclick="expandir('containerGraf7')">
+                    
+                    </div>
                 </div>
 
                 <div class="col-sm-6 col-md-3 col-xl-3 col-lg-3">
@@ -181,6 +188,8 @@ function getDataMarca(){
     getDataMunicipiosClientes()
     .then((datos)=>{
         getPieChartClientesEmpresas(datos);
+        getPieChartClientesEmpresasConteo(datos);
+        getPieChartVentasEmpresa(datos);
     });
 
     getDataVendedores()
@@ -514,7 +523,7 @@ function getPieChartClientesEmpresas(data){
                   },
                   title: {
                     display: true,
-                    text: 'Clientes Alcanzados por Empresa. Porcentaje total: ' + funciones.getParticipacion(total,totaluniversos)
+                    text: 'Universo Logrado Clientes. Porcentaje total: ' + funciones.getParticipacion(total,totaluniversos)
                   },
                 // Change options for ALL labels of THIS CHART
                 datalabels: {
@@ -529,6 +538,170 @@ function getPieChartClientesEmpresas(data){
                   },
                   formatter: function(value) {
                     return value + '%';
+                    // eq. return ['line1', 'line2', value]
+                  },
+                  color: function(context) {
+                    return context.dataset.backgroundColor;
+                  },
+                  borderColor: 'white',
+                  borderRadius: 25,
+                  borderWidth: 0,
+                  font: {
+                    weight: 'bold'
+                  }
+                }
+            }
+        }
+    });
+
+
+    
+
+};
+
+function getPieChartClientesEmpresasConteo(data){
+   
+    let container = document.getElementById('containerGraf6');
+    container.innerHTML = '';
+    container.innerHTML = '<canvas id="myChart6" width="50" height="50"></canvas>';
+  
+    let label = []; let valor = []; let bgColor = [];
+    let total = 0; let totaluniversos = 0;
+    data.map((r)=>{
+        total = total + Number(r.CONTEO);
+        totaluniversos += Number(r.UNIVERSO);
+    });
+   
+    data.map((r)=>{
+            label.push(r.CODSUCURSAL);
+            valor.push(Number(r.CONTEO));
+            bgColor.push(getRandomColor())
+    })
+
+  
+    var ctx = document.getElementById('myChart6').getContext('2d');
+    var myChart = new Chart(ctx, {
+        plugins: [ChartDataLabels],
+        type: 'bar',
+        data: {
+            labels: label,
+
+            datasets: [{
+                label:'Clientes Efectivos',
+                data:valor,
+                borderColor: 'white',
+                backgroundColor:bgColor
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                  },
+                  title: {
+                    display: true,
+                    text: 'Clientes Efectivos. Total: ' + total.toString() + '/' + totaluniversos.toString()
+                  },
+                // Change options for ALL labels of THIS CHART
+                datalabels: {
+                  anchor:'end',
+                  align:'end',
+                  listeners: {
+                    click: function(context) {
+                      // Receives `click` events only for labels of the first dataset.
+                      // The clicked label index is available in `context.dataIndex`.
+                      console.log(context);
+                    }
+                  },
+                  formatter: function(value) {
+                    return value;
+                    // eq. return ['line1', 'line2', value]
+                  },
+                  color: function(context) {
+                    return context.dataset.backgroundColor;
+                  },
+                  borderColor: 'white',
+                  borderRadius: 25,
+                  borderWidth: 0,
+                  font: {
+                    weight: 'bold'
+                  }
+                }
+            }
+        }
+    });
+
+
+    
+
+};
+
+function getPieChartVentasEmpresa(data){
+   
+    let container = document.getElementById('containerGraf7');
+    container.innerHTML = '';
+    container.innerHTML = '<canvas id="myChart7" width="50" height="50"></canvas>';
+  
+    let label = []; let valor = []; let bgColor = [];
+    let total = 0; let totaluniversos = 0;
+    data.map((r)=>{
+        total = total + Number(r.TOTALPRECIO);
+        totaluniversos += Number(r.UNIVERSO);
+    });
+   
+    data.map((r)=>{
+            label.push(r.CODSUCURSAL);
+            valor.push(Number(r.TOTALPRECIO));
+            bgColor.push(getRandomColor())
+    })
+
+  
+    var ctx = document.getElementById('myChart7').getContext('2d');
+    var myChart = new Chart(ctx, {
+        plugins: [ChartDataLabels],
+        type: 'doughnut',
+        data: {
+            labels: label,
+            datasets: [{
+                data:valor,
+                borderColor: 'white',
+                backgroundColor:bgColor
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                  },
+                  title: {
+                    display: true,
+                    text: 'Ventas por Sucursal. Total: ' + funciones.setMoneda(total,'Q')
+                  },
+                // Change options for ALL labels of THIS CHART
+                datalabels: {
+                  anchor:'end',
+                  align:'end',
+                  listeners: {
+                    click: function(context) {
+                      // Receives `click` events only for labels of the first dataset.
+                      // The clicked label index is available in `context.dataIndex`.
+                      console.log(context);
+                    }
+                  },
+                  formatter: function(value) {
+                    return funciones.setMoneda(value,'Q');
                     // eq. return ['line1', 'line2', value]
                   },
                   color: function(context) {
