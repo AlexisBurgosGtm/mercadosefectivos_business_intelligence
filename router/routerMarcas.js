@@ -2,6 +2,31 @@ const execute = require('./connection');
 const express = require('express');
 const router = express.Router();
 
+
+router.post('/getProductosMarcaMunicipioProductos', async function(req,res){
+
+    const {empresas, codmun, coddepto, codmarca, anio, mes} = req.body;
+  
+    let qry = `SELECT  CODPRODUCTO AS CODPROD, 
+                        PRODUCTO AS DESPROD, 
+                        SUM(FARDOS) AS FARDOS, 
+                        SUM(TOTALCOSTO) AS TOTALCOSTO, 
+                        SUM(TOTALPRECIO) AS TOTALPRECIO
+                    FROM BI_RPT_GENERAL
+                    WHERE (CODMARCA = ${codmarca}) 
+                    AND (CODSUCURSAL IN(${empresas})) 
+                    AND (ANIO IN(${anio})) 
+                    AND (MES IN(${mes})) 
+                    AND (CODMUN = ${codmun}) 
+                    AND (CODDEPTO = ${coddepto})
+                    GROUP BY CODPRODUCTO, PRODUCTO
+                `
+
+    execute.Query(res,qry);
+    
+});
+
+
 router.get('/getProductosMarcaMunicipio', async function(req,res){
 
     const {empresas, municipio, departamento, codmarca, anio, mes} = req.query;
@@ -176,7 +201,7 @@ router.get('/getMunicipiosMarcaProd', async function(req,res){
   
 
     let qry = `
-            SELECT BI_RPT_GENERAL.DEPARTAMENTO, BI_RPT_GENERAL.MUNICIPIO, COUNT(DISTINCT BI_RPT_GENERAL.CODIGO) AS CONTEO, 
+            SELECT BI_RPT_GENERAL.CODMUN, BI_RPT_GENERAL.CODDEPTO, BI_RPT_GENERAL.DEPARTAMENTO, BI_RPT_GENERAL.MUNICIPIO, COUNT(DISTINCT BI_RPT_GENERAL.CODIGO) AS CONTEO, 
                                 SUM(BI_RPT_GENERAL.FARDOS) AS FARDOS,
                                 SUM(BI_RPT_GENERAL.TOTALCOSTO) AS TOTALCOSTO, 
                                 SUM(BI_RPT_GENERAL.TOTALPRECIO) AS TOTALPRECIO, SUM(BI_RPT_GENERAL.TOTALPRECIO) - SUM(BI_RPT_GENERAL.TOTALCOSTO) AS UTILIDAD, 
@@ -189,7 +214,7 @@ router.get('/getMunicipiosMarcaProd', async function(req,res){
                     AND (BI_RPT_GENERAL.ANIO IN (${anio})) 
                     AND (BI_RPT_GENERAL.MES IN (${mes})) 
                     AND (BI_RPT_GENERAL.CODMARCA = ${codmarca})
-            GROUP BY BI_RPT_GENERAL.DEPARTAMENTO, BI_RPT_GENERAL.MUNICIPIO, BI_GENERALES_MUNICIPIOS.UNIVERSO
+            GROUP BY BI_RPT_GENERAL.DEPARTAMENTO, BI_RPT_GENERAL.MUNICIPIO, BI_GENERALES_MUNICIPIOS.UNIVERSO, BI_RPT_GENERAL.CODMUN, BI_RPT_GENERAL.CODDEPTO
             ORDER BY BI_RPT_GENERAL.DEPARTAMENTO, BI_RPT_GENERAL.MUNICIPIO
     `
 

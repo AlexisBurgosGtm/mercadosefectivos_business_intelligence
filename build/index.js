@@ -237,6 +237,6 @@ function expandir(idcontainer){
 };
 
 
-funciones.instalationHandlers('btnInstalar');
-
 funciones.animateCSS('btnInstalar','backInRight');
+
+funciones.instalationHandlers('btnInstalar');

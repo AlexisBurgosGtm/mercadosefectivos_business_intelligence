@@ -110,9 +110,18 @@ function getView(){
                     </div>
                 </div>
 
-                <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">  
-                    <div class="table-responsive"  id="containertblMunicipiosProductos">
+                <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="table-responsive"  id="containertblMunicipiosProductos2">
+                            </div>      
+                        </div>
+                        <div class="col-6">
+                            <div class="table-responsive"  id="containertblMunicipiosClientes">
+                            </div>  
+                        </div>
                     </div>  
+                    
                 </div>
                     
             </div>
@@ -832,10 +841,15 @@ function getPieChartOportunidadEmpresa(data){
 };
 
 
+
 function getDataProductosMunicipio(departamento,municipio){
 
-    let container = document.getElementById('containertblMunicipiosProductos');
+   
+    let container = document.getElementById('containertblMunicipiosProductos2');
     container.innerHTML = getLoader();
+
+    
+    location.hash = "#containertblMunicipiosProductos2"; 
 
     let totalventa = 0;
     let totalcosto = 0;
@@ -848,15 +862,12 @@ function getDataProductosMunicipio(departamento,municipio){
        
         let head = `<h5>PRODUCTOS VENDIDOS</h5>
                 <h5 class="text-danger">${municipio},${departamento}</h5>
-                <table class="table table-responsive" style="font-size:80%;" id="tblVProductosM">
+                <table class="table table-responsive" style="font-size:70%;" id="tblVProductosM">
                     <thead class="bg-info text-white">
                         <tr>
                             <td>PRODUCTO</td>
                             <td>FARDOS</td>
-                            <td>COSTO</td>
                             <td>VENTA</td>
-                            <td>UTILIDAD</td>
-                            <td>MARG</td>
                             <td>PART</td>
                         </tr>
                     </thead>
@@ -879,10 +890,7 @@ function getDataProductosMunicipio(departamento,municipio){
                         <small class="negrita text-danger">${r.CODPRODUCTO}</small>
                     </td>
                     <td>${Number(r.FARDOS).toFixed(2)}</td>
-                    <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
                     <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
-                    <td>${funciones.setMoneda(r.UTILIDAD,'Q')}</td>
-                    <td>${funciones.getMargenUtilidad(Number(r.TOTALPRECIO),Number(r.TOTALCOSTO))}</td>
                     <td>${funciones.getParticipacion(Number(r.TOTALPRECIO),totalventa)}</td>
                 </tr>
             `
@@ -893,10 +901,7 @@ function getDataProductosMunicipio(departamento,municipio){
                             <tr>
                                 <td></td>
                                 <td>${totalcajas.toFixed(2)}</td>
-                                <td>${funciones.setMoneda(totalcosto,'Q')}</td>
                                 <td>${funciones.setMoneda(totalventa,'Q')}</td>
-                                <td>${funciones.setMoneda(totalutilidad,'Q')}</td>
-                                <td></td>
                                 <td></td>
                             </tr>
                         </tfoot>
@@ -907,7 +912,7 @@ function getDataProductosMunicipio(departamento,municipio){
 
         $('#tblVProductosM').DataTable({
             paging: false,
-            bFilter:true
+            bFilter:false
         });
     })
     .catch(()=>{
@@ -1296,5 +1301,6 @@ function getTblMunicipiosProducto(codprod,desprod){
 
     
 };
+
 
 
