@@ -67,7 +67,7 @@ function getView(){
                                     </div>
                                  
                                     <div class="row">
-                                        <button class="btn btn-primary shadow btn-rounded" id="btnIngresar">
+                                        <button class="btn-redondo" id="btnIngresar">
                                             <i class="fas fa-lock"></i>Ingresar
                                         </button>
                                     </div>
@@ -80,8 +80,8 @@ function getView(){
                 </div>
             </div>
             <!-- Footer -->
-            <div class="container-fluid text-center footer">
-                Por <a href="#">Alexis Burgos (v.10.2021)</a>
+            <div class="container-fluid text-center footer" style="font-size:10px">
+                Por <a href="https://api.whatsapp.com/send?phone=50257255092&text=Hola%20Alexis%2C%20puedes%20ayudarme%20...." target="_blank">Alexis Burgos (v.10.2021)</a>
             </div>
             `
         }

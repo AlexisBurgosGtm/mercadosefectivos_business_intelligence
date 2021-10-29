@@ -8,7 +8,13 @@ function getView(){
                         <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#tabHome" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Resume</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#tab1" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Lists</button>
+                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#tab1" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Trademarks</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#tab2" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Employees</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#tab3" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Daily</button>
                     </li>
                 </ul>
                 <div class="tab-content col-12" id="pills-tabContent">
@@ -16,13 +22,13 @@ function getView(){
                         ${view.resumen()}
                     </div>
                     <div class="tab-pane fade" id="tab1" role="tabpanel" aria-labelledby="pills-profile-tab">
-                        ${view.tablas()}
+                        ${view.marcas()}
                     </div>
                     <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="pills-profile-tab">
-                        
+                        ${view.empleados()}
                     </div>
                     <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="pills-contact-tab">
-                        
+                        ${view.fechas()}
                     </div>
                 </div>
             </div>
@@ -58,18 +64,34 @@ function getView(){
             </div>
             `
         },
-        tablas:()=>{
+        marcas:()=>{
+            return `
+            
+               
+                <div class="table-responsive card-shadow col-12" id="tblTabla2">
+                
+                </div>
+            
+            `
+        },
+        empleados:()=>{
             return `
             <div class="row">
-                <div class="table-responsive card-shadow col-sm-12 col-lg-4 col-xl-4 col-md-4" id="tblTabla">
+                
+                <div class="table-responsive card-shadow col-sm-12 col-lg-6 col-xl-6 col-md-6" id="tblTablaV">
                 
                 </div>
-                <div class="table-responsive card-shadow col-sm-12 col-lg-4 col-xl-4 col-md-4" id="tblTablaV">
+            
+            </div>
+            `
+        },
+        fechas:()=>{
+            return `
+            <div class="row">
+                <div class="table-responsive card-shadow col-sm-12 col-lg-6 col-xl-6 col-md-6" id="tblTabla">
                 
                 </div>
-                <div class="table-responsive card-shadow col-sm-12 col-lg-4 col-xl-4 col-md-4" id="tblTabla2">
-                
-                </div>
+           
             </div>
             `
         },
@@ -660,7 +682,7 @@ function getTblVentasFecha(data){
 
     let head = `<h5 class="text-info">VENTAS POR FECHA</h5>
             <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('tblTabla')">Expandir</button>
-            <table class="table-responsive table-bordered table-striped"  style="font-size:90%;" id="tblFVentas">
+            <table class="table table-responsive table-bordered table-striped"  style="font-size:90%;" id="tblFVentas">
                     <thead class="bg-info text-white">
                         <tr>
                             <td>FECHA</td>
@@ -749,7 +771,7 @@ function getTblVentasVendedores(data){
 
     let head = `<h5 class="text-danger">VENTAS POR VENDEDOR</h5>
             <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('tblTablaV')">Expandir</button>
-                <table class="table-condensed table-bordered"  style="font-size:80%;" id="tblTablaVendedores">
+                <table class="table table-condensed table-bordered"  style="font-size:80%;" id="tblTablaVendedores">
                     <thead class="bg-danger text-white">
                         <tr>
                             <td>VENDEDOR</td>
@@ -821,7 +843,7 @@ function getTblVentasMarcas(data){
 
     let head = `<h5>VENTAS POR MARCA</h5>
     <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('tblTabla2')">Expandir</button>
-                <table class="table-condensed table-bordered"  style="font-size:85%;" id="tblVMarcas">
+                <table class="table table-responsive table-bordered"  style="font-size:85%;" id="tblVMarcas">
                     <thead class="bg-secondary text-white">
                         <tr>
                             <td>MARCA</td>
@@ -873,6 +895,7 @@ function getTblVentasMarcas(data){
     container.innerHTML = head + dat + foot
     $('#tblVMarcas').DataTable({
                     paging: false,
+                    bFilter:false
     });
 };
 
