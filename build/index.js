@@ -205,6 +205,12 @@ btnMSell.addEventListener('click',()=>{
     Navegar.inicio();
 });
 
+let btnMSalir = document.getElementById('btnMSalir');
+btnMSalir.addEventListener('click',()=>{
+    Navegar.login();
+});
+
+
 
 //fullscreen scroll
 function expandir(idcontainer){
