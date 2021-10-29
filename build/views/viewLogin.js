@@ -9,7 +9,7 @@ function getView(){
                 <div class="card-body">
                     <div class="form-group">
                         <label class="negrita">Tipo Usuario</label>
-                        <select class="form-control border-bottom border-right border-secondary border-left-0" id="cmbTipo">
+                        <select class="form-control border-bottom border-right-0 border-top-0 border-left shadow" id="cmbTipo">
                             <option value="GERENTE">GERENTE</option>
                             <option value="SUPERVISOR">SUPERVISOR</option>
                             <option value="PROVEEDOR">PROVEEDOR</option>
