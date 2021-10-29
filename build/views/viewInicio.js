@@ -5,16 +5,24 @@ function getView(){
             <div class="row">
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#tabHome" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Resume</button>
+                        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#tabHome" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
+                            <i class="bx bx-bar-chart-square"></i> Quick View
+                        </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#tab1" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Trademarks</button>
+                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#tab1" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
+                            <i class="bx bx-purchase-tag"></i> Trademarks
+                        </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#tab2" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Employees</button>
+                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#tab2" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
+                            <i class="bx bx-group"></i> Employees
+                        </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#tab3" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Daily</button>
+                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#tab3" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
+                            <i class="bx bx-calendar"></i> Daily
+                        </button>
                     </li>
                 </ul>
                 <div class="tab-content col-12" id="pills-tabContent">
@@ -127,6 +135,7 @@ function addListeners(){
    
     viewInicioObtenerDatos();
 
+    funciones.slideAnimationTabs();
 };
 
 async function viewInicioObtenerDatos(){
@@ -843,7 +852,7 @@ function getTblVentasMarcas(data){
 
     let head = `<h5>VENTAS POR MARCA</h5>
     <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('tblTabla2')">Expandir</button>
-                <table class="table table-responsive table-bordered"  style="font-size:85%;" id="tblVMarcas">
+                <table class="table table-responsive table-bordered col-12"  style="font-size:85%;" id="tblVMarcas">
                     <thead class="bg-secondary text-white">
                         <tr>
                             <td>MARCA</td>
@@ -867,7 +876,7 @@ function getTblVentasMarcas(data){
 
     data.map((r)=>{
         dat += `
-            <tr class="hand border-bottom border-dark" ondblclick="gotoMarca('${r.CODMARCA}','${r.DESMARCA}')">
+            <tr class="hand border-bottom" ondblclick="gotoMarca('${r.CODMARCA}','${r.DESMARCA}')">
                 <td>${GlobalIconoDobleClick} ${r.DESMARCA}</td>
                 <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
                 <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
