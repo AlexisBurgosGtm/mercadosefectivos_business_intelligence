@@ -1,6 +1,34 @@
 function getView(){
     let view = {
-        encabezado:()=>{
+        body:()=>{
+            return `
+            <div class="row">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#tabHome" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Resume</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#tab1" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Lists</button>
+                    </li>
+                </ul>
+                <div class="tab-content col-12" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="tabHome" role="tabpanel" aria-labelledby="pills-home-tab">
+                        ${view.resumen()}
+                    </div>
+                    <div class="tab-pane fade" id="tab1" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        ${view.tablas()}
+                    </div>
+                    <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        
+                    </div>
+                    <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="pills-contact-tab">
+                        
+                    </div>
+                </div>
+            </div>
+            `
+        },
+        resumen:()=>{
             return `
             <div class="row">
                 <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">
@@ -23,15 +51,15 @@ function getView(){
                     <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf4" ondblclick="expandir('containerGraf4')"></div>
                 </div>
             </div>
-            `
-        },
-        listado:()=>{
-            return `
+
             <div class="row">
                 ${GlobalIconoDobleClick}   
                 <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf5" ondblclick="expandir('containerGraf5')"></div>
             </div>
-
+            `
+        },
+        tablas:()=>{
+            return `
             <div class="row">
                 <div class="table-responsive card-shadow col-sm-12 col-lg-4 col-xl-4 col-md-4" id="tblTabla">
                 
@@ -67,7 +95,7 @@ function getView(){
         }
     }
 
-    root.innerHTML = view.encabezado() + view.listado() + view.modalExpandir();
+    root.innerHTML = view.body() + view.modalExpandir();
 }; 
 
 function addListeners(){

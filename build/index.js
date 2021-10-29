@@ -185,11 +185,25 @@ function getParametros(){
 Navegar.login();
 
 
-let btnHome = document.getElementById('btnHome');
-btnHome.addEventListener('click',()=>{
+let btnMInicio = document.getElementById('btnMInicio');
+btnMInicio.addEventListener('click',()=>{
     Navegar.inicio();
 });
 
+let btnMMarcas = document.getElementById('btnMMarcas');
+btnMMarcas.addEventListener('click',()=>{
+    Navegar.marcas();
+});
+
+let btnMProductos = document.getElementById('btnMProductos');
+btnMProductos.addEventListener('click',()=>{
+    Navegar.inicio();
+});
+
+let btnMSell = document.getElementById('btnMSell');
+btnMSell.addEventListener('click',()=>{
+    Navegar.inicio();
+});
 
 
 //fullscreen scroll

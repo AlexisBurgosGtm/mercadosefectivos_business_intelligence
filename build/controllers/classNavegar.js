@@ -8,6 +8,7 @@ let Navegar = {
             btnFiltroCerrar.style='visibility:hidden';
             //btnMenu.style='visibility:hidden';
             btnHome.style='visibility:hidden';
+            divMenu.style='visibility:hidden';
             initView();
         })
     },
@@ -20,17 +21,19 @@ let Navegar = {
             btnFiltroCerrar.style='visibility:visible';
             //btnMenu.style='visibility:visible';
             btnHome.style='visibility:hidden';
+            divMenu.style='visibility:visible';
             initView();
         })
     },
     marcas:()=>{
         funciones.loadScript('../views/viewMarcas.js','root')
         .then(()=>{
+            titulo.innerHTML = `<img src="./favicon.png" width="20" height="20" class="profile-pic me-2">ALL BRAND ANALYSIS`;
             GlobalSelectedForm = 'MARCAS';
             btnFiltro.style='visibility:visible';
             btnFiltroCerrar.style='visibility:visible';
             //btnMenu.style='visibility:visible';
-            btnHome.style='visibility:visible';
+            btnHome.style='visibility:hidden';
             initView();
         })
     },
@@ -42,7 +45,7 @@ let Navegar = {
             btnFiltro.style='visibility:visible';
             btnFiltroCerrar.style='visibility:visible';
             //btnMenu.style='visibility:visible';
-            btnHome.style='visibility:visible';
+            btnHome.style='visibility:hidden';
             initView(data);
         })
     },
@@ -54,7 +57,7 @@ let Navegar = {
             btnFiltro.style='visibility:visible';
             btnFiltroCerrar.style='visibility:visible';
             //btnMenu.style='visibility:visible';
-            btnHome.style='visibility:visible';
+            btnHome.style='visibility:hidden';
             initView(data);
         })
     }

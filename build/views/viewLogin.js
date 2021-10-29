@@ -9,22 +9,25 @@ function getView(){
                 <div class="card-body">
                     <div class="form-group">
                         <label class="negrita">Tipo Usuario</label>
-                        <select class="form-control" id="cmbTipo">
+                        <select class="form-control border-bottom border-right border-secondary border-left-0" id="cmbTipo">
                             <option value="GERENTE">GERENTE</option>
                             <option value="SUPERVISOR">SUPERVISOR</option>
                             <option value="PROVEEDOR">PROVEEDOR</option>
                         </select>
                     </div>
+                    <br>
                     <div class="form-group">
                         <label class="negrita">Usuario</label>
                         <input type="text" class="form-control" id="txtU">
                     </div>
+                    <br>
                     <div class="form-group">
                         <label class="negrita">Clave</label>
                         <input type="password" class="form-control" id="txtP">    
                     </div>
+                    <br>
                     <div class="form-group">
-                        <button class="btn btn-outline-info btn-lg shadow" id="btnIngresar">
+                        <button class="btn btn-outline-info btn-lg shadow btn-rounded" id="btnIngresar">
                             <i class="fas fa-lock"></i>Ingresar
                         </button>
                     </div>

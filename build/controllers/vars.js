@@ -1,8 +1,9 @@
 let root = document.getElementById('root');
 let GlobalSelectedForm = 'LOGIN';
 
-let titulo = document.getElementById('navbarDropdown');
-
+let titulo = document.getElementById('titulo');
+let divMenu = document.getElementById('navbar');
+divMenu.style = "visibility:hidden;";
 
 let GlobalSelectedCodMarca = 0;
 let GlobalSelectedDesMarca = '';
