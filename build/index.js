@@ -55,8 +55,9 @@ function setParametrosIniciales(){
     document.getElementById('paramP').checked=true;
 
     let f = new Date();
+   
     //MES
-    document.getElementById('paramM' + (f.getUTCMonth()+1).toString()).checked=true;
+    document.getElementById('paramM' + (f.getMonth()+1).toString()).checked=true;
     //AÑO
     document.getElementById('paramA' + (f.getFullYear()).toString()).checked=true;
 
