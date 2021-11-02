@@ -1,3 +1,30 @@
+//inicializa el service worker
+function InicializarServiceWorkerNotif(){
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () =>
+   navigator.serviceWorker.register('./sw.js')
+    .then(registration => console.log('Service Worker registered'))
+    .catch(err => 'SW registration failed'));
+  };
+
+  requestPermission();
+}
+
+if ('Notification' in window) {};
+
+function requestPermission() {
+  if (!('Notification' in window)) {
+    //alert('Notification API not supported!');
+    return;
+  }
+  
+  Notification.requestPermission(function (result) {
+    //$status.innerText = result;
+  });
+}
+
+InicializarServiceWorkerNotif();
+//finaliza--- inicializador del service worker
 
 let btnFiltro = document.getElementById('btnFiltro');
 btnFiltro.addEventListener('click',()=>{
@@ -25,6 +52,13 @@ btnFiltroAceptar.addEventListener('click',()=>{
         case 'ANALISIS_MARCA': 
             try {
                 getDataMarca();
+            } catch (error) {
+                
+            }
+            break;
+        case 'MARCAS': 
+            try {
+              getTblVentasMarcas('containerTblMarcas');
             } catch (error) {
                 
             }

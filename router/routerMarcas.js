@@ -2,7 +2,32 @@ const execute = require('./connection');
 const express = require('express');
 const router = express.Router();
 
+// POR MARCAS GENERALES
+router.post('/get_gen_marcas', async function(req,res){
 
+    const {empresas,anio,mes} = req.body;
+
+    let qry = '';
+
+        qry = `SELECT CODMARCA, DESMARCA, SUM(FARDOS) AS FARDOS, 
+        SUM(TOTALCOSTO) AS TOTALCOSTO, 
+        SUM(TOTALPRECIO) AS TOTALPRECIO,
+        (SUM(TOTALPRECIO) - SUM(TOTALCOSTO)) AS UTILIDAD
+        FROM  BI_RPT_GENERAL
+        WHERE (CODSUCURSAL IN(${empresas})) 
+        AND (ANIO IN(${anio})) 
+        AND (MES IN(${mes}))
+        GROUP BY CODMARCA, DESMARCA
+        ORDER BY DESMARCA`
+    
+        console.log(qry);
+
+     execute.Query(res,qry);
+    
+});
+
+
+// POR MARCA ESPECÍFICA
 router.post('/getProductosMarcaMunicipioProductos', async function(req,res){
 
     const {empresas, codmun, coddepto, codmarca, anio, mes} = req.body;
@@ -315,6 +340,9 @@ router.get('/getmarcasmunicipio', async function(req,res){
     execute.Query(res,qry);
   
 });
+
+
+
 
 
 module.exports = router;

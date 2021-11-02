@@ -1,5 +1,5 @@
 
-var CACHE = 'mercadosefectivosbi1';
+var CACHE = 'mercadosefectivosbi2';
 const staticAssets = [  
   './index.js',
   './favicon.png',
@@ -110,3 +110,5 @@ self.addEventListener('sync', function(event) {
     event.waitUntil(dbSendPedidosBackground(GlobalUsuario).then(()=>{funciones.NotificacionPersistent('Enviando pedidos en background','sincronización sw')  }));
   }
 });
+
+
