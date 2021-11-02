@@ -29,6 +29,33 @@ function getView(){
                 
             </div>
             `
+        },
+        modalDetalles: ()=>{
+            return `
+            <div class="modal fade shadow border-top-rounded border-bottom-rounded" id="modalDetalles" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Detalles de la Marca</h5>
+                            <h5 class="text-danger" id="lbDesMarca"></h5>
+                        </div>
+                        <div class="modal-body row">
+                    
+                                                       
+                            
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-outline-secondary btn-xl btn-circle shadow" data-modal="dismiss" id="">
+                                X
+                            </button>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            `
         }
         
     }
@@ -62,7 +89,7 @@ function getTblVentasMarcas(idcontainer){
         const data = res.data.recordset;
         
         let head = `
-                    <table class="table table-responsive table-bordered table-striped  col-12" id="tblMarcas">
+                    <table class="table table-responsive table-bordered table-striped  col-12 scroll-table" id="tblMarcas">
                         <thead class="bg-info text-white">
                             <tr>
                                 <td>MARCA</td>
@@ -120,7 +147,7 @@ function getTblVentasMarcas(idcontainer){
         getCardsMarcas(totalcosto,totalventa,totalutilidad);
        
     })
-    .catch(()=>{
+    .catch((error)=>{
         container.innerHTML = 'No se pudieron cargar los Datos...'
     })
 
@@ -132,7 +159,7 @@ function getCardsMarcas(costo,precio,utilidad){
     
     let view = `
     
-    <div class="col-3">
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6">
         <div class="card shadow border-top-rounded border-bottom-rounded p-4">
             <div class="row">
                 <div class="col-9">
@@ -146,7 +173,7 @@ function getCardsMarcas(costo,precio,utilidad){
         </div>
     </div>
 
-    <div class="col-3">
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6">
         <div class="card shadow border-top-rounded border-bottom-rounded p-4">
             <div class="row">
                 <div class="col-9">
@@ -160,7 +187,7 @@ function getCardsMarcas(costo,precio,utilidad){
         </div>
     </div>
     
-    <div class="col-3">
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6">
         <div class="card shadow border-top-rounded border-bottom-rounded p-4">
             <div class="row">
                 <div class="col-9">
@@ -174,7 +201,7 @@ function getCardsMarcas(costo,precio,utilidad){
         </div>
     </div>
 
-    <div class="col-3">
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6">
         <div class="card shadow border-top-rounded border-bottom-rounded p-4">
             <div class="row">
                 <div class="col-9">

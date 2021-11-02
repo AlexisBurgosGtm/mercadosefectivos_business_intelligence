@@ -223,26 +223,31 @@ Navegar.login();
 let btnMInicio = document.getElementById('btnMInicio');
 btnMInicio.addEventListener('click',()=>{
     Navegar.inicio();
+    document.getElementById('btnMen').click();
 });
 
 let btnMMarcas = document.getElementById('btnMMarcas');
 btnMMarcas.addEventListener('click',()=>{
     Navegar.marcas();
+    document.getElementById('btnMen').click();
 });
 
 let btnMProductos = document.getElementById('btnMProductos');
 btnMProductos.addEventListener('click',()=>{
     Navegar.inicio();
+    document.getElementById('btnMen').click();
 });
 
 let btnMSell = document.getElementById('btnMSell');
 btnMSell.addEventListener('click',()=>{
     Navegar.inicio();
+    document.getElementById('btnMen').click();
 });
 
 let btnMSalir = document.getElementById('btnMSalir');
 btnMSalir.addEventListener('click',()=>{
     Navegar.login();
+    document.getElementById('btnMen').click();
 });
 
 

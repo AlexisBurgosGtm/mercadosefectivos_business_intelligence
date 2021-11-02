@@ -51,6 +51,13 @@ function getView(){
             <div class="row">
                 <div class="col-sm-6 col-md-3 col-xl-3 col-lg-3">
                     ${GlobalIconoDobleClick}
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf7"  ondblclick="expandir('containerGraf7')">
+                    
+                    </div>
+                </div>
+                
+                <div class="col-sm-6 col-md-3 col-xl-3 col-lg-3">
+                    ${GlobalIconoDobleClick}
                     <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf2"  ondblclick="expandir('containerGraf2')">
                 
                     </div>    
@@ -70,12 +77,7 @@ function getView(){
                     </div>
                 </div>
 
-                <div class="col-sm-6 col-md-3 col-xl-3 col-lg-3">
-                    ${GlobalIconoDobleClick}
-                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf7"  ondblclick="expandir('containerGraf7')">
-                    
-                    </div>
-                </div>
+            
 
             </div>
 
