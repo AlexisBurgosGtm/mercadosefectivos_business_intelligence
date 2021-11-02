@@ -44,11 +44,13 @@
 <body>
 
   <!-- ======= Mobile nav toggle button ======= -->
-  <!-- <button type="button" class="mobile-nav-toggle d-xl-none"><i class="bi bi-list mobile-nav-toggle"></i></button> -->
+  <!-- 
   <i class="bi bi-list mobile-nav-toggle d-xl-none" id="btnMen"></i>
+    -->
+
   <!-- ======= Header ======= -->
   <header id="header" class="d-flex flex-column justify-content-center">
-
+    <!--
     <nav id="navbar" class="navbar nav-menu">
       <ul>
         <li><a id="btnMInicio" href="#" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Inicio</span></a></li>
@@ -57,52 +59,43 @@
         <li><a id="btnMSell"  href="#" class="nav-link scrollto"><i class="bx bx-note"></i> <span>Sell-In-Out</span></a></li>
         <li><a id="btnMSalir"  href="#" class="nav-link scrollto"><i class="bx bx-log-out-circle"></i> <span>Salir</span></a></li>
       </ul>
-    </nav><!-- .nav-menu -->
+    </nav>
+    -->
+    
+    <!-- .nav-menu -->
    
   </header><!-- End Header -->
-  <div id="titulo" class="negrita text-white col-12 bg-titulo" style=""></div>
-  <!--
+  <div id="titulo" class="negrita text-white col-12 bg-titulo"></div>
+  
   <section id="root" class="d-flex flex-column justify-content-center">
     
   </section>
-     -->
+  <!--   
   <main id="main">
     <section id="root" class="about">
     </section>
   </main>
-
-  <div class="circular-menu hand" id="btnHome">
-    <a class="floating-btn">
-        <i class="fa fa-home"></i>
-      </a>
-  </div>
+-->
 
 
+  <div id="circularMenu" class="circular-menu">
 
-<div class="circular-menu hidden" id="circularmenu">
-    <a class="floating-btn" onclick="document.getElementById('circularmenu').classList.toggle('active');">
-        <i class="fa fa-plus"></i>
-      </a>
-
+    <a class="floating-btn" onclick="document.getElementById('circularMenu').classList.toggle('active');" id="btnMenuHome2">
+      <i class="fa fa-plus"></i>
+    </a>
+  
     <menu class="items-wrapper">
-        <a href="#" 
-            data-toggle="tooltip" data-placement="left" title="Análisis de Productos" 
-            class="menu-item  fas fa-box">P</a>
-        <a href="#" 
-            data-toggle="tooltip" data-placement="left" title="Análisis de Marcas"  
-            class="menu-item  fas fa-briefcase">M</a>
-        <a href="#" 
-            data-toggle="tooltip" data-placement="left" title="Análisis por Municipio"  
-            class="menu-item  fas fa-map-marker-alt">U</a>
-        <a href="./index.html"
-         data-toggle="tooltip" data-placement="left" title="Salir (x)"  
-         class="menu-item  fas fa-lock"></a>
+      <a href="#" class="menu-item fas fa-home" id="btnMInicio"></a>
+      <a href="#" class="menu-item fas fa-tag" id="btnMMarcas"></a>
+      <a href="#" class="menu-item fa fa-chart-line" id="btnMSell"></a>
+      <a href="#" class="menu-item fa fa-arrow-left" id="btnMSalir"></a>
     </menu>
+  
+  </div>
+  
 
-</div>
 
-
-<button class="btn btn-outline-secondary bg-white text-secondary shadow middlebutton btn-circle btn-xl" id="btnFiltro">
+<button class="btn btn-outline-secondary bg-white text-secondary shadow leftbutton btn-circle btn-xl" id="btnFiltro">
     <i class="fas fa-grip-horizontal"></i>
 </button>
 
@@ -340,13 +333,15 @@
 </div>
 
 <div class="circular-menu hand" id="btnInstalar">
-<a class="floating-btn btn-danger">
-    <i class="fa fa-download"></i>
-  </a>
+    <a class="floating-btn btn-danger">
+        <i class="fa fa-download"></i>
+    </a>
 </div>
 
   <div id="preloader"></div>
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <!--
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    -->
 
   <script src="https://kit.fontawesome.com/3d70a7cf56.js" crossorigin="anonymous"></script>
   <!-- Vendor JS Files -->

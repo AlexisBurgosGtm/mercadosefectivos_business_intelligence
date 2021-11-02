@@ -25,6 +25,11 @@ function getView(){
                             <i class="bx bx-calendar"></i> Daily
                         </button>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#tab4" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
+                            <i class="bx bx-layer"></i> Monthly
+                        </button>
+                    </li>
                 </ul>
                 
                 <div class="tab-content col-12" id="pills-tabContent">
@@ -39,6 +44,9 @@ function getView(){
                     </div>
                     <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="pills-contact-tab">
                         ${view.fechas()}
+                    </div>
+                    <div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="pills-contact-tab">
+                        ${view.meses()}
                     </div>
                 </div>
 
@@ -70,10 +78,7 @@ function getView(){
                 </div>
             </div>
 
-            <div class="row">
-                ${GlobalIconoDobleClick}   
-                <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf5" ondblclick="expandir('containerGraf5')"></div>
-            </div>
+            
             `
         },
         marcas:()=>{
@@ -94,6 +99,12 @@ function getView(){
             return `
                 <div class="table-responsive card-shadow col-12" id="tblTabla">
                 
+                </div>
+            `
+        },
+        meses:()=>{
+            return `                 
+                <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGraf5" ondblclick="expandir('containerGraf5')"></div>
                 </div>
             `
         },

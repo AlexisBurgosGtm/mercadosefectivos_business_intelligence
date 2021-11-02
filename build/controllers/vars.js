@@ -2,14 +2,15 @@ let root = document.getElementById('root');
 let GlobalSelectedForm = 'LOGIN';
 
 let titulo = document.getElementById('titulo');
-let divMenu = document.getElementById('navbar');
-divMenu.style = "visibility:hidden;";
+
+
+let btnMenuHome = document.getElementById('circularMenu');
 
 let GlobalSelectedCodMarca = 0;
 let GlobalSelectedDesMarca = '';
 let GlobalSelectedFecha ='';
 
-let GlobalIconoDobleClick = `<i class="fas fa-hand-point-up"></i><i class="fas fa-hand-point-up"></i>`
+let GlobalIconoDobleClick = `<i class="doble-hand fas fa-hand-point-up"></i><i class="doble-hand fas fa-hand-point-up"></i>`
 
 let GlobalLoader = `<div class="spinner-grow text-secondary" role="status">
                         <span class="sr-only">Loading...</span>
