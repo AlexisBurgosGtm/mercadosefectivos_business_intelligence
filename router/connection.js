@@ -9,7 +9,7 @@ const config = {
 
 
 
-const configx = {
+const configs = {
 	user: 'iEx',
 	password: 'iEx',
 	server: 'DESKTOP-0F9UF5S\\SQLEXPRESS',

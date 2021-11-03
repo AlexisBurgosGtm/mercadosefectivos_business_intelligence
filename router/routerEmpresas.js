@@ -138,7 +138,8 @@ router.get("/getempresas", async function(req,res){
                 SUM(COSTO) AS COSTO,SUM(VENTAS) AS VENTAS,
                 SUM(COSTODEV) AS COSTODEV,SUM(DEVOLUCIONES) AS DEVOLUCIONES,
                 SUM(UTILIDAD) AS UTILIDAD,SUM(MARGEN) AS MARGEN,0 AS OBJETIVO, 
-                AVG(UNIVERSO) AS UNIVERSO
+                AVG(UNIVERSO) AS UNIVERSO,
+                MAX(LASTUPDATE) AS LASTUPDATE
                 FROM BI_EMPRESAS_RESUMEN 
                 WHERE EMPNIT IN(${empresas})
                  AND MES IN(${mes}) AND ANIO IN(${anio})

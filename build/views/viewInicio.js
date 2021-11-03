@@ -529,30 +529,30 @@ function getCarsEmpresas(data){
 
     data.map((r)=>{
         view += `
-        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6">
-            <div class="card shadow border-top-rounded border-bottom-rounded p-4">
+        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6">
+            <div class="card shadow border-top-rounded border-bottom-rounded p-4" style="font-size:70%">
                 <div class="row">
                     <div class="col-9">
 
-                        <span class="text-info">${r.EMPNIT}</span>   
+                        <span class="text-info negrita">${r.EMPNIT}</span>   
                         <hr class="solid">
 
                         <label>Total Ventas:</label>
-                        <h5 class="text-secondary">${funciones.setMoneda(r.VENTAS,'Q')}</h5>
+                        <label class="negrita text-info">${funciones.setMoneda(r.VENTAS,'Q')}</label>
                         
                         <label>Total Devoluciones:</label>
-                        <h5 class="text-secondary">${funciones.setMoneda(r.DEVOLUCIONES,'Q')}</h5>
+                        <label class="negrita text-danger">${funciones.setMoneda(r.DEVOLUCIONES,'Q')}</label>
                         
                         <label>Total Bruto:</label>
-                        <h5 class="text-secondary">${funciones.setMoneda((Number(r.VENTAS)+Number(r.DEVOLUCIONES)),'Q')}</h5>
+                        <label class="negrita text-secondary">${funciones.setMoneda((Number(r.VENTAS)+Number(r.DEVOLUCIONES)),'Q')}</label>
 
                     </div>
                     <div class="col-3" style="font-size:40px">
-                        <i class="bx bx-purchase-tag-alt text-secondary"></i>
+                        <i class="bx bx-line-chart text-secondary"></i>
                     </div>
                 </div>
                 <div class="row">
-                    <small>Updated: ${r.LASTUPDATE}</small>
+                    <small>Updated: ${funciones.convertDateNormal(r.LASTUPDATE)}</small>
                 </div>
             </div>
         </div>
