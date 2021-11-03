@@ -32,25 +32,19 @@ function getView(){
         },
         modalDetalles: ()=>{
             return `
-            <div class="modal fade shadow border-top-rounded border-bottom-rounded" id="modalDetalles" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-xl" role="document">
+            <div class="modal fade" id="modalDetalles" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Detalles de la Marca</h5>
-                            <br>
-                            <h5 class="text-danger" id="lbDesMarca"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                         </div>
-                        <div class="modal-body row">
-                    
-                                                       
-                            
-
+                        <div class="modal-body">
+                            ...
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-outline-secondary btn-xl btn-circle shadow" data-dismiss="modal" id="">
-                                X
-                            </button>
-                           
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
                         </div>
                     </div>
                 </div>
@@ -224,7 +218,7 @@ function getCardsMarcas(costo,precio,utilidad){
 
 function getDetallesMarca(codmarca,desmarca){
     
-    document.getElementById('lbDesMarca').innerText = desmarca + ' (Cod:' + codmarca + ')';
+    //document.getElementById('lbDesMarca').innerText = desmarca + ' (Cod:' + codmarca + ')';
     $('#modalDetalles').modal('show');
 
 }

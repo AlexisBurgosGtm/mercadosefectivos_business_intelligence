@@ -527,7 +527,13 @@ function getCarsEmpresas(data){
     let container = document.getElementById('containerCardsResumen');
     let view = '';
 
+    let totalventa =0; let totaldevoluciones = 0;
     data.map((r)=>{
+        totalventa += Number(r.VENTAS);
+        totaldevoluciones += Number(r.DEVOLUCIONES);
+        let dev = Number(r.DEVOLUCIONES);
+        let vent = Number(r.VENTAS);
+        let porcdev = ((dev * -1) / vent) * 100;
         view += `
         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6">
             <div class="card shadow border-top-rounded border-bottom-rounded p-4" style="font-size:70%">
@@ -541,7 +547,7 @@ function getCarsEmpresas(data){
                         <label class="negrita text-info">${funciones.setMoneda(r.VENTAS,'Q')}</label>
                         
                         <label>Total Devoluciones:</label>
-                        <label class="negrita text-danger">${funciones.setMoneda(r.DEVOLUCIONES,'Q')}</label>
+                        <label class="negrita text-danger">${funciones.setMoneda(r.DEVOLUCIONES,'Q')} (${porcdev.toFixed(2)} %)</label>
                         
                         <label>Total Bruto:</label>
                         <label class="negrita text-secondary">${funciones.setMoneda((Number(r.VENTAS)+Number(r.DEVOLUCIONES)),'Q')}</label>
@@ -559,8 +565,33 @@ function getCarsEmpresas(data){
         `
     });
 
+    totaldevoluciones = totaldevoluciones * -1;
+    let totalscard = `
+        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6">
+            <div class="card shadow border-top-rounded border-bottom-rounded p-4 bg-primary text-white" style="font-size:80%">
+                <div class="row">
+                    <div class="col-9">
 
-    container.innerHTML = view;
+                        <label>Ventas:</label>
+                        <label class="negrita">${funciones.setMoneda(totalventa,'Q')}</label>
+                        
+                        <label>Devoluciones:</label>
+                        <label class="negrita">${funciones.setMoneda(totaldevoluciones,'Q')}</label>
+                        <h5 class="negrita">${((totaldevoluciones / totalventa) * 100).toFixed(2)} %</h5>
+
+                        <label>Total Bruto:</label>
+                        <label class="negrita">${funciones.setMoneda((Number(totalventa)-Number(totaldevoluciones)),'Q')}</label>
+
+                    </div>
+                    <div class="col-3" style="font-size:50px">
+                        <i class="bx bx-dollar"></i>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    `
+    container.innerHTML = totalscard + view;
 
 
 }
