@@ -56,6 +56,10 @@ function getView(){
         },
         resumen:()=>{
             return `
+            <div class="row" id="containerCardsResumen">
+            
+            </div>
+
             <div class="row">
                 <div class="col-sm-6 col-lg-3 col-xl-3 col-md-6">
                     ${GlobalIconoDobleClick}
@@ -151,6 +155,7 @@ async function viewInicioObtenerDatos(){
         getPieCharVentas(empresas);
         getPieCharDevoluciones(empresas);
         getBarCharUtilidades(empresas);
+        getCarsEmpresas(empresas);
     })
 
     await getDataFechas()
@@ -516,6 +521,50 @@ function getBarCharUtilidades(data){
     
 
 };
+
+function getCarsEmpresas(data){
+
+    let container = document.getElementById('containerCardsResumen');
+    let view = '';
+
+    data.map((r)=>{
+        view += `
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6">
+            <div class="card shadow border-top-rounded border-bottom-rounded p-4">
+                <div class="row">
+                    <div class="col-9">
+
+                        <span class="text-info">${r.EMPNIT}</span>   
+                        <hr class="solid">
+
+                        <label>Total Ventas:</label>
+                        <h5 class="text-secondary">${funciones.setMoneda(r.VENTAS,'Q')}</h5>
+                        
+                        <label>Total Devoluciones:</label>
+                        <h5 class="text-secondary">${funciones.setMoneda(r.DEVOLUCIONES,'Q')}</h5>
+                        
+                        <label>Total Bruto:</label>
+                        <h5 class="text-secondary">${funciones.setMoneda((Number(r.VENTAS)+Number(r.DEVOLUCIONES)),'Q')}</h5>
+
+                    </div>
+                    <div class="col-3" style="font-size:40px">
+                        <i class="bx bx-purchase-tag-alt text-secondary"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <small>Updated: ${r.LASTUPDATE}</small>
+                </div>
+            </div>
+        </div>
+        `
+    });
+
+
+    container.innerHTML = view;
+
+
+}
+
 
 
 function getBarCharClientesAlcanzados(data){
