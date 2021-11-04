@@ -539,23 +539,25 @@ function getCarsEmpresas(data){
             <div class="card shadow border-top-rounded border-bottom-rounded p-4" style="font-size:70%">
                 <div class="row">
                     <div class="col-9">
-
-                        <span class="text-info negrita">${r.EMPNIT}</span>   
-                        <hr class="solid">
-
-                        <label>Total Ventas:</label>
-                        <label class="negrita text-info">${funciones.setMoneda(r.VENTAS,'Q')}</label>
-                        
-                        <label>Total Devoluciones:</label>
-                        <label class="negrita text-danger">${funciones.setMoneda(r.DEVOLUCIONES,'Q')} (${porcdev.toFixed(2)} %)</label>
-                        
-                        <label>Total Bruto:</label>
-                        <label class="negrita text-secondary">${funciones.setMoneda((Number(r.VENTAS)+Number(r.DEVOLUCIONES)),'Q')}</label>
-
+                        <span class="text-primary negrita">${r.EMPNIT}</span>   
+                      
                     </div>
-                    <div class="col-3" style="font-size:40px">
+
+                    <div class="col-3" style="font-size:20px">
                         <i class="bx bx-line-chart text-secondary"></i>
                     </div>
+                </div>
+                <div class="row">
+
+                    <label>Total Ventas:</label>
+                    <label class="negrita text-info">${funciones.setMoneda(r.VENTAS,'Q')}</label>
+                    <br>
+                    <label>Total Devoluciones:</label>
+                    <label class="negrita text-danger">${funciones.setMoneda(r.DEVOLUCIONES,'Q')} (${porcdev.toFixed(2)} %)</label>
+                    <br>
+                    <label>Total Bruto:</label>
+                    <label class="negrita text-secondary">${funciones.setMoneda((Number(r.VENTAS)+Number(r.DEVOLUCIONES)),'Q')}</label>
+            
                 </div>
                 <div class="row">
                     <small>Updated: ${funciones.convertDateNormal(r.LASTUPDATE)}</small>
@@ -568,17 +570,17 @@ function getCarsEmpresas(data){
     totaldevoluciones = totaldevoluciones * -1;
     let totalscard = `
         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6">
-            <div class="card shadow border-top-rounded border-bottom-rounded p-4 bg-primary text-white" style="font-size:80%">
+            <div class="card shadow border-top-rounded border-bottom-rounded p-4 bg-primary  text-white" style="font-size:80%">
                 <div class="row">
                     <div class="col-9">
 
                         <label>Ventas:</label>
                         <label class="negrita">${funciones.setMoneda(totalventa,'Q')}</label>
-                        
+                        <br>
                         <label>Devoluciones:</label>
                         <label class="negrita">${funciones.setMoneda(totaldevoluciones,'Q')}</label>
                         <h5 class="negrita">${((totaldevoluciones / totalventa) * 100).toFixed(2)} %</h5>
-
+                        <br>
                         <label>Total Bruto:</label>
                         <label class="negrita">${funciones.setMoneda((Number(totalventa)-Number(totaldevoluciones)),'Q')}</label>
 
