@@ -4,20 +4,20 @@ function getView(){
             return `
             <div class="row shadow p-2 border-top-rounded border-bottom-rounded">
                 <div class="col-sm-12 col-md-6 col-xl-6 col-lg-6">
-                    <h3 class="text-danger">${GlobalSelectedCodSucursal}</h3>
+                    <h3 class="text-danger negrita">${GlobalSelectedCodSucursal}</h3>
                 </div>
                 
                 <div class="col-sm-12 col-md-6 col-xl-6 col-lg-6">
-                    <button class="btn btn-outline-secondary" id="btnTabHome">
+                    <button class="btn btn-outline-secondary shadow" id="btnTabHome">
                         <i class="fas fa-chart"></i>Sales Overview
                     </button>
-                    <button class="btn btn-outline-danger" id="btnTab1">
+                    <button class="btn btn-outline-danger shadow" id="btnTab1">
                         <i class="fas fa-shopping-cart"></i>Products
                     </button>
-                    <button class="btn btn-outline-info" id="btnTab2">
+                    <button class="btn btn-outline-info shadow" id="btnTab2">
                         <i class="fas fa-address-book"></i>Customers
                     </button>
-                    <button class="btn btn-outline-success" id="btnTab3">
+                    <button class="btn btn-outline-success shadow" id="btnTab3">
                         <i class="fas fa-briefcase"></i>Routes(Employees)
                     </button>
                 </div>
