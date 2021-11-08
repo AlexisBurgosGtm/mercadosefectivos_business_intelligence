@@ -3,6 +3,20 @@ const execute = require('./connection');
 const express = require('express');
 const router = express.Router();
 
+router.post('/getVentasFechas', async function(req,res){
+
+    const {empresa,anio,mes} = req.body;
+   
+    let qry = `SELECT FECHA, COUNT(DISTINCT CODIGO) AS VISITADOS, SUM(TOTALCOSTO) AS TOTALCOSTO, SUM(TOTALPRECIO) AS TOTALPRECIO
+            FROM BI_RPT_GENERAL
+            WHERE (CODSUCURSAL = '${empresa}') AND (ANIO IN(${anio})) AND (MES IN(${mes})) 
+    GROUP BY FECHA`;
+
+    execute.Query(res,qry);
+
+});
+
+
 
 router.get('/getHistorialVenta', async function(req,res){
 

@@ -9,7 +9,7 @@ function getView(){
                 
                 <div class="col-sm-12 col-md-6 col-xl-6 col-lg-6">
                     <button class="btn btn-outline-secondary" id="btnTabHome">
-                        <i class="fas fa-chart"></i>Sales Overview
+                        <i class="fas fa-chart-pie"></i>Sales Overview
                     </button>
                     <button class="btn btn-outline-danger" id="btnTab1">
                         <i class="fas fa-shopping-cart"></i>Products

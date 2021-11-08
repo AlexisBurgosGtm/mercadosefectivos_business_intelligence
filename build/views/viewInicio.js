@@ -540,7 +540,7 @@ function getCarsEmpresas(data){
         let porcdev = ((dev * -1) / vent) * 100;
         view += `
         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6">
-            <div class="card shadow border-top-rounded border-bottom-rounded p-4 hand" style="font-size:70%" onclick="gotoEmpresa('${r.EMPNIT}','${r.VENTAS}','${r.DEVOLUCIONES}','${r.UNIVERSO}')">
+            <div class="card shadow border-top-rounded border-bottom-rounded p-4 hand" style="font-size:70%" ondblclick="gotoEmpresa('${r.EMPNIT}','${r.VENTAS}','${r.DEVOLUCIONES}','${r.UNIVERSO}')">
                 <div class="row">
                     <div class="col-9">
                         <span class="text-primary negrita">${r.EMPNIT}</span>   

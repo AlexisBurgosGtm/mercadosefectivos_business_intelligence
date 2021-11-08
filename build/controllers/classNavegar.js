@@ -62,7 +62,7 @@ let Navegar = {
             btnFiltro.style='visibility:visible';
             btnFiltroCerrar.style='visibility:visible';
             btnMenuHome.style='visibility:visible';
-            initView();
+            initView(codsucursal,ventas,devoluciones,universo);
         })
     }
 }
