@@ -6,6 +6,7 @@ let titulo = document.getElementById('titulo');
 
 let btnMenuHome = document.getElementById('circularMenu');
 
+let GlobalSelectedCodSucursal = '';
 let GlobalSelectedCodMarca = 0;
 let GlobalSelectedDesMarca = '';
 let GlobalSelectedFecha ='';

@@ -131,8 +131,9 @@ router.get('/getfacdevempresas', async function(req,res){
 
 });
 
-router.get("/getempresas", async function(req,res){
-    const {empresas,anio,mes} = req.query;
+router.post("/getempresas", async function(req,res){
+    
+    const {empresas,anio,mes} = req.body;
 
     let qry = `SELECT EMPNIT, NOMBRE, 
                 SUM(COSTO) AS COSTO,SUM(VENTAS) AS VENTAS,

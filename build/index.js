@@ -29,6 +29,7 @@ InicializarServiceWorkerNotif();
 let btnFiltro = document.getElementById('btnFiltro');
 btnFiltro.addEventListener('click',()=>{
     $('#modalParametros').modal('show');
+    funciones.animateCSS('modalParametros','backInLeft');
 });
 
 let btnFiltroCerrar = document.getElementById('btnFiltroCerrar');

@@ -206,7 +206,11 @@ function getDataResumen(){
     return new Promise((resolve, reject)=>{
         //obtiene los datos de la card empresas
       
-        axios.get(`/empresas/getempresas?empresas=${parametrosEmpresas}&anio=${parametrosAnio}&mes=${parametrosMes}`)
+        //axios.get(`/empresas/getempresas?empresas=${parametrosEmpresas}&anio=${parametrosAnio}&mes=${parametrosMes}`)
+        axios.post(`/empresas/getempresas`,{
+                empresas:parametrosEmpresas,
+                anio:parametrosAnio,
+                mes:parametrosMes})
         .then(res => {
             const empresas = res.data.recordset;
            
@@ -536,11 +540,11 @@ function getCarsEmpresas(data){
         let porcdev = ((dev * -1) / vent) * 100;
         view += `
         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6">
-            <div class="card shadow border-top-rounded border-bottom-rounded p-4" style="font-size:70%">
+            <div class="card shadow border-top-rounded border-bottom-rounded p-4 hand" style="font-size:70%" onclick="gotoEmpresa('${r.EMPNIT}','${r.VENTAS}','${r.DEVOLUCIONES}','${r.UNIVERSO}')">
                 <div class="row">
                     <div class="col-9">
                         <span class="text-primary negrita">${r.EMPNIT}</span>   
-                      
+                        ${GlobalIconoDobleClick}
                     </div>
 
                     <div class="col-3" style="font-size:20px">
@@ -596,7 +600,13 @@ function getCarsEmpresas(data){
     container.innerHTML = totalscard + view;
 
 
-}
+};
+function gotoEmpresa(codsucursal,ventas,devoluciones,universo){
+
+    GlobalSelectedCodSucursal = codsucursal;
+    Navegar.analisis_empresa(codsucursal,ventas,devoluciones,universo);
+
+};
 
 
 

@@ -53,5 +53,16 @@ let Navegar = {
             btnMenuHome.style='visibility:visible';
             initView(data);
         })
+    },
+    analisis_empresa:(codsucursal,ventas,devoluciones,universo)=>{
+        funciones.loadScript('../views/viewAnalisisEmpresa.js','root')
+        .then(()=>{
+            titulo.innerHTML = `<img src="./favicon.png" width="20" height="20" class="profile-pic me-2">COMPANY ANALYSIS`;
+            GlobalSelectedForm = 'ANALISIS_EMPRESA';
+            btnFiltro.style='visibility:visible';
+            btnFiltroCerrar.style='visibility:visible';
+            btnMenuHome.style='visibility:visible';
+            initView();
+        })
     }
 }
