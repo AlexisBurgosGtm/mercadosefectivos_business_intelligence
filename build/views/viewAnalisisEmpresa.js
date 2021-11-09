@@ -203,13 +203,10 @@ function getCardInicio(ventas,devoluciones,universo){
                 <h5 class="negrita text-danger">${(((devoluciones * -1) / ventas) * 100).toFixed(2)} %</h5>
                 
                 <label>Total Bruto:</label>
-                <label class="negrita text-info">${funciones.setMoneda((Number(ventas)+Number(devoluciones)),'Q')}</label>
-                <br>
-                <label>Clientes Alcanzados:</label>
-                <label class="negrita text-secondary">${universo}</label>
+                <h5 class="negrita text-info">${funciones.setMoneda((Number(ventas)+Number(devoluciones)),'Q')}</h5>
 
             </div>
-            <div class="col-3" style="font-size:50px">
+            <div class="col-3" style="font-size:30px">
                 <i class="bx bx-dollar"></i>
             </div>
         </div>
@@ -217,6 +214,17 @@ function getCardInicio(ventas,devoluciones,universo){
     container.innerHTML = view;
 
 };
+function getDataCardInicio(data){
+
+    let totalventa = 0; let totaldevoluciones = 0; let universo = 0;
+    
+    data.map((r)=>{
+        totalventa += Number(r.TOTALPRECIO);
+        totaldevoluciones += Number(r.TOTALDEVOLUCIONES);
+    })
+
+    getCardInicio(totalventa,totaldevoluciones,universo);
+}
 
 // FECHAS ----------------------------
 function getDataEmpresaFechas(){
@@ -230,7 +238,6 @@ function getDataEmpresaFechas(){
 
         axios.post(`/empresas/getVentasFechas`, data)
         .then(res => {
-            console.log(res);
             const datos = res.data.recordset;   
             resolve(datos);
         })

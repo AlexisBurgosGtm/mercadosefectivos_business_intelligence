@@ -57,6 +57,13 @@ btnFiltroAceptar.addEventListener('click',()=>{
                 
             }
             break;
+        case 'ANALISIS_EMPRESA': 
+            try {
+              getEmpresaData();
+            } catch (error) {
+                
+            }
+            break;
         case 'MARCAS': 
             try {
               getTblVentasMarcas('containerTblMarcas');
