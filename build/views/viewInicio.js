@@ -561,6 +561,9 @@ function getCarsEmpresas(data){
                     <br>
                     <label>Total Bruto:</label>
                     <label class="negrita text-secondary">${funciones.setMoneda((Number(r.VENTAS)+Number(r.DEVOLUCIONES)),'Q')}</label>
+                    <br>
+                    <label>Total Compras:</label>
+                    <label class="negrita text-success">${funciones.setMoneda(Number(r.COMPRAS),'Q')}</label>
             
                 </div>
                 <div class="row">
@@ -601,6 +604,7 @@ function getCarsEmpresas(data){
 
 
 };
+
 function gotoEmpresa(codsucursal,ventas,devoluciones,universo){
 
     GlobalSelectedCodSucursal = codsucursal;

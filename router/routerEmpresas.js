@@ -150,11 +150,16 @@ router.post("/getempresas", async function(req,res){
     const {empresas,anio,mes} = req.body;
 
     let qry = `SELECT EMPNIT, NOMBRE, 
-                SUM(COSTO) AS COSTO,SUM(VENTAS) AS VENTAS,
-                SUM(COSTODEV) AS COSTODEV,SUM(DEVOLUCIONES) AS DEVOLUCIONES,
-                SUM(UTILIDAD) AS UTILIDAD,SUM(MARGEN) AS MARGEN,0 AS OBJETIVO, 
+                SUM(COSTO) AS COSTO,
+                SUM(VENTAS) AS VENTAS,
+                SUM(COSTODEV) AS COSTODEV,
+                SUM(DEVOLUCIONES) AS DEVOLUCIONES,
+                SUM(UTILIDAD) AS UTILIDAD,
+                SUM(MARGEN) AS MARGEN,
+                0 AS OBJETIVO, 
                 AVG(UNIVERSO) AS UNIVERSO,
-                MAX(LASTUPDATE) AS LASTUPDATE
+                MAX(LASTUPDATE) AS LASTUPDATE,
+                SUM(ISNULL(COMPRAS,0)) AS COMPRAS
                 FROM BI_EMPRESAS_RESUMEN 
                 WHERE EMPNIT IN(${empresas})
                  AND MES IN(${mes}) AND ANIO IN(${anio})
