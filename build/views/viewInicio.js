@@ -30,6 +30,11 @@ function getView(){
                             <i class="bx bx-layer"></i> Monthly
                         </button>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link"  id="btnConfig">
+                            <i class="fas fa-cog"></i> Config
+                        </button>
+                    </li>
                 </ul>
                 
                 <div class="tab-content col-12" id="pills-tabContent">
@@ -135,6 +140,7 @@ function getView(){
     }
 
     root.innerHTML = view.body() + view.modalExpandir();
+
 }; 
 
 function addListeners(){
@@ -143,6 +149,10 @@ function addListeners(){
     getParametros();
    
     viewInicioObtenerDatos();
+
+    document.getElementById('btnConfig').addEventListener('click',()=>{
+        Navegar.config();
+    });
 
     funciones.slideAnimationTabs();
 };
@@ -273,8 +283,7 @@ function getDataClientes(){
       
         axios.get(`/empresas/getClientesVisitados?anio=${parametrosAnio}&mes=${parametrosMes}`)
         .then(res => {
-            const empresas = res.data.recordset;
-           
+            const empresas = res.data.recordset;    
             resolve(empresas);
         })
         .catch(()=>{
@@ -284,8 +293,8 @@ function getDataClientes(){
 
     })
      
-
 };
+
 
 function getPieCharVentas(data){
    

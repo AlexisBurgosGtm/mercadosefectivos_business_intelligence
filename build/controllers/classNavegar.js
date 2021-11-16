@@ -10,6 +10,17 @@ let Navegar = {
             initView();
         })
     },
+    config:()=>{
+        funciones.loadScript('../views/viewConfig.js','root')
+        .then(()=>{
+            titulo.innerHTML = `<img src="./favicon.png" width="20" height="20" class="profile-pic me-2">CONFIGURATIONS AND USERS`;
+            GlobalSelectedForm = 'CONFIG';
+            btnFiltro.style='visibility:hidden';
+            btnFiltroCerrar.style='visibility:visible';
+            btnMenuHome.style='visibility:visible';
+            initView();
+        })
+    },
     inicio:()=>{
         funciones.loadScript('../views/viewInicio.js','root')
         .then(()=>{

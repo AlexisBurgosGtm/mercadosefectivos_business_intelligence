@@ -79,11 +79,14 @@ function initView(){
 
 
 function login(tipo,nombre,pass,element){
+
    let event = document.getElementById(element)
     event.innerHTML = `<i class="fas fa-unlock fa-spin"></i>`;
     event.disabled = true;
 
-    axios.get(`/usuarios/login?tipo=${tipo}&nombre=${nombre}&clave=${pass}`)
+    let data = {nombre:nombre,clave:pass,tipo:tipo}
+    //axios.get(`/usuarios/login?tipo=${tipo}&nombre=${nombre}&clave=${pass}`)
+    axios.post(`/usuarios/login`,data)
     .then(res => {
       const resp = res.data;
         if(Number(resp.rowsAffected[0])==0){
@@ -101,3 +104,5 @@ function login(tipo,nombre,pass,element){
         event.disabled = false;
     })
 };
+
+
