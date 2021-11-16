@@ -94,7 +94,20 @@ function login(tipo,nombre,pass,element){
             event.innerHTML = `<i class="fas fa-lock"></i>Ingresar`;
             event.disabled = false;
         }else{
-            Navegar.inicio();
+            switch (tipo) {
+                case "GERENTE":
+                    Navegar.inicio();        
+                    break;
+                case "PROVEEDOR":
+                    Navegar.analisis_marca();
+                    break;
+                case "SUPERVISOR":
+                    Navegar.analisis_empresa();
+                    break;
+                default:
+                    break;
+            }
+            
         }
       
     })
