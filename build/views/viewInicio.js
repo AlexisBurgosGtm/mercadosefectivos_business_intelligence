@@ -885,7 +885,7 @@ function getTblVentasVendedores(data){
     let container = document.getElementById('tblTablaV');
     container.innerHTML = getLoader();
 
-    let totalcosto = 0; let totalventa = 0; let totalutilidad = 0;
+    let totaldevoluciones = 0; let totalventa = 0; let totalutilidad = 0;
     let conteo = 0;
 
     let head = `<h5 class="text-danger">VENTAS POR VENDEDOR</h5>
@@ -894,9 +894,10 @@ function getTblVentasVendedores(data){
                     <thead class="bg-danger text-white">
                         <tr>
                             <td>VENDEDOR</td>
-                            <td>COSTO</td>
-                            <td>VENTA</td>
-                            <td>UTILIDAD</td>
+                            <td>VENTAS</td>
+                            <td>DEVOLUCIONES</td>
+                            <td>TOTALNETO</td>
+                            <td>DEV%</td>
                             <td>PART</td>
                         </tr>
                     </thead>
@@ -906,10 +907,11 @@ function getTblVentasVendedores(data){
 
     data.map((r)=>{
         conteo += 1;
-        totalcosto += Number(r.TOTALCOSTO);
-        totalventa += Number(r.TOTALPRECIO);
-        totalutilidad += Number(r.UTILIDAD);
+        totaldevoluciones += Number(r.DEVOLUCIONES);
+        totalventa += Number(r.VENTAS);
     })
+
+    totalutilidad = Number(totalventa + totaldevoluciones);
 
     data.map((r)=>{
         dat += `
@@ -918,10 +920,11 @@ function getTblVentasVendedores(data){
                     <br>
                     <small class="negrita">${r.CODSUCURSAL}</small>
                 </td>
-                <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
-                <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
-                <td>${funciones.setMoneda(r.UTILIDAD,'Q')}</td>
-                <td>${((Number(r.TOTALPRECIO)/totalventa)*100).toFixed(2)}%</td>
+                <td>${funciones.setMoneda(r.VENTAS,'Q')}</td>
+                <td>${funciones.setMoneda(r.DEVOLUCIONES,'Q')}</td>
+                <td>${funciones.setMoneda((Number(r.VENTAS)+Number(r.DEVOLUCIONES)),'Q')}</td>
+                <td>${((Number(r.DEVOLUCIONES*-1)/Number(r.VENTAS))*100).toFixed(2)}%</td>
+                <td>${((Number(r.VENTAS)+Number(r.DEVOLUCIONES)/totalventa) *100).toFixed(2)}%</td>
             </tr>
         `
     })
@@ -930,9 +933,10 @@ function getTblVentasVendedores(data){
                     <tfoot class="text-danger bg-foot-table table-bordered">
                         <tr>
                             <td></td>
-                            <td>${funciones.setMoneda(totalcosto,'Q')}</td>
                             <td>${funciones.setMoneda(totalventa,'Q')}</td>
+                            <td>${funciones.setMoneda(totaldevoluciones,'Q')}</td>
                             <td>${funciones.setMoneda(totalutilidad,'Q')}</td>
+                            <td></td>
                             <td></td>
                         </tr>
                     </tfoot>
