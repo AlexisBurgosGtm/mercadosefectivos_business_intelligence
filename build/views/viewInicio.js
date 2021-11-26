@@ -915,6 +915,7 @@ function getTblVentasVendedores(data){
     totalutilidad = Number(totalventa + totaldevoluciones);
    
     data.map((r)=>{
+        let totalneto = Number(r.VENTAS) + Number(r.DEVOLUCIONES);
         dat += `
             <tr class="hand border-bottom border-dark" ondblclick="gotoVendedor('${r.CODVEN}','${r.NOMVEN}')">
                 <td>${GlobalIconoDobleClick} ${r.NOMVEN}
@@ -923,9 +924,9 @@ function getTblVentasVendedores(data){
                 </td>
                 <td>${funciones.setMoneda(r.VENTAS,'Q')}</td>
                 <td>${funciones.setMoneda(r.DEVOLUCIONES,'Q')}</td>
-                <td>${funciones.setMoneda((Number(r.VENTAS)+Number(r.DEVOLUCIONES)),'Q')}</td>
+                <td>${funciones.setMoneda(totalneto,'Q')}</td>
                 <td>${((Number(r.DEVOLUCIONES *-1)/Number(r.VENTAS))*100).toFixed(2)}%</td>
-                <td>${((Number(r.VENTAS)+Number(r.DEVOLUCIONES)/totalventa)).toFixed(2)}%</td>
+                <td>${((totalneto / totalventa)* 100).toFixed(2)}%</td>
             </tr>
         `
     })
