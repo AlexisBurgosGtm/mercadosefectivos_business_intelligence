@@ -882,6 +882,7 @@ function getDataVendedores(){
 
 function getTblVentasVendedores(data){
     
+    
     let container = document.getElementById('tblTablaV');
     container.innerHTML = getLoader();
 
@@ -912,7 +913,7 @@ function getTblVentasVendedores(data){
     })
 
     totalutilidad = Number(totalventa + totaldevoluciones);
-
+   
     data.map((r)=>{
         dat += `
             <tr class="hand border-bottom border-dark" ondblclick="gotoVendedor('${r.CODVEN}','${r.NOMVEN}')">
@@ -923,8 +924,8 @@ function getTblVentasVendedores(data){
                 <td>${funciones.setMoneda(r.VENTAS,'Q')}</td>
                 <td>${funciones.setMoneda(r.DEVOLUCIONES,'Q')}</td>
                 <td>${funciones.setMoneda((Number(r.VENTAS)+Number(r.DEVOLUCIONES)),'Q')}</td>
-                <td>${((Number(r.DEVOLUCIONES*-1)/Number(r.VENTAS))*100).toFixed(2)}%</td>
-                <td>${((Number(r.VENTAS)+Number(r.DEVOLUCIONES)/totalventa) *100).toFixed(2)}%</td>
+                <td>${((Number(r.DEVOLUCIONES *-1)/Number(r.VENTAS))*100).toFixed(2)}%</td>
+                <td>${((Number(r.VENTAS)+Number(r.DEVOLUCIONES)/totalventa)).toFixed(2)}%</td>
             </tr>
         `
     })
