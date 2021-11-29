@@ -18,7 +18,8 @@ router.post('/login', async function(req,res){
 router.post('/select_usuarios', async function(req,res){
 
    
-    let qry = `SELECT ID, USUARIO, PASS, CODDOC, CORRELATIVO, TIPO, CODMARCA, CODSUCURSAL FROM BI_USUARIOS; `;
+    let qry = `SELECT ID, USUARIO, PASS, CODDOC, CORRELATIVO, TIPO, CODMARCA, CODSUCURSAL FROM BI_USUARIOS; 
+                `;
 
     execute.Query(res,qry);
 

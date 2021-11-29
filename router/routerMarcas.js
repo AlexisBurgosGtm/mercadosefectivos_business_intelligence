@@ -343,6 +343,18 @@ router.get('/getmarcasmunicipio', async function(req,res){
 
 
 
+router.post('/get_catalogo_marcas', async function(req,res){
+
+    const {} = req.body;
+
+    let qry = '';
+
+        qry = `SELECT CODMARCA, DESMARCA FROM BI_GENERALES_MARCAS ORDER BY DESMARCA`
+    
+
+     execute.Query(res,qry);
+    
+});
 
 
 module.exports = router;

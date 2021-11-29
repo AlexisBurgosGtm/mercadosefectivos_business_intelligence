@@ -84,7 +84,8 @@ function getView(){
                             
                             <div class="form-group">
                                 <label>Código de Marca:</label>
-                                <input type="number" class="form-control" id="txtUsuarioMarca">    
+                                <!--<input type="number" class="form-control" id="txtUsuarioMarca">-->
+                                <select class="form-control" id="txtUsuarioMarca"></select>    
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -183,6 +184,7 @@ function addListeners(){
     });
 
    getListaUsuarios();
+   getListaMarcas();
 
 };
 
@@ -225,6 +227,24 @@ function getListaUsuarios(){
         })
 }
 
+
+function getListaMarcas(){
+    let str = '';
+    let container = document.getElementById('txtUsuarioMarca');
+    container.innerHTML = GlobalLoader;
+
+    axios.post(`/marcas/get_catalogo_marcas`)
+        .then(res => {
+            const datos = res.data.recordset;
+            datos.map((r)=>{
+                str += `<option value="${r.CODMARCA}">${r.DESMARCA}</option>`
+            })
+            container.innerHTML = str;
+        })
+        .catch(()=>{
+           container.innerHTML = 'No se pudieron cargar los datos...'
+        })
+}
 
 
 function deleteUsuario(id){
