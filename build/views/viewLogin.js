@@ -4,8 +4,8 @@ function getView(){
             return `
           
             <div id="cardLogin" class="card card-rounded shadow col-sm-12 col-lg-4 col-xl-4 col-md-6">
-                    <div  class="card-header text-center">                        
-                        <img class="" width="100" height="100" src="./favicon.png">
+                    <div  class="card-header bg-white text-center">                        
+                        <img class="" width="70" height="70" src="./favicon.png">
                     </div>
 
                     <div class="card-body">

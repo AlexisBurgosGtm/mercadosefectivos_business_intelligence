@@ -9,16 +9,16 @@ function getView(){
                 
                 <div class="col-sm-12 col-md-6 col-xl-6 col-lg-6">
                     <button class="btn btn-outline-secondary shadow" id="btnTabHome">
-                        <i class="fas fa-chart-pie"></i>Sales Overview
+                        <i class="fal fa-chart-pie"></i>Sales Overview
                     </button>
                     <button class="btn btn-outline-danger shadow" id="btnTab1">
-                        <i class="fas fa-shopping-cart"></i>Products
+                        <i class="fal fa-shopping-cart"></i>Products
                     </button>
                     <button class="btn btn-outline-info shadow" id="btnTab2">
-                        <i class="fas fa-address-book"></i>Customers
+                        <i class="fal fa-address-book"></i>Customers
                     </button>
                     <button class="btn btn-outline-success shadow" id="btnTab3">
-                        <i class="fas fa-briefcase"></i>Routes(Employees)
+                        <i class="fal fa-briefcase"></i>Routes(Employees)
                     </button>
                 </div>
             </div>

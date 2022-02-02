@@ -612,7 +612,7 @@ function getCarsEmpresas(data){
                     </div>
 
                     <div class="col-3" style="font-size:20px">
-                        <i class="bx bx-line-chart text-secondary"></i>
+                        <i class="fal fa-chart-line text-secondary"></i>
                     </div>
                 </div>
                 <div class="row">
@@ -657,7 +657,7 @@ function getCarsEmpresas(data){
 
                     </div>
                     <div class="col-3" style="font-size:50px">
-                        <i class="bx bx-dollar"></i>
+                        <i class="fal fa-dollar-sign"></i>
                     </div>
                 </div>
                 

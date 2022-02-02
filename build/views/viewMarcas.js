@@ -170,7 +170,7 @@ function getCardsMarcas(costo,precio,utilidad){
                     <h5 class="text-secondary">${funciones.setMoneda(costo,'Q')}</h5>
                 </div>
                 <div class="col-3" style="font-size:40px">
-                    <i class="bx bx-purchase-tag-alt text-secondary"></i>
+                    <i class="fal fa-tag text-secondary"></i>
                 </div>
             </div>
         </div>
@@ -184,7 +184,7 @@ function getCardsMarcas(costo,precio,utilidad){
                     <h5 class="text-success">${funciones.setMoneda(precio,'Q')}</h5>
                 </div>
                 <div class="col-3" style="font-size:40px">
-                    <i class="bx bx-cart text-success"></i>
+                    <i class="fal fa-shopping-cart text-success"></i>
                 </div>
             </div>
         </div>
@@ -198,7 +198,7 @@ function getCardsMarcas(costo,precio,utilidad){
                     <h5 class="text-info">${funciones.setMoneda(utilidad,'Q')}</h5>
                 </div>
                 <div class="col-3" style="font-size:40px">
-                    <i class="bx bx-trending-up text-info"></i>
+                    <i class="fal fa-chart-line text-info"></i>
                 </div>
             </div>
         </div>
@@ -212,7 +212,7 @@ function getCardsMarcas(costo,precio,utilidad){
                     <h5 class="text-danger">${funciones.getMargenUtilidad(precio,costo)}</h5>
                 </div>
                 <div class="col-3" style="font-size:40px">
-                    <i class="bx bx-purchase-tag-alt text-danger"></i>
+                    <i class="fal fa-tag text-danger"></i>
                 </div>
             </div>
         </div>

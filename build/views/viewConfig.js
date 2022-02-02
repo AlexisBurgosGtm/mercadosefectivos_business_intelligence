@@ -12,7 +12,7 @@ function getView(){
                         <br>
                         <div class="" align="right">
                             <button class="btn btn-lg btn-outline-success hand shadow" id="btnNuevoUsuario">
-                                <i class="fas fa-plus"></i> Nuevo Usuario
+                                <i class="fal fa-plus"></i> Nuevo Usuario
                             </button>
                         </div>
                         <div class="card-body">
@@ -94,7 +94,7 @@ function getView(){
                             </button>
 
                             <button class="btn btn-info btn-xl btn-circle shadow hand" id="btnGuardarUsuario">
-                                <i class="fas fa-check"></i>
+                                <i class="fal fa-check"></i>
                             </button>
                         </div>
 
@@ -160,12 +160,12 @@ function addListeners(){
         .then((value)=>{
             if(value==true){
                 btnGuardarUsuario.disabled = true;
-                btnGuardarUsuario.innerHTML = '<i class="fas fa-check fa-spin"></i>';
+                btnGuardarUsuario.innerHTML = '<i class="fal fa-check fa-spin"></i>';
 
                 fcn_insert_usuario()
                 .then(()=>{
                     btnGuardarUsuario.disabled = false;
-                    btnGuardarUsuario.innerHTML = '<i class="fas fa-check"></i>';
+                    btnGuardarUsuario.innerHTML = '<i class="fal fa-check"></i>';
                     funciones.Aviso('Usuario creado exitosamente!!')
                     $('#modalUsuario').modal('hide');
 
@@ -174,7 +174,7 @@ function addListeners(){
                 .catch(()=>{
                     funciones.AvisoError('No se pudo crear este usuario')
                     btnGuardarUsuario.disabled = false;
-                    btnGuardarUsuario.innerHTML = '<i class="fas fa-check"></i>';
+                    btnGuardarUsuario.innerHTML = '<i class="fal fa-check"></i>';
                 })
 
 
@@ -214,7 +214,7 @@ function getListaUsuarios(){
                     <td>${r.CODSUCURSAL}</td>
                     <td>
                         <button class="btn btn-sm btn-outline-danger btn-circle hand" onclick="deleteUsuario('${r.ID}')" id="btnElim${r.ID.toString()}">
-                            <i class="fas fa-trash"></i>
+                            <i class="fal fa-trash"></i>
                         </button>
                     </td>
                 </tr>
@@ -251,7 +251,7 @@ function deleteUsuario(id){
     funciones.Confirmacion('¿Está seguro que desea ELIMINAR este Usuario?')
     .then((value)=>{
         if(value==true){
-            document.getElementById('btnElim' + id.toString()).innerHTML = '<i class="fas fa-trash fa-spin"></i>';
+            document.getElementById('btnElim' + id.toString()).innerHTML = '<i class="fal fa-trash fa-spin"></i>';
             document.getElementById('btnElim' + id.toString()).disabled =true;
 
             fcn_delete_usuario(id)
@@ -260,7 +260,7 @@ function deleteUsuario(id){
                 getListaUsuarios();
             })
             .catch(()=>{
-                document.getElementById('btnElim' + id.toString()).innerHTML = '<i class="fas fa-trash"></i>';
+                document.getElementById('btnElim' + id.toString()).innerHTML = '<i class="fal fa-trash"></i>';
                 document.getElementById('btnElim' + id.toString()).disabled =false;
             })
 
