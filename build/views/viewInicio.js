@@ -2,6 +2,61 @@ function getView(){
     let view = {
         body:()=>{
             return `
+            <div class="panel-content">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link btn-md active" data-toggle="tab" href="#tabHome" role="tab">
+                            <i class="fal fa-home mr-1"></i>Quick View
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-md" data-toggle="tab" href="#tab1" role="tab">
+                            <i class="fal fa-tag mr-1"></i>Trademarks
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-md" data-toggle="tab" href="#tab2" role="tab">
+                            <i class="fal fa-address-card mr-1"></i>Employees
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-md" data-toggle="tab" href="#tab3" role="tab">
+                            <i class="fal fa-calendar-alt mr-1"></i>Daily
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-md" data-toggle="tab" href="#tab4" role="tab">
+                            <i class="fal fa-chart-bar mr-1"></i>Monthly
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link"  id="btnConfig">
+                            <i class="fal fa-cog"></i> Config
+                        </button>
+                    </li>
+                </ul>
+                <div class="tab-content border border-top-0 border-bottom-0 border-right-0 border-left-0 p-3">
+                    <div class="tab-pane fade show active"  id="tabHome"  role="tabpanel">
+                        ${view.resumen()}
+                    </div>
+                    <div class="tab-pane fade" id="tab1" role="tabpanel">
+                        ${view.marcas()}
+                    </div>
+                    <div class="tab-pane fade" id="tab2" role="tabpanel">            
+                        ${view.empleados()}
+                    </div>
+                    <div class="tab-pane fade" id="tab3" role="tabpanel">            
+                        ${view.fechas()}
+                    </div>
+                    <div class="tab-pane fade" id="tab4" role="tabpanel">            
+                        ${view.meses()}
+                    </div>
+                </div>
+            </div>
+            `
+        },
+        bodyOld:()=>{
+            return `
             <div class="row">
     
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -549,7 +604,7 @@ function getCarsEmpresas(data){
         let porcdev = ((dev * -1) / vent) * 100;
         view += `
         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6">
-            <div class="card shadow border-top-rounded border-bottom-rounded p-4 hand" style="font-size:70%" ondblclick="gotoEmpresa('${r.EMPNIT}','${r.VENTAS}','${r.DEVOLUCIONES}','${r.UNIVERSO}')">
+            <div class="card shadow card-rounded p-4 hand" style="font-size:80%" ondblclick="gotoEmpresa('${r.EMPNIT}','${r.VENTAS}','${r.DEVOLUCIONES}','${r.UNIVERSO}')">
                 <div class="row">
                     <div class="col-9">
                         <span class="text-primary negrita">${r.EMPNIT}</span>   

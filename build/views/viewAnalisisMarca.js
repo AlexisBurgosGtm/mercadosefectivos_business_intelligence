@@ -9,16 +9,16 @@ function getView(){
                 
                 <div class="col-sm-12 col-md-6 col-xl-6 col-lg-6">
                     <button class="btn btn-outline-secondary" id="btnTabHome">
-                        <i class="fas fa-chart-pie"></i>Sales Overview
+                        <i class="fal fa-chart-pie"></i>Sales Overview
                     </button>
                     <button class="btn btn-outline-danger" id="btnTab1">
-                        <i class="fas fa-shopping-cart"></i>Products
+                        <i class="fal fa-shopping-cart"></i>Products
                     </button>
                     <button class="btn btn-outline-info" id="btnTab2">
-                        <i class="fas fa-address-book"></i>Customers
+                        <i class="fal fa-address-book"></i>Customers
                     </button>
                     <button class="btn btn-outline-success" id="btnTab3">
-                        <i class="fas fa-briefcase"></i>Routes
+                        <i class="fal fa-briefcase"></i>Routes
                     </button>
                 </div>
             </div>
@@ -459,7 +459,7 @@ function getTblMunicipios(data){
     data.map((r)=>{
         dat += `
             <tr class="hand border-bottom border-secondary" onclick="getDataProductosMunicipio('${r.DEPARTAMENTO}','${r.MUNICIPIO}')">
-                <td><i class="fas fa-hand-point-up"></i>${r.MUNICIPIO}
+                <td><i class="fal fa-hand-point-up"></i>${r.MUNICIPIO}
                     <br>               
                     <small class="negrita">${r.DEPARTAMENTO}</small>
                 </td>
@@ -990,7 +990,7 @@ function getTblVendedores(data){
     data.map((r)=>{
         dat += `
             <tr class="hand border-bottom border-secondary" onclick="getDataProductosVendedor('${r.CODRUTA}','${r.VENDEDOR}')">
-                <td><i class="fas fa-hand-point-up"></i>${r.VENDEDOR}</td>
+                <td><i class="fal fa-hand-point-up"></i>${r.VENDEDOR}</td>
                 <td>${r.FARDOS.toFixed(2)}</td>
                 <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
                 <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
@@ -1174,7 +1174,7 @@ function getTblProductos(data){
     data.map((r)=>{
         dat += `
             <tr class="hand border-bottom border-secondary" onclick="getTblMunicipiosProducto('${r.CODPRODUCTO}','${r.PRODUCTO}')">
-                <td><i class="fas fa-hand-point-up"></i>${r.PRODUCTO}
+                <td><i class="fal fa-hand-point-up"></i>${r.PRODUCTO}
                     <br>
                     <small class="negrita text-danger">${r.CODPRODUCTO}</small>
                 </td>
