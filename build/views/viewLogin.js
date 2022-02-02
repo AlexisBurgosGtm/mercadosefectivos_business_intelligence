@@ -3,50 +3,47 @@ function getView(){
         login:()=>{
             return `
           
-            <div class="container-fluid">
-                <div id="cardLogin"  class="row main-content bg-success text-center">
-                    <div class="col-md-4 text-center company__info bg-login">
-                        
-                        <img class="company__logo" width="100" height="100" src="./favicon.png">
-                        
+            <div id="cardLogin" class="card card-rounded shadow col-sm-12 col-lg-4 col-xl-4 col-md-6">
+                    <div  class="card-header text-center">                        
+                        <img class="" width="100" height="100" src="./favicon.png">
                     </div>
-                    <div class="col-md-8 col-xs-12 col-sm-12 login_form ">
-                        <div class="container-fluid">
-                            <div class="row">
-                            </div>
-                            <div class="row">
-                                <form control="" class="form-group">
-                                    <div class="row">
-                                        
-                                        <select class="form__input" id="cmbTipo">
-                                            <option value="GERENTE">GERENTE</option>
-                                            <option value="SUPERVISOR">SUPERVISOR</option>
-                                            <option value="PROVEEDOR">PROVEEDOR</option>
-                                        </select>
-                                    </div>
-                                    <div class="row">
-                                        <input type="text" name="username" id="txtU" class="form__input" placeholder="Usuario..">
-                                    </div>
-                                    <div class="row">
-                                        <input type="password" name="password" id="txtP" class="form__input" placeholder="Contraseña">
-                                    </div>
-                                 
-                                    <div class="row">
-                                        <button class="btn-redondo" id="btnIngresar">
-                                            <i class="fas fa-lock"></i>Ingresar
-                                        </button>
-                                    </div>
-                                    <br>
-                                </form>
-                            </div>
-                           
+
+                    <div class="card-body">
+                        <div class="form-group">          
+                            <select class="form-control" id="cmbTipo">
+                                <option value="GERENTE">GERENTE</option>
+                                <option value="SUPERVISOR">SUPERVISOR</option>
+                                <option value="PROVEEDOR">PROVEEDOR</option>
+                            </select>
                         </div>
+                        
+                        <div class="form-group">
+                            <input type="text" name="username" id="txtU" class="form-control" placeholder="Usuario..">
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="password" name="password" id="txtP" class="form-control" placeholder="Contraseña">
+                        </div>
+                                 
+                        <div class="row">
+                            <div class="col-6">
+                            </div>
+                            <div class="col-6 text-right">
+                                <button class="btn btn-lg btn-info btn-rounded shadow" id="btnIngresar">
+                                    <i class="fal fa-lock"></i> Ingresar
+                                </button>        
+                            </div>
+                            
+                            
+                        </div>
+                                    
                     </div>
-                </div>
+            
             </div>
+
             <!-- Footer -->
-            <div class="container-fluid text-center footer" style="font-size:10px">
-                (Rev 2.2022) Por <a href="https://api.whatsapp.com/send?phone=50257255092&text=Hola%20Alexis%2C%20puedes%20ayudarme%20...." target="_blank">Alexis Burgos (v.11.2021)</a>
+            <div class="footer" style="font-size:10px">
+                Por <a href="https://api.whatsapp.com/send?phone=50257255092&text=Hola%20Alexis%2C%20puedes%20ayudarme%20...." target="_blank">Alexis Burgos (v.2.2022)</a>
             </div>
             `
         }
@@ -81,7 +78,7 @@ function initView(){
 function login(tipo,nombre,pass,element){
 
    let event = document.getElementById(element)
-    event.innerHTML = `<i class="fas fa-unlock fa-spin"></i>`;
+    event.innerHTML = `<i class="fal fa-unlock fa-spin"></i>`;
     event.disabled = true;
 
     let data = {nombre:nombre,clave:pass,tipo:tipo}
@@ -91,7 +88,7 @@ function login(tipo,nombre,pass,element){
       const resp = res.data;
         if(Number(resp.rowsAffected[0])==0){
             funciones.AvisoError('Usuario o contraseña incorrecta')
-            event.innerHTML = `<i class="fas fa-lock"></i>Ingresar`;
+            event.innerHTML = `<i class="fal fa-lock"></i> Ingresar`;
             event.disabled = false;
         }else{
             switch (tipo) {
@@ -113,7 +110,7 @@ function login(tipo,nombre,pass,element){
     })
     .catch(()=>{
         funciones.AvisoError('Usuario o contraseña incorrecta')
-        event.innerHTML = `<i class="fas fa-lock"></i>Ingresar`;
+        event.innerHTML = `<i class="fal fa-lock"></i> Ingresar`;
         event.disabled = false;
     })
 };

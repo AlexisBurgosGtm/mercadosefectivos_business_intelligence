@@ -225,31 +225,31 @@ function getParametros(){
 
 Navegar.login();
 //botón dentro del circular menu
-let btnMenuHome2 = document.getElementById('btnMenuHome2'); 
+//let btnMenuHome2 = document.getElementById('btnMenuHome2'); 
 
 let btnMInicio = document.getElementById('btnMInicio');
 btnMInicio.addEventListener('click',()=>{
     Navegar.inicio();
-    btnMenuHome2.click();
+    //btnMenuHome2.click();
 });
 
 let btnMMarcas = document.getElementById('btnMMarcas');
 btnMMarcas.addEventListener('click',()=>{
     Navegar.marcas();
-    btnMenuHome2.click();
+    //btnMenuHome2.click();
 });
 
 
 let btnMSell = document.getElementById('btnMSell');
 btnMSell.addEventListener('click',()=>{
     Navegar.inicio();
-    btnMenuHome2.click();
+    //btnMenuHome2.click();
 });
 
 let btnMSalir = document.getElementById('btnMSalir');
 btnMSalir.addEventListener('click',()=>{
     Navegar.login();
-    btnMenuHome2.click();
+    //btnMenuHome2.click();
 });
 
 
