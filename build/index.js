@@ -226,6 +226,11 @@ function getParametros(){
 Navegar.login();
 //botón dentro del circular menu
 //let btnMenuHome2 = document.getElementById('btnMenuHome2'); 
+let btnMenu = document.getElementById('btnMenu');
+btnMenu.addEventListener('click',()=>{
+    $('#modalMenuPrincipal').modal('show');
+});
+
 
 let btnMInicio = document.getElementById('btnMInicio');
 btnMInicio.addEventListener('click',()=>{
@@ -300,6 +305,9 @@ function expandir(idcontainer){
 };
 
 
-funciones.animateCSS('btnInstalar','backInRight');
+funciones.animateCSS('btnInstalarApp','backInRight');
 
-funciones.instalationHandlers('btnInstalar');
+funciones.instalationHandlers('btnInstalarApp');
+
+
+

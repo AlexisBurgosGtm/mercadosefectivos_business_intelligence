@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>
-           Onne-POS
+            Mercados Efectivos
         </title>
         <meta name="description" content="Blank">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -159,19 +159,9 @@
 
                       </div>
 
-                      <menu class="items-wrapper">
-                        <a href="#" class="menu-item fas fa-home" id="btnMInicio"></a>
-                        <a href="#" class="menu-item fas fa-tag" id="btnMMarcas"></a>
-                        <a href="#" class="menu-item fa fa-chart-line" id="btnMSell"></a>
-                        <a href="#" class="menu-item fa fa-arrow-left" id="btnMSalir"></a>
-                      </menu>
 
                     </main>
-                    <!--  botón para instalar la app en dispositivos  -->
-                   
-                         <button class="btn btn-danger btn-circle btn-xl shadow btn-right" id="btnInstalarApp">
-                             <i class="fal fa-download"></i>
-                         </button>
+                  
                     
                     
                     <!-- this overlay is activated only when mobile menu is triggered -->
@@ -187,7 +177,12 @@
         </div>
         <!-- END Page Wrapper -->
 
-      
+        <!--  botón para instalar la app en dispositivos  -->
+                   
+        <button class="btn btn-danger btn-circle btn-xl shadow btn-bottom-right" id="btnInstalarApp">
+            <i class="fal fa-download"></i>
+        </button>
+
         <!-- BEGIN Page Settings -->
         <div class="modal fade js-modal-settings modal-backdrop-transparent" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-right modal-md">
@@ -376,12 +371,12 @@
             </div>
         </div> <!-- END Page Settings -->
       
-        <button class="btn btn-outline-secondary bg-white text-secondary shadow leftbutton btn-circle btn-xl" id="btnFiltro">
-            <i class="fas fa-grip-horizontal"></i>
+        <button class="btn btn-outline-secondary shadow btn-bottom-left btn-circle btn-xl" id="btnFiltro">
+            <i class="fal fa-filter"></i>
         </button>
         
-        <div class="modal fade shadow border-top-rounded border-bottom-rounded" id="modalParametros" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog " role="document">
+        <div class="modal fade shadow card-rounded" id="modalParametros" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content" style="font-size: 80%;">
                
                     <div class="modal-body row">
@@ -606,10 +601,40 @@
             </div>
         </div>
 
-        <div class="circular-menu hand" id="btnInstalar">
-            <a class="floating-btn btn-danger">
-                <i class="fa fa-download"></i>
-            </a>
+      
+        <button class="btn btn-info shadow btn-bottom-middle btn-circle btn-xl" id="btnMenu">
+            <i class="fal fa-bars"></i>
+        </button>
+
+        <div class="modal fade shadow card-rounded" id="modalMenuPrincipal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-left modal-lg" role="document">
+                <div class="modal-content">
+               
+                    <div class="modal-body">
+                        
+                    
+                        <button class="btn btn-info" id="btnMInicio">
+                            <i class="fal fa-home"></i>
+                        </button>
+                        <button class="btn btn-primary" id="btnMMarcas">
+                            <i class="fal fa-tag"></i>
+                        </button>
+                        <button class="btn btn-success" id="btnMSell">
+                            <i class="fal fa-chart-line"></i>
+                        </button>
+                        <button class="btn btn-secondary" id="btnMSalir">
+                            <i class="fal fa-arrow-left"></i>
+                        </button>
+                     
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-secondary btn-xl btn-circle shadow" data-dismiss="modal">
+                            <i class="fal fa-arrow-left"></i>
+                        </button>
+                      
+                    </div>
+                </div>
+            </div>
         </div>
 
         <script src="js/vendors.bundle.js"></script>

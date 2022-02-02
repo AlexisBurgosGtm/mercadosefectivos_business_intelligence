@@ -1,3 +1,25 @@
+.btn-bottom-right { 
+  position: fixed;
+  z-index: 1088;
+  right: 21px;
+  bottom: 15px;
+  }
+
+.btn-bottom-left { 
+  position: fixed;
+  z-index: 1088;
+  left: 21px;
+  bottom: 15px;
+  }
+
+.btn-bottom-middle { 
+      position: fixed;
+      z-index: 1088;
+      left: 50%;
+      right: 50%;
+      bottom: 15px;
+}
+
 .lb-total{
   font-size: 160%;
 }
@@ -214,6 +236,12 @@
         cursor: pointer;
     }
     
+    .btn-left { 
+      position: fixed;
+      z-index: 1088;
+      left: 5px;
+      bottom: 40px;
+    }
     
   /* BOTON FLOTANTE ESQUINA DERECHA */
   .btn-right{

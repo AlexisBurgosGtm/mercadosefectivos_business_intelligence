@@ -1,0 +1,476 @@
+.bg-card1{
+    background-color: #48a5fc;
+}
+
+.doble-hand{
+  font-size: 70%;
+  color: rgb(110, 110, 110);
+}
+
+/* MENU CIRCULAR */
+.circular-menu {
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+}
+
+.circular-menu .floating-btn {
+  display: block;
+  width: 3.5em;
+  height: 3.5em;
+  border-radius: 50%;
+  background-color: hsl(0, 0%, 89%);
+  box-shadow: 0 2px 5px 0 hsla(0, 0%, 0%, .26);  
+  color: hsl(0, 0%, 0%);
+  text-align: center;
+  line-height: 3.9;
+  cursor: pointer;
+  outline: 0;
+}
+
+.circular-menu.active .floating-btn {
+  box-shadow: inset 0 0 3px hsla(0, 0%, 0%, .3);
+}
+
+.circular-menu .floating-btn:active {
+  box-shadow: 0 4px 8px 0 hsla(0, 0%, 0%, .4);
+}
+
+.circular-menu .floating-btn i {
+  font-size: 1.3em;
+  transition: transform .2s;  
+}
+
+.circular-menu.active .floating-btn i {
+  transform: rotate(-45deg);
+}
+
+.circular-menu:after {
+  display: block;
+  content: ' ';
+  width: 3.5em;
+  height: 3.5em;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: -2;
+  background-color: hsl(210, 70%, 96%);
+  transition: all .3s ease;
+}
+
+.circular-menu.active:after {
+  transform: scale3d(5.5, 5.5, 1);
+  transition-timing-function: cubic-bezier(.68, 1.55, .265, 1);
+}
+
+.circular-menu .items-wrapper {
+  padding: 0;
+  margin: 0;
+}
+
+.circular-menu .menu-item {
+  position: absolute;
+  top: .2em;
+  right: .2em;
+  z-index: -1;
+  display: block;
+  text-decoration: none;
+  color: hsl(0, 1%, 17%);
+  font-size: 1em;
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 3;
+  background-color: hsla(0,0%,0%,.1);
+  transition: transform .3s ease, background .2s ease;
+}
+
+.circular-menu .menu-item:hover {
+  background-color: hsla(0,0%,0%,.3);
+}
+
+.circular-menu.active .menu-item {
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.circular-menu.active .menu-item:nth-child(1) {
+  transform: translate3d(1em,-7em,0);
+}
+
+.circular-menu.active .menu-item:nth-child(2) {
+  transform: translate3d(-3.5em,-6.3em,0);
+}
+
+.circular-menu.active .menu-item:nth-child(3) {
+  transform: translate3d(-6.5em,-3.2em,0);
+}
+
+.circular-menu.active .menu-item:nth-child(4) {
+  transform: translate3d(-7em,1em,0);
+}
+
+/**
+ * The other theme for this menu
+ */
+
+.circular-menu.circular-menu-left {
+  right: auto; 
+  left: 1em;
+}
+
+.circular-menu.circular-menu-left .floating-btn {
+  background-color: hsl(217, 89%, 61%);
+}
+
+.circular-menu.circular-menu-left:after {
+  background-color: hsl(217, 89%, 61%);
+}
+
+.circular-menu.circular-menu-left.active .floating-btn i {
+  transform: rotate(90deg);
+}
+
+.circular-menu.circular-menu-left.active .menu-item:nth-child(1) {
+  transform: translate3d(-1em,-7em,0);
+}
+
+.circular-menu.circular-menu-left.active .menu-item:nth-child(2) {
+  transform: translate3d(3.5em,-6.3em,0);
+}
+
+.circular-menu.circular-menu-left.active .menu-item:nth-child(3) {
+  transform: translate3d(6.5em,-3.2em,0);
+}
+
+.circular-menu.circular-menu-left.active .menu-item:nth-child(4) {
+  transform: translate3d(7em,1em,0);
+}
+/* MENU CIRCULAR */
+/* ----------------- */
+
+
+.fa-spin {
+  -webkit-animation: fa-spin 1s infinite linear !important;
+  animation: fa-spin 1s infinite linear !important;
+ }
+
+
+.body{
+  font-size: 10px;
+}
+.btn-redondo {
+  height: 44px;
+  border: 0;
+  color: #fff;
+  background: #0563bb;
+  font-size: 18px;
+  transition: all 0.4s;
+  outline: none !important;
+  line-height: 0;
+  cursor: pointer;
+  border-radius: 50px;
+  padding: 5px;
+}
+
+/*------------------------------
+LOGIN
+*/
+.main-content{
+	width: 50%;
+	border-radius: 20px;
+	box-shadow: 0 5px 5px rgba(0,0,0,.4);
+	margin: 5em auto;
+	display: flex;
+}
+.company__info{
+	background-color: #008080;
+	border-top-left-radius: 20px;
+	border-bottom-left-radius: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	color: #fff;
+}
+.fa-android{
+	font-size:3em;
+}
+@media screen and (max-width: 640px) {
+	.main-content{width: 90%;}
+	.company__info{
+		display: none;
+	}
+	.login_form{
+		border-top-left-radius:20px;
+		border-bottom-left-radius:20px;
+	}
+}
+@media screen and (min-width: 642px) and (max-width:800px){
+	.main-content{width: 70%;}
+}
+.row > h2{
+	color:#008080;
+}
+.login_form{
+	background-color: #fff;
+	border-top-right-radius:20px;
+	border-bottom-right-radius:20px;
+	border-top:1px solid #ccc;
+	border-right:1px solid #ccc;
+}
+form{
+	padding: 0 2em;
+}
+.form__input{
+	width: 100%;
+	border:0px solid transparent;
+	border-radius: 0;
+	border-bottom: 1px solid #aaa;
+	padding: 1em .5em .5em;
+	padding-left: 2em;
+	outline:none;
+	margin:1.5em auto;
+	transition: all .5s ease;
+}
+.form__input:focus{
+	border-bottom-color: #008080;
+	box-shadow: 0 0 5px rgba(0,80,80,.4); 
+	border-radius: 4px;
+}
+
+/*------------------------------
+.btn{
+	transition: all .5s ease;
+	width: 70%;
+	border-radius: 30px;
+	color:#008080;
+	font-weight: 600;
+	background-color: #fff;
+	border: 1px solid #008080;
+	margin-top: 1.5em;
+	margin-bottom: 1em;
+}
+.btn:hover, .btn:focus{
+	background-color: #008080;
+	color:#fff;
+}
+
+LOGIN
+*/
+
+
+
+.bg-titulo {
+  position: fixed;
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(32,32,144,1) 14%, rgba(0,212,255,1) 100%);
+}
+
+.bg-login{
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(32,32,144,1) 14%, rgba(0,212,255,1) 100%);
+
+}
+
+::backdrop
+{
+  /* evita que el color de fondo se vuelva negro al maximizar */
+    background-color: white;
+}
+
+.bg-gris {
+  background-color: rgb(221, 221, 221)
+}
+
+.bg-foot-table {
+  background-color: rgb(255, 238, 233)
+}
+
+.my-node-enter {
+  opacity: 0;
+}
+.my-node-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+.my-node-exit {
+  opacity: 1;
+}
+.my-node-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+
+
+
+
+
+
+.scroll-table{
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+
+
+.border-gris{
+  border-color: lightgrey;
+}
+
+.hand{
+  cursor: pointer;
+}
+
+.top-left-rounded{
+  border-top-left-radius: 15px;
+}
+
+.top-right-rounded{
+  border-top-right-radius: 15px;
+ 
+}
+
+
+.bottom-left-rounded{
+  border-bottom-left-radius: 15px;
+}
+
+.bottom-right-rounded{
+  border-bottom-right-radius: 15px;
+  
+}
+
+
+.border-top-rounded{
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+}
+
+.border-bottom-rounded{
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.bg-amarillo {
+  background-color: beige;
+  font-weight: bold;
+}
+
+/* EVITA QUE UNA MODAL INFERIOR A OTRA PIERDA EL SCROLL */
+.modal-with-scroll{
+  overflow-y: scroll; 
+}
+
+.negrita {
+  font-weight: bold;
+}
+
+
+.toppegado {
+  margin-top: 0px;
+};
+
+.hidden{
+  visibility: hidden;
+}
+
+
+.foot {
+    margin-bottom: 0;
+    position: sticky;
+}
+
+.footed {
+  margin-bottom: 0;
+  position: fixed;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+
+
+.middlebutton { 
+  position: fixed;
+  z-index: 1088;
+  left: 120px;
+  bottom: 20px;
+}
+
+.leftbutton { 
+  position: fixed;
+  z-index: 1088;
+  left: 5px;
+  bottom: 20px;
+}
+
+
+.rightbutton { 
+  position: fixed;
+  z-index: 888;
+  right: 21px;
+  bottom: 50px;
+}
+
+
+
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  border-radius: 35px;
+  font-size: 24px;
+  line-height: 1.33;
+}
+
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
+}
+
+
+
+  
+.mapcontainer {
+  width: 100%;
+  height: 600px;
+  position: relative;
+  box-shadow: 5px 5px 5px #888;
+}
+.mapcontainer2 {
+  width: 100%;
+  height: 600px;
+  position: relative;
+  box-shadow: 5px 5px 5px #888;
+}
+
+.mapcontainer4 {
+width: 100%;
+height: 400px;
+position: relative;
+box-shadow: 5px 5px 5px #888;
+}
+
+.mapcontainer3 {
+width: 100%;
+height: 700;
+box-shadow: 5px 5px 5px #888;
+}
+
+
+
