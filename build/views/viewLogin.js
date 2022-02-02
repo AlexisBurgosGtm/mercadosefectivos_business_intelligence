@@ -46,7 +46,7 @@ function getView(){
             </div>
             <!-- Footer -->
             <div class="container-fluid text-center footer" style="font-size:10px">
-                Por <a href="https://api.whatsapp.com/send?phone=50257255092&text=Hola%20Alexis%2C%20puedes%20ayudarme%20...." target="_blank">Alexis Burgos (v.11.2021)</a>
+                (Rev 2.2022) Por <a href="https://api.whatsapp.com/send?phone=50257255092&text=Hola%20Alexis%2C%20puedes%20ayudarme%20...." target="_blank">Alexis Burgos (v.11.2021)</a>
             </div>
             `
         }
