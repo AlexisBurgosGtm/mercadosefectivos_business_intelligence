@@ -244,12 +244,12 @@ btnMMarcas.addEventListener('click',()=>{
     //btnMenuHome2.click();
 });
 
-
-let btnMSell = document.getElementById('btnMSell');
-btnMSell.addEventListener('click',()=>{
-    Navegar.inicio();
+let btnMEmpleados = document.getElementById('btnMEmpleados');
+btnMEmpleados.addEventListener('click',()=>{
+    Navegar.empleados();
     //btnMenuHome2.click();
 });
+
 
 document.getElementById('btnMConfig').addEventListener('click',()=>{
   Navegar.config();

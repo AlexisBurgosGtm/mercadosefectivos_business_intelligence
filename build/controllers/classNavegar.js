@@ -35,8 +35,19 @@ let Navegar = {
     marcas:()=>{
         funciones.loadScript('../views/viewMarcas.js','root')
         .then(()=>{
-            titulo.innerHTML = `ALL BRAND ANALYSIS`;
+            titulo.innerHTML = `TRADEMARK ANALYSIS`;
             GlobalSelectedForm = 'MARCAS';
+            btnFiltro.style='visibility:visible';
+            btnFiltroCerrar.style='visibility:visible';
+            btnMenu.style='visibility:visible';
+            initView();
+        })
+    },
+    empleados:()=>{
+        funciones.loadScript('../views/viewEmpleados.js','root')
+        .then(()=>{
+            titulo.innerHTML = `EMPLOYEES ANALYSIS`;
+            GlobalSelectedForm = 'EMPLEADOS';
             btnFiltro.style='visibility:visible';
             btnFiltroCerrar.style='visibility:visible';
             btnMenu.style='visibility:visible';

@@ -10,6 +10,16 @@ function getView(){
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link btn-md hidden" data-toggle="tab" href="#tab1" role="tab">
+                            <i class="fal fa-tag mr-1"></i>Trademarks
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-md" data-toggle="tab" href="#tab2" role="tab">
+                            <i class="fal fa-address-card mr-1"></i>Employees
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link btn-md" data-toggle="tab" href="#tab3" role="tab">
                             <i class="fal fa-calendar-alt mr-1"></i>Daily
                         </a>
@@ -24,6 +34,63 @@ function getView(){
                 <div class="tab-content border border-top-0 border-bottom-0 border-right-0 border-left-0 p-3">
                     <div class="tab-pane fade show active"  id="tabHome"  role="tabpanel">
                         ${view.resumen()}
+                    </div>
+                    <div class="tab-pane fade" id="tab1" role="tabpanel">
+                        ${view.marcas()}
+                    </div>
+                    <div class="tab-pane fade" id="tab2" role="tabpanel">            
+                        ${view.empleados()}
+                    </div>
+                    <div class="tab-pane fade" id="tab3" role="tabpanel">            
+                        ${view.fechas()}
+                    </div>
+                    <div class="tab-pane fade" id="tab4" role="tabpanel">            
+                        ${view.meses()}
+                    </div>
+                </div>
+            </div>
+            `
+        },
+        bodyBackup:()=>{
+            return `
+            <div class="panel-content">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link btn-md active" data-toggle="tab" href="#tabHome" role="tab">
+                            <i class="fal fa-home mr-1"></i>Quick View
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-md hidden" data-toggle="tab" href="#tab1" role="tab">
+                            <i class="fal fa-tag mr-1"></i>Trademarks
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-md" data-toggle="tab" href="#tab2" role="tab">
+                            <i class="fal fa-address-card mr-1"></i>Employees
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-md" data-toggle="tab" href="#tab3" role="tab">
+                            <i class="fal fa-calendar-alt mr-1"></i>Daily
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-md" data-toggle="tab" href="#tab4" role="tab">
+                            <i class="fal fa-chart-bar mr-1"></i>Monthly
+                        </a>
+                    </li>
+                   
+                </ul>
+                <div class="tab-content border border-top-0 border-bottom-0 border-right-0 border-left-0 p-3">
+                    <div class="tab-pane fade show active"  id="tabHome"  role="tabpanel">
+                        ${view.resumen()}
+                    </div>
+                    <div class="tab-pane fade" id="tab1" role="tabpanel">
+                        ${view.marcas()}
+                    </div>
+                    <div class="tab-pane fade" id="tab2" role="tabpanel">            
+                        ${view.empleados()}
                     </div>
                     <div class="tab-pane fade" id="tab3" role="tabpanel">            
                         ${view.fechas()}
@@ -64,6 +131,20 @@ function getView(){
             </div>
 
             
+            `
+        },
+        marcas:()=>{
+            return `
+                <div class="table-responsive card-shadow col-12" id="tblTabla2">
+                
+                </div>
+            `
+        },
+        empleados:()=>{
+            return `
+                <div class="table-responsive card-shadow col-12" id="tblTablaV">
+                
+                </div>
             `
         },
         fechas:()=>{
@@ -136,6 +217,15 @@ async function viewInicioObtenerDatos(){
         
     })
 
+    /*
+    await getDataMarcas()
+    .then((datos)=>{
+        getTblVentasMarcas(datos)
+    })
+    .catch(()=>{
+        
+    })
+    */
 
     await getDataClientes()
     .then((datos)=>{
@@ -150,6 +240,10 @@ async function viewInicioObtenerDatos(){
         getLineChartMeses(datos);
     })
 
+    await getDataVendedores()
+    .then((datos)=>{
+        getTblVentasVendedores(datos);
+    })
 
 };
 
@@ -510,24 +604,18 @@ function getCarsEmpresas(data){
                     </div>
                 </div>
                 <div class="row">
-                    <div class="table-responsive">
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td><label>Total Ventas:</label></td><td><label class="negrita text-info">${funciones.setMoneda(r.VENTAS,'Q')}</label></td>
-                                </tr>
-                                <tr>
-                                    <td> <label>Total Devoluciones:</label></td><td><label class="negrita text-danger">${funciones.setMoneda(r.DEVOLUCIONES,'Q')} (${porcdev.toFixed(2)} %)</label></td>
-                                </tr>
-                                <tr>
-                                    <td><label>Total Bruto:</label></td><td><label class="negrita text-secondary">${funciones.setMoneda((Number(r.VENTAS)+Number(r.DEVOLUCIONES)),'Q')}</label></td>
-                                </tr>
-                                <tr>
-                                    <td> <label>Total Compras:</label></td><td><label class="negrita text-success">${funciones.setMoneda(Number(r.COMPRAS),'Q')}</label></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>                   
+
+                    <label>Total Ventas:</label>
+                    <label class="negrita text-info">${funciones.setMoneda(r.VENTAS,'Q')}</label>
+                    <br>
+                    <label>Total Devoluciones:</label>
+                    <label class="negrita text-danger">${funciones.setMoneda(r.DEVOLUCIONES,'Q')} (${porcdev.toFixed(2)} %)</label>
+                    <br>
+                    <label>Total Bruto:</label>
+                    <label class="negrita text-secondary">${funciones.setMoneda((Number(r.VENTAS)+Number(r.DEVOLUCIONES)),'Q')}</label>
+                    <br>
+                    <label>Total Compras:</label>
+                    <label class="negrita text-success">${funciones.setMoneda(Number(r.COMPRAS),'Q')}</label>
             
                 </div>
                 <div class="row">
@@ -815,6 +903,175 @@ function gotoFecha(fecha){
 };
 
 
+
+function getDataVendedores(){
+    return new Promise((resolve, reject)=>{
+        //obtiene los datos de la card empresas
+      
+        axios.get(`/empresas/getVentasVendedores?empresas=${parametrosEmpresas}&mes=${parametrosMes}&anio=${parametrosAnio}`)
+        .then(res => {
+            const datos = res.data.recordset;
+           
+            resolve(datos);
+        })
+        .catch(()=>{
+            reject();
+        })
+
+
+    })
+
+};
+
+function getTblVentasVendedores(data){
+    
+    
+    let container = document.getElementById('tblTablaV');
+    container.innerHTML = getLoader();
+
+    let totaldevoluciones = 0; let totalventa = 0; let totalutilidad = 0;
+    let conteo = 0;
+
+    let head = `<h5 class="text-danger">VENTAS POR VENDEDOR</h5>
+            <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('tblTablaV')">Expandir</button>
+                <table class="table table-responsive table-bordered table-striped  col-12"  style="font-size:80%;" id="tblTablaVendedores">
+                    <thead class="bg-danger text-white">
+                        <tr>
+                            <td>VENDEDOR</td>
+                            <td>VENTAS</td>
+                            <td>DEVOLUCIONES</td>
+                            <td>TOTALNETO</td>
+                            <td>DEV%</td>
+                            <td>PART</td>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+    let dat = '';
+
+    data.map((r)=>{
+        conteo += 1;
+        totaldevoluciones += Number(r.DEVOLUCIONES);
+        totalventa += Number(r.VENTAS);
+    })
+
+    totalutilidad = Number(totalventa + totaldevoluciones);
+   
+    data.map((r)=>{
+        let totalneto = Number(r.VENTAS) + Number(r.DEVOLUCIONES);
+        dat += `
+            <tr class="hand border-bottom border-dark" ondblclick="gotoVendedor('${r.CODVEN}','${r.NOMVEN}')">
+                <td>${GlobalIconoDobleClick} ${r.NOMVEN}
+                    <br>
+                    <small class="negrita">${r.CODSUCURSAL}</small>
+                </td>
+                <td>${funciones.setMoneda(r.VENTAS,'Q')}</td>
+                <td>${funciones.setMoneda(r.DEVOLUCIONES,'Q')}</td>
+                <td>${funciones.setMoneda(totalneto,'Q')}</td>
+                <td>${((Number(r.DEVOLUCIONES *-1)/Number(r.VENTAS))*100).toFixed(2)}%</td>
+                <td>${((totalneto / totalventa)* 100).toFixed(2)}%</td>
+            </tr>
+        `
+    })
+
+    let foot = `</tbody>
+                    <tfoot class="text-danger bg-foot-table table-bordered">
+                        <tr>
+                            <td></td>
+                            <td>${funciones.setMoneda(totalventa,'Q')}</td>
+                            <td>${funciones.setMoneda(totaldevoluciones,'Q')}</td>
+                            <td>${funciones.setMoneda(totalutilidad,'Q')}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                `
+
+    container.innerHTML = head + dat + foot
+    $('#tblTablaVendedores').DataTable({
+                    paging: true,
+    });
+};
+
+function gotoVendedor(codven, nomven){
+   
+    //Navegar.analisis_fecha();
+};
+
+
+
+function getTblVentasMarcas(data){
+    
+    let container = document.getElementById('tblTabla2');
+    container.innerHTML = getLoader();
+
+    let totalcosto = 0; let totalventa = 0; let totalutilidad = 0;
+    let conteo = 0;
+
+    let head = `<h5>VENTAS POR MARCA</h5>
+    <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('tblTabla2')">Expandir</button>
+                <table class="table table-responsive table-bordered table-striped  col-12"  style="font-size:85%;" id="tblVMarcas">
+                    <thead class="bg-secondary text-white">
+                        <tr>
+                            <td>MARCA</td>
+                            <td>COSTO</td>
+                            <td>VENTA</td>
+                            <td>UTILIDAD</td>
+                            <td>MARG</td>
+                            <td>PART</td>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+    let dat = '';
+
+    data.map((r)=>{
+        conteo += 1;
+        totalcosto += Number(r.TOTALCOSTO);
+        totalventa += Number(r.TOTALPRECIO);
+        totalutilidad += Number(r.UTILIDAD);
+    })
+
+    data.map((r)=>{
+        dat += `
+            <tr class="hand border-bottom" ondblclick="gotoMarca('${r.CODMARCA}','${r.DESMARCA}')">
+                <td>${GlobalIconoDobleClick} ${r.DESMARCA}</td>
+                <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
+                <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
+                <td>${funciones.setMoneda(r.UTILIDAD,'Q')}</td>
+                <td>${funciones.setMargen(((Number(r.UTILIDAD)/Number(r.TOTALPRECIO))*100).toFixed(2),'%')}</td>
+                <td>${((Number(r.TOTALPRECIO)/totalventa)*100).toFixed(2)}%</td>
+            </tr>
+        `
+    })
+
+    let foot = `</tbody>
+                    <tfoot class="text-danger bg-foot-table table-bordered">
+                        <tr>
+                            <td></td>
+                            <td>${funciones.setMoneda(totalcosto,'Q')}</td>
+                            <td>${funciones.setMoneda(totalventa,'Q')}</td>
+                            <td>${funciones.setMoneda(totalutilidad,'Q')}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                `
+
+    container.innerHTML = head + dat + foot
+    $('#tblVMarcas').DataTable({
+                    paging: false,
+                    bFilter:false
+    });
+};
+
+function gotoMarca(codigo, descripcion){
+    GlobalSelectedCodMarca = codigo;
+    GlobalSelectedDesMarca = descripcion;
+    Navegar.analisis_marca();
+};
 
 
 

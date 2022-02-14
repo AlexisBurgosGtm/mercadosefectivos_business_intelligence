@@ -92,7 +92,7 @@ function getTblVentasMarcas(idcontainer){
         const data = res.data.recordset;
         
         let head = `
-                    <table class="table table-responsive table-bordered table-striped  col-12 scroll-table" id="tblMarcas">
+                    <table class="table table-responsive table-bordered table-striped  col-12 scroll-table" id="tblMarcas" width="100%">
                         <thead class="bg-info text-white">
                             <tr>
                                 <td>MARCA</td>
@@ -116,7 +116,7 @@ function getTblVentasMarcas(idcontainer){
 
         data.map((r)=>{
             dat += `
-                <tr class="hand border-bottom" ondblclick="getDetallesMarca('${r.CODMARCA}','${r.DESMARCA}')">
+                <tr class="hand border-bottom" ondblclick="gotoMarca('${r.CODMARCA}','${r.DESMARCA}')">
                     <td>${GlobalIconoDobleClick} ${r.DESMARCA}</td>
                     <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
                     <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
@@ -223,6 +223,11 @@ function getCardsMarcas(costo,precio,utilidad){
 
 };
 
+function gotoMarca(codigo, descripcion){
+    GlobalSelectedCodMarca = codigo;
+    GlobalSelectedDesMarca = descripcion;
+    Navegar.analisis_marca();
+};
 
 function getDetallesMarca(codmarca,desmarca){
     
