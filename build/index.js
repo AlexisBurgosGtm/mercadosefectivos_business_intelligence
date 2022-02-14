@@ -251,6 +251,11 @@ btnMSell.addEventListener('click',()=>{
     //btnMenuHome2.click();
 });
 
+document.getElementById('btnMConfig').addEventListener('click',()=>{
+  Navegar.config();
+});
+
+
 let btnMSalir = document.getElementById('btnMSalir');
 btnMSalir.addEventListener('click',()=>{
     Navegar.login();

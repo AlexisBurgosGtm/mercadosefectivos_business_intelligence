@@ -205,9 +205,7 @@ function addListeners(){
    
     viewInicioObtenerDatos();
 
-    document.getElementById('btnConfig').addEventListener('click',()=>{
-        Navegar.config();
-    });
+  
 
     funciones.slideAnimationTabs();
 };

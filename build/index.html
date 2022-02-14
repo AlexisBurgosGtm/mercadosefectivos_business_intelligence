@@ -125,20 +125,20 @@
                         <div class="ml-auto d-flex">
                            
 
-                            <div class="">
+                            <div class="hidden">
                                 <a href="#" class="header-icon" onclick="document.body.requestFullscreen();">
                                     <i class="fal fa-expand"></i>
                                 </a>
                             </div>                           
 
                             <!-- app settings -->
-                            <div class="hidden-md-down">
+                            <div class="hidden-md-down hidden">
                                 <a href="#" class="header-icon" data-toggle="modal" data-target=".js-modal-settings">
                                     <i class="fal fa-cog"></i>
                                 </a>
                             </div>
 
-                            <div class="">
+                            <div class="hidden">
                                 <a href="#" class="header-icon" id="btnMenuSalir">
                                     <i class="fal fa-sign-out"></i>
                                 </a>
@@ -375,6 +375,7 @@
             <i class="fal fa-filter"></i>
         </button>
         
+        <!-- MODAL PARAMETROS -->
         <div class="modal fade shadow card-rounded" id="modalParametros" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content" style="font-size: 100%;">
@@ -619,6 +620,7 @@
             <i class="fal fa-bars"></i>
         </button>
 
+        <!-- MODAL MENUL PRINCIPAL 
         <div class="modal fade shadow card-rounded" id="modalMenuPrincipal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-left modal-lg" role="document">
                 <div class="modal-content">
@@ -630,25 +632,35 @@
                         </div>
                     
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
                                 
                                 <div class="card card-rounded shadow p-4 hand" data-dismiss="modal"  id="btnMInicio">
-                                    <div class="card-body" style="font-size:150%">
+                                    <div class="card-body">
 
-                                        <i class="fal fa-home"></i>Inicio
+                                        <i class="fal fa-home" style="font-size:150%"></i>Inicio
 
                                     </div>
                                 </div>
 
                             </div>
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="card card-rounded shadow p-4 hand" data-dismiss="modal"  id="btnMMarcas">
-                                    <div class="card-body" style="font-size:150%">
+                                    <div class="card-body">
 
-                                        <i class="fal fa-tag"></i>Marcas
+                                        <i class="fal fa-tag"  style="font-size:150%"></i>Marcas
 
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="card card-rounded shadow p-4 hand" data-dismiss="modal" id="btnMSell">
+                                    <div class="card-body">
+
+                                        <i class="fal fa-chart-line"  style="font-size:150%"></i>Mensual
+
+                                    </div>
+                                </div>
+                               
                             </div>
                         </div>
                         <div class="row">
@@ -656,21 +668,23 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-6">
-                                <div class="card card-rounded shadow p-4 hand" data-dismiss="modal" id="btnMSell">
-                                    <div class="card-body" style="font-size:150%">
+                       
+                            <div class="col-2">
+                                <div class="card card-rounded shadow p-4 hand" data-dismiss="modal" id="btnMConfig">
+                                    <div class="card-body" >
 
-                                        <i class="fal fa-chart-line"></i>Mensual
+                                        <i class="fal fa-cog"  style="font-size:150%"></i>Config
 
                                     </div>
                                 </div>
-                               
+                                
                             </div>
-                            <div class="col-6">
-                                <div class="card card-rounded shadow p-4 hand" data-dismiss="modal" id="btnMSalir">
-                                    <div class="card-body" style="font-size:150%">
 
-                                        <i class="fal fa-arrow-left"></i>Cerrar Sesión
+                            <div class="col-2">
+                                <div class="card card-rounded shadow p-4 hand" data-dismiss="modal" id="btnMSalir">
+                                    <div class="card-body" >
+
+                                        <i class="fal fa-arrow-left"  style="font-size:150%"></i>Cerrar Sesión
 
                                     </div>
                                 </div>
@@ -681,6 +695,100 @@
                         
                       
                         
+                       
+                     
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-secondary btn-xl btn-circle shadow" data-dismiss="modal">
+                            <i class="fal fa-arrow-left"></i>
+                        </button>
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+            -->
+
+        <div class="modal fade shadow card-rounded" id="modalMenuPrincipal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-left modal-md" role="document">
+                <div class="modal-content">
+               
+                    <div class="modal-body p-5">
+                        
+                        <div class="row">
+                            <h5 class="text-center text-info negrita">Menú Principal</h5>
+                        </div>
+                        
+                        <br><br><br>
+
+                        <div class="row">
+                            <div class="table-responsive col-12">
+                                <table class="table table-responsive col-12">
+                                    <tbody>
+
+                                        <tr class="hand border-bottom-secondary border-right-secondary border-top-0 border-left-0" data-dismiss="modal"  id="btnMInicio">
+                                            <td>
+                                                <h1><i class="fal fa-home"></i></h1> 
+                                            </td>
+                                            <td>
+                                                <h2>Inicio</h2> 
+                                            </td>
+                                        </tr>
+
+                                        <tr class="hand border-bottom-secondary border-right-secondary border-top-0 border-left-0" data-dismiss="modal" id="btnMMarcas">
+                                            <td>
+                                                <h1><i class="fal fa-tag"></i></h1>           
+                                            </td>
+                                            <td>
+                                                <h2>Marcas</h2>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="hand border-bottom-secondary border-right-secondary border-top-secondary border-left-0" data-dismiss="modal"  id="btnMEmpleados">
+                                            <td>
+                                                <h1><i class="fal fa-home"></i></h1>           
+                                            </td>
+                                            <td>
+                                                <h2>Vendedores</h2>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="hand border-bottom-secondary border-right-secondary border-top-secondary border-left-0" data-dismiss="modal"  id="btnMConfig">
+                                            <td>
+                                                <h1><i class="fal fa-cog"></i></h1>           
+                                            </td>
+                                            <td>
+                                                <h2>Configuración</h2>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="hand border-bottom-secondary border-right-0 border-top-secondary border-left-0 text-danger" data-dismiss="modal"  id="btnMSalir">
+                                            <td>
+                                                <h5><i class="fal fa-user"></i></h5>           
+                                            </td>
+                                            <td>
+                                                <h5>Cerrar Sesión</h5>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="hand border-bottom-secondary border-right-0 border-top-secondary border-left-0 text-danger">
+                                            <td>
+                                               
+                                            </td>
+                                            <td>
+                                              
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                
+                                <hr class="solid">
+
+                            </div>
+
+                         
+                        </div>                      
                        
                      
                     </div>
