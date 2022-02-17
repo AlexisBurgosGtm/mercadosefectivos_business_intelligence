@@ -566,7 +566,7 @@ function getCarsEmpresas(data){
     `
     container.innerHTML = totalscard + view;
 
-
+   
 };
 
 function gotoEmpresa(codsucursal,ventas,devoluciones,universo){
