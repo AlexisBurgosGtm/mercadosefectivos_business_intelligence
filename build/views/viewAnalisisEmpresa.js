@@ -150,18 +150,36 @@ function addListeners(){
         document.getElementById('tab1').classList.add('show','active');
         document.getElementById('tab2').classList.remove('show','active');
         document.getElementById('tab3').classList.remove('show','active');
+        //PRODUCTOS
+        try {
+            
+        } catch (error) {
+            
+        }
     })
     document.getElementById('btnTab2').addEventListener('click',()=>{
         document.getElementById('tabHome').classList.remove('show','active');
         document.getElementById('tab1').classList.remove('show','active');
         document.getElementById('tab2').classList.add('show','active');
         document.getElementById('tab3').classList.remove('show','active');
+          //CLIENTES
+          try {
+            
+        } catch (error) {
+            
+        }
     })
     document.getElementById('btnTab3').addEventListener('click',()=>{
         document.getElementById('tabHome').classList.remove('show','active');
         document.getElementById('tab1').classList.remove('show','active');
         document.getElementById('tab2').classList.remove('show','active');
         document.getElementById('tab3').classList.add('show','active');
+          //RUTAS - EMPLEADOS
+          try {
+            
+        } catch (error) {
+            
+        }
     })
 };
 

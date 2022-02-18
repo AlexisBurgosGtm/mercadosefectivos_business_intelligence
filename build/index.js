@@ -314,5 +314,5 @@ funciones.animateCSS('btnInstalarApp','backInRight');
 
 funciones.instalationHandlers('btnInstalarApp');
 
-
-
+//anulo las alert para evitar el error por los datatables
+window.alert = function(){};

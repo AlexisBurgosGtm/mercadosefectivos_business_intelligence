@@ -154,30 +154,63 @@ function getView(){
 };
 
 function addListeners(){
+
+    
     document.getElementById('btnTabHome').addEventListener('click',()=>{
         document.getElementById('tabHome').classList.add('show','active');
         document.getElementById('tab1').classList.remove('show','active');
         document.getElementById('tab2').classList.remove('show','active');
         document.getElementById('tab3').classList.remove('show','active');
+
+      
     })
     document.getElementById('btnTab1').addEventListener('click',()=>{
         document.getElementById('tabHome').classList.remove('show','active');
         document.getElementById('tab1').classList.add('show','active');
         document.getElementById('tab2').classList.remove('show','active');
         document.getElementById('tab3').classList.remove('show','active');
+        
+        //aplica el formato de datatable ya que no funciona si está oculto
+        try {
+            $('#tblMarcaProductos').DataTable({paging: false, bFilter:true });    
+        } catch (error) {
+            
+        }
+         
+
     })
     document.getElementById('btnTab2').addEventListener('click',()=>{
         document.getElementById('tabHome').classList.remove('show','active');
         document.getElementById('tab1').classList.remove('show','active');
         document.getElementById('tab2').classList.add('show','active');
         document.getElementById('tab3').classList.remove('show','active');
+
+        try {
+            //customers
+            $('#tblVFMunicipios').DataTable({ paging: false, bFilter:false });
+        } catch (error) {
+            
+        }
+
+   
     })
     document.getElementById('btnTab3').addEventListener('click',()=>{
         document.getElementById('tabHome').classList.remove('show','active');
         document.getElementById('tab1').classList.remove('show','active');
         document.getElementById('tab2').classList.remove('show','active');
         document.getElementById('tab3').classList.add('show','active');
+        //routes
+        try {
+            $('#tblVVendedores').DataTable({paging: false, bFilter:false });    
+        } catch (error) {
+            
+        }
+        
     })
+    
+
+
+
 };
 
 function initView(){
@@ -194,12 +227,7 @@ function getDataMarca(){
         getLineChartFechas(datos);    
     });
 
-    getDataMunicipios()
-    .then(async(datos)=>{
-        //getPieChartMunicipios(datos);
-        getTblMunicipios(datos);
-    });
-
+    
     getDataMunicipiosClientes()
     .then((datos)=>{
         getPieChartClientesEmpresas(datos);
@@ -212,15 +240,25 @@ function getDataMarca(){
         getPieChartOportunidadEmpresa(datos);
     })
 
-    getDataVendedores()
-    .then(async (datos)=>{
-        getTblVendedores(datos);
+    
+    getDataProductos()
+    .then(async(datos)=>{
+        await getTblProductos(datos);
     });
 
-    getDataProductos()
-    .then(async (datos)=>{
-        getTblProductos(datos);
+
+    getDataMunicipios()
+    .then(async(datos)=>{
+        //getPieChartMunicipios(datos);
+        await getTblMunicipios(datos);
     });
+
+    getDataVendedores()
+    .then(async(datos)=>{
+        await getTblVendedores(datos);
+    });
+
+    
 
 };
 
@@ -491,10 +529,15 @@ function getTblMunicipios(data){
 
     container.innerHTML = head + dat + foot 
 
-    $('#tblVFMunicipios').DataTable({
-        paging: false,
-        bFilter:false
-    });
+    return;
+
+    let tim6= setTimeout(() => {
+        $('#tblVFMunicipios').DataTable({
+            paging: false,
+            bFilter:false
+        });
+        clearTimeout(tim6);
+    },3000)
 
 };
 
@@ -916,6 +959,7 @@ function getDataProductosMunicipio(departamento,municipio){
             paging: false,
             bFilter:false
         });
+
     })
     .catch(()=>{
         container.innerHTML = `No se pudieron cargar los datos...`
@@ -1017,10 +1061,15 @@ function getTblVendedores(data){
 
     container.innerHTML = head + dat + foot 
 
-    $('#tblVVendedores').DataTable({
-        paging: false,
-        bFilter:false
-    });
+   
+    return;
+    let tim5 = setTimeout(() => {
+        $('#tblVVendedores').DataTable({
+            paging: false,
+            bFilter:false
+        });
+        clearTimeout(tim5);
+    },3000)
 
 };
 
@@ -1097,10 +1146,16 @@ function getDataProductosVendedor(codruta,nomven){
 
         container.innerHTML = head + dat + foot 
 
-        $('#tblVProductosV').DataTable({
-            paging: false,
-            bFilter:true
-        });
+
+        let tim2 = setTimeout(() => {
+           
+            $('#tblVProductosV').DataTable({
+                paging: false,
+                bFilter:true
+            });
+            clearTimeout(tim2);
+        }, 3000);
+    
     })
     .catch(()=>{
         container.innerHTML = `No se pudieron cargar los datos...`
@@ -1133,10 +1188,9 @@ function getDataProductos(){
 
 function getTblProductos(data){
 
-       console.log('aqui bien..')
-
+         
     let container = document.getElementById('containertblProductos');
-    container.innerHTML = getLoader();
+    container.innerHTML = ''; //getLoader();
     let totalventa = 0;
     let totalcosto = 0;
     let totalutilidad = 0;
@@ -1147,7 +1201,7 @@ function getTblProductos(data){
                     <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('tab1')">Expandir</button>
                 </div>
                    
-                <table class="table table-responsive" style="font-size:90%;" id="tblVProductos">
+                <table class="table table-responsive" style="font-size:90%;" id="tblMarcaProductos">
                     <thead class="bg-info text-white">
                         <tr>
                             <td>PRODUCTO</td>
@@ -1206,10 +1260,14 @@ function getTblProductos(data){
 
     container.innerHTML = head + dat + foot 
 
-    $('#tblVProductos').DataTable({
-        paging: false,
-        bFilter:true
-    });
+    return;
+    let tim = setTimeout(() => {
+        $('#tblMarcaProductos').DataTable({paging: false, bFilter:true });
+        clearTimeout(tim);
+    }, 5000);
+
+
+  
 
 };
 
