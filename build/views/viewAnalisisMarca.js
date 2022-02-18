@@ -191,13 +191,13 @@ function getDataMarca(){
     getDataFechas()
     .then(async(datos)=>{
         //getTblFechas(datos)
-        await getLineChartFechas(datos);    
+        getLineChartFechas(datos);    
     });
 
     getDataMunicipios()
     .then(async(datos)=>{
         //getPieChartMunicipios(datos);
-        await getTblMunicipios(datos);
+        getTblMunicipios(datos);
     });
 
     getDataMunicipiosClientes()
@@ -207,18 +207,18 @@ function getDataMarca(){
     });
 
     getDataVentasMarca()
-    .then((datos)=>{
+    .then(async (datos)=>{
         getPieChartVentasEmpresa(datos);
         getPieChartOportunidadEmpresa(datos);
     })
 
     getDataVendedores()
-    .then((datos)=>{
+    .then(async (datos)=>{
         getTblVendedores(datos);
     });
 
     getDataProductos()
-    .then((datos)=>{
+    .then(async (datos)=>{
         getTblProductos(datos);
     });
 
@@ -1133,7 +1133,8 @@ function getDataProductos(){
 
 function getTblProductos(data){
 
-       
+       console.log('aqui bien..')
+
     let container = document.getElementById('containertblProductos');
     container.innerHTML = getLoader();
     let totalventa = 0;
