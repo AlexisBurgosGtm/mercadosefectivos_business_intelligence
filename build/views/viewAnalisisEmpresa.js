@@ -180,7 +180,10 @@ function addListeners(){
         } catch (error) {
             
         }
-    })
+    });
+
+    funciones.slideAnimationTabs();
+    
 };
 
 function initView(codsucursal,ventas,devoluciones,universo){

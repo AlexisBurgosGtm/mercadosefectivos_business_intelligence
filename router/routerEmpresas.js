@@ -118,8 +118,7 @@ router.get('/getVentasFechaEmpresas', async function(req,res){
 
     const {anio,mes,empresas} = req.query;
 
-   console.log(req.query);
-   
+     
     let qry = `SELECT FECHA, 
                 SUM(TOTALCOSTO) AS TOTALCOSTO, 
                 SUM(TOTALPRECIO) AS TOTALPRECIO, 

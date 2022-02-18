@@ -209,7 +209,7 @@ function addListeners(){
     })
     
 
-
+    funciones.slideAnimationTabs();
 
 };
 
