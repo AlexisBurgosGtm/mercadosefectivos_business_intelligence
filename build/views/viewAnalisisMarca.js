@@ -172,7 +172,8 @@ function addListeners(){
         
         //aplica el formato de datatable ya que no funciona si está oculto
         try {
-            $('#tblMarcaProductos').DataTable({paging: false, bFilter:true });    
+            $('#tblMarcaProductos').DataTable({paging: false, bFilter:true });
+            //$("#tblMarcaProductos").DataTable().fnDestroy();    
         } catch (error) {
             
         }

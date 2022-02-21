@@ -250,6 +250,10 @@ btnMEmpleados.addEventListener('click',()=>{
     //btnMenuHome2.click();
 });
 
+let btnMRutas = document.getElementById('btnMRutas');
+btnMRutas.addEventListener('click', ()=>{
+    Navegar.rutas();
+});
 
 document.getElementById('btnMConfig').addEventListener('click',()=>{
   Navegar.config();

@@ -54,6 +54,17 @@ let Navegar = {
             initView();
         })
     },
+    rutas:()=>{
+        funciones.loadScript('../views/viewRutas.js','root')
+        .then(()=>{
+            titulo.innerHTML = `ROUTES ANALISYS`;
+            GlobalSelectedForm = 'RUTAS';
+            btnFiltro.style='visibility:visible';
+            btnFiltroCerrar.style='visibility:visible';
+            btnMenu.style='visibility:visible';
+            initView();
+        })
+    },
     analisis_marca:(data)=>{
         funciones.loadScript('../views/viewAnalisisMarca.js','root')
         .then(()=>{
