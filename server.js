@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var routerMarcas = require('./router/routerMarcas');
 var routerEmpresas = require('./router/routerEmpresas');
 var routerUsuarios = require('./router/routerUsuarios');
+var routerCobertura = require('./router/routerCobertura');
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -51,6 +52,7 @@ app.use('/empresas', routerEmpresas);
 
 app.use('/usuarios', routerUsuarios);
 
+app.use('/cobertura', routerCobertura);
 
 
 app.use("/",router);
