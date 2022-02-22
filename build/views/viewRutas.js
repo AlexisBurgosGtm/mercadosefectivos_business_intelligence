@@ -48,7 +48,19 @@ function getView(){
                 <div class="col-6">
                     <div class="card shadow card-rounded" id="">
                         <div class="card-body">
-                            <h3>Totales de ventas dividido por departamento</h3>
+                            <h3 class="text-danger">Total por Municipio/Departamento</h3>
+
+                            <div class="table-responsive">
+                                <table class="table table-responsive table-hover" id="tblMunicipiosDep">
+                                    <thead>
+                                        <tr>
+                                            <td>Municipio</td>
+                                            <td>Importe</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="containerTabla"></tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -93,7 +105,11 @@ function mapaCobertura(idContenedor, lt, lg){
     let container = document.getElementById(idContenedor);
     container.innerHTML = GlobalLoader;
     
-    let tbl = `<div class="mapcontainer4" id="mapcontainer"></div>`;        
+    let tbl = `<div class="mapcontainer4" id="mapcontainer"></div>`;  
+    
+    let containerTabla = document.getElementById('containerTabla');
+    containerTabla.innerHTML = GlobalLoader;
+    let str = '';
     
     container.innerHTML = tbl;
     
@@ -106,8 +122,7 @@ function mapaCobertura(idContenedor, lt, lg){
         const data = datos;
 
         data.map((rows)=>{
-            
-            if(f==funciones.getFecha()){}else{
+                //Carga el marker en el mapa
                 L.marker([rows.LAT, rows.LONG])
                 .addTo(map)
                 .bindPopup(`${rows.MUNICIPIO} <br><small>Vendido: ${funciones.setMoneda(rows.TOTALPRECIO,'Q')}</small>`, {closeOnClick: true, autoClose: true})   
@@ -116,9 +131,28 @@ function mapaCobertura(idContenedor, lt, lg){
                     //console.log(e.sourceTarget._leaflet_id);
                     //GlobalMarkerId = Number(e.sourceTarget._leaflet_id);
                     //getMenuCliente(rows.CODIGO,rows.NOMCLIE,rows.DIRCLIE,rows.TELEFONO,rows.LAT,rows.LONG,rows.NIT);
-                })
-            }
+                });
+                //dibuja la table
+                str += `<tr class="hand">
+                            <td>${rows.MUNICIPIO}
+                                <br>
+                                <small class="negrita">${rows.DEPARTAMENTO}</small>
+                            </td>
+                            <td><b class="currSign">${Number(rows.TOTALPRECIO)}</b></td>
+                        </tr>`
         })
+
+        //carga la tabla
+        containerTabla.innerHTML = str;
+        try {
+            var table = $('#tblMunicipiosDep').DataTable({
+                paging: false, 
+                bFilter:true
+            });    
+        } catch (error) {
+            
+        }
+        
 
         //RE-AJUSTA EL MAPA A LA PANTALLA
         setTimeout(function () {
@@ -139,7 +173,7 @@ function mapaCobertura(idContenedor, lt, lg){
         console.log(error);
     })
        
-}
+};
 
 function getDataCobertura(){
 
