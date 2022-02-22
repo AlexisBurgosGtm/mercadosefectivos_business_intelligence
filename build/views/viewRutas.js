@@ -64,6 +64,7 @@ function getView(){
 
 function addListeners(){
 
+    /*
     funciones.showLocation()
     .then((location)=>{
             let lat = location.coords.latitude.toString();
@@ -71,7 +72,10 @@ function addListeners(){
             
             mapaCobertura('mapContenedor', lat, longg);
     });    
+    */
 
+    //carga los datos con una latitud y longitud en el centro del mapa
+    mapaCobertura('mapContenedor',15.8037849,-89.8683734)
    
     funciones.slideAnimationTabs();
 
@@ -108,6 +112,7 @@ function mapaCobertura(idContenedor, lt, lg){
                 .addTo(map)
                 .bindPopup(`${rows.MUNICIPIO} <br><small>Vendido: ${funciones.setMoneda(rows.TOTALPRECIO,'Q')}</small>`, {closeOnClick: true, autoClose: true})   
                 .on('click', function(e){
+                    console.log(e);
                     //console.log(e.sourceTarget._leaflet_id);
                     //GlobalMarkerId = Number(e.sourceTarget._leaflet_id);
                     //getMenuCliente(rows.CODIGO,rows.NOMCLIE,rows.DIRCLIE,rows.TELEFONO,rows.LAT,rows.LONG,rows.NIT);

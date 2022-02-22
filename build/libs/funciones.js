@@ -16,7 +16,7 @@ let funciones = {
       var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       osm = L.tileLayer(osmUrl, {center: [lat, long],maxZoom: 20, attribution: osmAttrib});    
-      map = L.map('mapcontainer').setView([lat, long], 11).addLayer(osm);
+      map = L.map('mapcontainer').setView([lat, long], 7).addLayer(osm);
 
       var userIcon = L.icon({
         iconUrl: '../img/userIcon.png',
@@ -29,10 +29,11 @@ let funciones = {
         popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
     });
 
-      L.marker([lat, long],{icon:userIcon})
-        .addTo(map)
-        .bindPopup('Mi Ubicación', {closeOnClick: true, autoClose: false})   
-        .openPopup()
+
+      //L.marker([lat, long],{icon:userIcon})
+        //.addTo(map)
+        //.bindPopup('Mi Ubicación', {closeOnClick: true, autoClose: false})   
+        //.openPopup()
                 
       return map;
   },
