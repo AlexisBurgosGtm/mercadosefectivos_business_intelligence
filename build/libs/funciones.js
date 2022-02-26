@@ -1,4 +1,8 @@
 let funciones = {
+  setMoneda2:(number)=>{
+      let valor = new Intl.NumberFormat().format(number);
+      return valor;
+  },
   showLocation:()=>{
       return new Promise((resolve,reject)=>{
             try {
