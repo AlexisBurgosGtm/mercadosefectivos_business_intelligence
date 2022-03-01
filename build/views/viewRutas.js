@@ -168,12 +168,12 @@ function mapaCobertura(idContenedor, lt, lg){
                     //getMenuCliente(rows.CODIGO,rows.NOMCLIE,rows.DIRCLIE,rows.TELEFONO,rows.LAT,rows.LONG,rows.NIT);
                 });
                 //dibuja la table
-                str += `<tr class="hand" onclick="getMenuMunicipio(${rows.CODSUCURSAL.toString()},${rows.CODMUNICIPIO}, ${rows.MUNICIPIO}, ${rows.TOTALPRECIO})">
+                str += `<tr class="hand" onclick="getMenuMunicipio('${rows.CODSUCURSAL}','${rows.CODMUNICIPIO}', '${rows.MUNICIPIO}', '${rows.TOTALPRECIO}')">
                             <td>${rows.MUNICIPIO}
                                 <br>
                                 <small class="negrita">${rows.DEPARTAMENTO}</small>
                             </td>
-                            <td><b class="currSign">${Number(funciones.setMoneda2(rows.TOTALPRECIO))}</b></td>
+                            <td class="currSign">${funciones.setMoneda(rows.TOTALPRECIO,'')}</td>
                         </tr>`
         })
 

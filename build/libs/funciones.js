@@ -1,6 +1,6 @@
 let funciones = {
   setMoneda2:(number)=>{
-      let valor = new Intl.NumberFormat().format(number);
+      let valor = new Intl.NumberFormat('en-GB', { style:'currency', currency:'GTQ' }).format(number);
       return valor;
   },
   showLocation:()=>{

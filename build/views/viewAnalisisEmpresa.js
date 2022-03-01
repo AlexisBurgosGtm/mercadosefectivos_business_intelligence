@@ -303,9 +303,9 @@ function getTblFechas(data){
         dat += `
             <tr class="hand">
                 <td>${funciones.cleanFecha(r.FECHA)}</td>
-                <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
-                <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
-                <td>${funciones.setMoneda(r.UTILIDAD,'Q')}</td>
+                <td class="currSign">${funciones.setMoneda(r.TOTALCOSTO,'')}</td>
+                <td class="currSign">${funciones.setMoneda(r.TOTALPRECIO,'')}</td>
+                <td class="currSign">${funciones.setMoneda(r.UTILIDAD,'')}</td>
                 <td>${funciones.setMargen(((Number(r.UTILIDAD)/Number(r.TOTALPRECIO))*100).toFixed(2),'%')}</td>
             </tr>
         `

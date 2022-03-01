@@ -777,9 +777,9 @@ function getTblVentasFecha(data){
         dat += `
             <tr class="hand border-bottom border-info" ondblclick="gotoFecha('${funciones.cleanFecha(r.FECHA)}')">
                 <td>${GlobalIconoDobleClick} ${funciones.convertDateNormal(r.FECHA)}</td>
-                <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
-                <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
-                <td>${funciones.setMoneda(r.TOTALUTILIDAD,'Q')}</td>
+                <td class="currSign">${funciones.setMoneda(r.TOTALCOSTO,'')}</td>
+                <td class="currSign">${funciones.setMoneda(r.TOTALPRECIO,'')}</td>
+                <td class="currSign">${funciones.setMoneda(r.TOTALUTILIDAD,'')}</td>
             </tr>
         `
     })

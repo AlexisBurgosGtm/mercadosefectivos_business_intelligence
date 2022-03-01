@@ -140,9 +140,9 @@ function getTblVentasVendedores(data){
                     <br>
                     <small class="negrita">${r.CODSUCURSAL}</small>
                 </td>
-                <td>${funciones.setMoneda(r.VENTAS,'Q')}</td>
-                <td>${funciones.setMoneda(r.DEVOLUCIONES,'Q')}</td>
-                <td>${funciones.setMoneda(totalneto,'Q')}</td>
+                <td class="currSign">${funciones.setMoneda(r.VENTAS,'')}</td>
+                <td class="currSign">${funciones.setMoneda(r.DEVOLUCIONES,'')}</td>
+                <td class="currSign">${funciones.setMoneda(totalneto,'')}</td>
                 <td>${((Number(r.DEVOLUCIONES *-1)/Number(r.VENTAS))*100).toFixed(2)}%</td>
                 <td>${((totalneto / totalventa)* 100).toFixed(2)}%</td>
             </tr>

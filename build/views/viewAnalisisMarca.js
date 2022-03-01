@@ -319,9 +319,9 @@ function getTblFechas(data){
         dat += `
             <tr class="hand">
                 <td>${funciones.cleanFecha(r.FECHA)}</td>
-                <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
-                <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
-                <td>${funciones.setMoneda(r.UTILIDAD,'Q')}</td>
+                <td class="currSign">${funciones.setMoneda(r.TOTALCOSTO,'')}</td>
+                <td class="currSign">${funciones.setMoneda(r.TOTALPRECIO,'')}</td>
+                <td class="currSign">${funciones.setMoneda(r.UTILIDAD,'')}</td>
                 <td>${funciones.setMargen(((Number(r.UTILIDAD)/Number(r.TOTALPRECIO))*100).toFixed(2),'%')}</td>
             </tr>
         `
@@ -502,9 +502,9 @@ function getTblMunicipios(data){
                     <br>               
                     <small class="negrita">${r.DEPARTAMENTO}</small>
                 </td>
-                <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
-                <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
-                <td>${funciones.setMoneda(r.UTILIDAD,'Q')}</td>
+                <td class="currSign">${funciones.setMoneda(r.TOTALCOSTO,'')}</td>
+                <td class="currSign">${funciones.setMoneda(r.TOTALPRECIO,'')}</td>
+                <td class="currSign">${funciones.setMoneda(r.UTILIDAD,'')}</td>
                 <td>${funciones.getMargenUtilidad(Number(r.TOTALPRECIO),Number(r.TOTALCOSTO))}</td>
                 <td>${funciones.getParticipacion(Number(r.TOTALPRECIO),totalventa)}</td>
                 <td class="text-danger">${funciones.getParticipacion(Number(r.CONTEO), Number(r.TOTALMUNICIPIO))}
@@ -936,7 +936,7 @@ function getDataProductosMunicipio(departamento,municipio){
                         <small class="negrita text-danger">${r.CODPRODUCTO}</small>
                     </td>
                     <td>${Number(r.FARDOS).toFixed(2)}</td>
-                    <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
+                    <td class="currSign">${funciones.setMoneda(r.TOTALPRECIO,'')}</td>
                     <td>${funciones.getParticipacion(Number(r.TOTALPRECIO),totalventa)}</td>
                 </tr>
             `
@@ -1037,9 +1037,9 @@ function getTblVendedores(data){
             <tr class="hand border-bottom border-secondary" onclick="getDataProductosVendedor('${r.CODRUTA}','${r.VENDEDOR}')">
                 <td><i class="fal fa-hand-point-up"></i>${r.VENDEDOR}</td>
                 <td>${r.FARDOS.toFixed(2)}</td>
-                <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
-                <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
-                <td>${funciones.setMoneda(r.UTILIDAD,'Q')}</td>
+                <td class="currSign">${funciones.setMoneda(r.TOTALCOSTO,'')}</td>
+                <td class="currSign">${funciones.setMoneda(r.TOTALPRECIO,'')}</td>
+                <td class="currSign">${funciones.setMoneda(r.UTILIDAD,'')}</td>
                 <td>${funciones.getMargenUtilidad(Number(r.TOTALPRECIO),Number(r.TOTALCOSTO))}</td>
                 <td>${funciones.getParticipacion(Number(r.TOTALPRECIO),totalventa)}</td>
             </tr>
@@ -1121,9 +1121,9 @@ function getDataProductosVendedor(codruta,nomven){
                         <small class="negrita text-danger">${r.CODPRODUCTO}</small>
                     </td>
                     <td>${Number(r.FARDOS).toFixed(2)}</td>
-                    <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
-                    <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
-                    <td>${funciones.setMoneda(r.UTILIDAD,'Q')}</td>
+                    <td class="currSign">${funciones.setMoneda(r.TOTALCOSTO,'')}</td>
+                    <td class="currSign">${funciones.setMoneda(r.TOTALPRECIO,'')}</td>
+                    <td class="currSign">${funciones.setMoneda(r.UTILIDAD,'')}</td>
                     <td>${funciones.getMargenUtilidad(Number(r.TOTALPRECIO),Number(r.TOTALCOSTO))}</td>
                     <td>${funciones.getParticipacion(Number(r.TOTALPRECIO),totalventa)}</td>
                 </tr>
@@ -1235,9 +1235,9 @@ function getTblProductos(data){
                     <small class="negrita text-danger">${r.CODPRODUCTO}</small>
                 </td>
                 <td>${Number(r.FARDOS).toFixed(2)}</td>
-                <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
-                <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
-                <td>${funciones.setMoneda(r.UTILIDAD,'Q')}</td>
+                <td class="currSign">${funciones.setMoneda(r.TOTALCOSTO,'')}</td>
+                <td class="currSign">${funciones.setMoneda(r.TOTALPRECIO,'')}</td>
+                <td class="currSign">${funciones.setMoneda(r.UTILIDAD,'')}</td>
                 <td>${funciones.getMargenUtilidad(Number(r.TOTALPRECIO),Number(r.TOTALCOSTO))}</td>
                 <td>${funciones.getParticipacion(Number(r.TOTALPRECIO),totalventa)}</td>
             </tr>
@@ -1322,9 +1322,9 @@ function getTblMunicipiosProducto(codprod,desprod){
                     <small class="negrita">${r.DEPARTAMENTO}</small>
                 </td>
                 <td>${Number(r.FARDOS).toFixed(2)}</td>
-                <td>${funciones.setMoneda(r.TOTALCOSTO,'Q')}</td>
-                <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
-                <td>${funciones.setMoneda(r.UTILIDAD,'Q')}</td>
+                <td class="currSign">${funciones.setMoneda(r.TOTALCOSTO,'')}</td>
+                <td class="currSign">${funciones.setMoneda(r.TOTALPRECIO,'')}</td>
+                <td class="currSign">${funciones.setMoneda(r.UTILIDAD,'')}</td>
                 <td>${funciones.getMargenUtilidad(Number(r.TOTALPRECIO),Number(r.TOTALCOSTO))}</td>
                 <td>${funciones.getParticipacion(Number(r.TOTALPRECIO),totalventa)}</td>
                 <td class="text-danger">${funciones.getParticipacion(Number(r.CONTEO), Number(r.TOTALMUNICIPIO))}
