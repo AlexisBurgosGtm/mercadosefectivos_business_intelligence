@@ -173,7 +173,7 @@ function mapaCobertura(idContenedor, lt, lg){
                                 <br>
                                 <small class="negrita">${rows.DEPARTAMENTO}</small>
                             </td>
-                            <td><b class="currSign">${Number(rows.TOTALPRECIO)}</b></td>
+                            <td><b class="currSign">${Number(funciones.setMoneda2(rows.TOTALPRECIO))}</b></td>
                         </tr>`
         })
 
