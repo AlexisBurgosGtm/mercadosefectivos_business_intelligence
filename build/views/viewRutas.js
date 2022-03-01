@@ -39,13 +39,13 @@ function getView(){
         home:()=>{
           return `
             <div class="row">
-                <div class="col-6">
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
 
                     <div class="card shadow card-rounded" id="mapContenedor">
                     </div>
                 
                 </div>
-                <div class="col-6">
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="card shadow card-rounded" id="">
                         <div class="card-body">
                             <h3 class="text-danger">Total por Municipio/Departamento</h3>
