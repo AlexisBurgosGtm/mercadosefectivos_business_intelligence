@@ -66,11 +66,45 @@ function getView(){
                 </div>
             </div>                  
           `
+        },
+        modalMunicipio:()=>{
+            return `
+                <div class="modal fade shadow card-rounded" id="modalResumenMunicipio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-right modal-lg" role="document">
+                        <div class="modal-content">
+                    
+                            <div class="modal-body p-2">
+                                <div class="card card-rounded shadow">
+                                    
+                                    <div class="card-body">
+                                        <h5 class="text-center text-secondary" id="lbMunicipio">Municipio</h5>
+                                        <h5 class="text-center text-danger negrita" id="lbTotalVenta">0</h5>
+                                        
+                                        <hr class="solid">
+                                    </div>
+                                    
+                                    <div class="card-body">
+                                    
+
+                                    
+                                    </div>  
+                                </div>                      
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-outline-secondary btn-xl btn-circle shadow" data-dismiss="modal">
+                                    <i class="fal fa-arrow-right"></i>
+                                </button>
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
         }
     }
 
 
-    root.innerHTML = view.body();
+    root.innerHTML = view.body() + view.modalMunicipio();
 
 };
 
@@ -128,12 +162,13 @@ function mapaCobertura(idContenedor, lt, lg){
                 .bindPopup(`${rows.MUNICIPIO} <br><small>Vendido: ${funciones.setMoneda(rows.TOTALPRECIO,'Q')}</small>`, {closeOnClick: true, autoClose: true})   
                 .on('click', function(e){
                     console.log(e);
+                    getMenuMunicipio(rows.CODSUCURSAL.toString(),rows.CODMUNICIPIO, rows.MUNICIPIO, rows.TOTALPRECIO)
                     //console.log(e.sourceTarget._leaflet_id);
                     //GlobalMarkerId = Number(e.sourceTarget._leaflet_id);
                     //getMenuCliente(rows.CODIGO,rows.NOMCLIE,rows.DIRCLIE,rows.TELEFONO,rows.LAT,rows.LONG,rows.NIT);
                 });
                 //dibuja la table
-                str += `<tr class="hand">
+                str += `<tr class="hand" onclick="getMenuMunicipio(${rows.CODSUCURSAL.toString()},${rows.CODMUNICIPIO}, ${rows.MUNICIPIO}, ${rows.TOTALPRECIO})">
                             <td>${rows.MUNICIPIO}
                                 <br>
                                 <small class="negrita">${rows.DEPARTAMENTO}</small>
@@ -191,5 +226,20 @@ function getDataCobertura(){
 
     })
      
+
+};
+
+
+
+
+function getMenuMunicipio(sucursal,codmun, desmun, venta){
+
+    $('#modalResumenMunicipio').modal('show');
+
+    document.getElementById('lbMunicipio').innerText = `${desmun} - (${sucursal})`;
+    document.getElementById('lbTotalVenta').innerText = funciones.setMoneda(venta,'Q');
+
+    
+
 
 };
