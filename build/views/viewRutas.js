@@ -50,16 +50,8 @@ function getView(){
                         <div class="card-body">
                             <h3 class="text-danger">Total por Municipio/Departamento</h3>
 
-                            <div class="table-responsive">
-                                <table class="table table-responsive table-hover" id="tblMunicipiosDep">
-                                    <thead>
-                                        <tr>
-                                            <td>Municipio</td>
-                                            <td>Importe</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="containerTabla"></tbody>
-                                </table>
+                            <div class="table-responsive" id="containerMunicipios">
+                             
                             </div>
                         </div>
                     </div>
@@ -84,6 +76,19 @@ function getView(){
                                     </div>
                                     
                                     <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="table-responsive"  id="containerTblMarcas">
+                                                    
+                                                </div>    
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="card card-rounded shadow p2" id="containerGraf1">
+                                                
+                                                </div>
+                                            
+                                            </div>
+                                        </div>
                                     
 
                                     
@@ -121,7 +126,8 @@ function addListeners(){
     */
 
     //carga los datos con una latitud y longitud en el centro del mapa
-    mapaCobertura('mapContenedor',15.8037849,-89.8683734)
+    mapaCobertura('mapContenedor',15.8037849,-89.8683734);
+
    
     funciones.slideAnimationTabs();
 
@@ -141,7 +147,7 @@ function mapaCobertura(idContenedor, lt, lg){
     
     let tbl = `<div class="mapcontainer4" id="mapcontainer"></div>`;  
     
-    let containerTabla = document.getElementById('containerTabla');
+    let containerTabla = document.getElementById('containerMunicipios');
     containerTabla.innerHTML = GlobalLoader;
     let str = '';
     
@@ -178,7 +184,18 @@ function mapaCobertura(idContenedor, lt, lg){
         })
 
         //carga la tabla
-        containerTabla.innerHTML = str;
+        let tablamun = `
+                        <table class="table table-responsive table-hover" id="tblMunicipiosDep">
+                            <thead>
+                                <tr>
+                                    <td>Municipio</td>
+                                    <td>Importe</td>
+                                </tr>
+                            </thead>
+                            <tbody id="">${str}</tbody>
+                        </table>
+        `
+        containerTabla.innerHTML = tablamun;
         try {
             var table = $('#tblMunicipiosDep').DataTable({
                 paging: false, 
@@ -239,7 +256,168 @@ function getMenuMunicipio(sucursal,codmun, desmun, venta){
     document.getElementById('lbMunicipio').innerText = `${desmun} - (${sucursal})`;
     document.getElementById('lbTotalVenta').innerText = funciones.setMoneda(venta,'Q');
 
-    
+    getDataMunicipio(codmun,sucursal)
+    .then((datos)=>{
+        getTblMarcasMunicipio(datos);
+        getPieMarcasMunicipio(datos);
+    })
+   
 
+};
+
+
+function getDataMunicipio(codmun,sucursal){
+
+    return new Promise((resolve, reject)=>{
+      
+        axios.post(`/cobertura/get_marcas_municipio`, {
+                                                        empresas: sucursal, 
+                                                        anio:parametrosAnio, 
+                                                        mes:parametrosMes,
+                                                        codmun:codmun})
+        .then(res => {
+            const datos = res.data.recordset;
+            resolve(datos);
+        })
+        .catch(()=>{
+            reject();
+        })
+
+
+    })
+     
+
+};
+
+function getTblMarcasMunicipio(datos){
+
+    let container = document.getElementById('containerTblMarcas');
+    container.innerHTML = getLoader();
+
+
+    let str = '';
+    
+    let totalventa = 0;
+   
+        datos.map((r)=>{
+            totalventa += Number(r.TOTALPRECIO);
+        })
+
+        datos.map((r)=>{
+            str += `
+                    <tr class="fontsmall hand">
+                        <td>${r.DESMARCA}</td>
+                        <td>${r.CLIENTES}</td>
+                        <td class="currSign">${funciones.setMoneda(r.TOTALPRECIO,'')}</td>
+                        <td class="currSign">${funciones.setMoneda(Number(r.TOTALPRECIO)-Number(r.TOTALCOSTO),'')}</td>
+                        <td>${funciones.getParticipacion(Number(r.TOTALPRECIO),totalventa)}</td>
+                    </tr>
+                    `
+        })
+        let tablemarcas = ` <table class="table table-responsive table-hover" id="tblMarcasMunicipio">
+                                <thead class="bg-trans-gradient text-white fontsmall">
+                                    <tr>
+                                        <td>MARCA</td>
+                                        <td>CLI</td>
+                                        <td>VENTA</td>
+                                        <td>UTIL</td>
+                                        <td>PART</td>
+                                    </tr>
+                                </thead>
+                                <tbody class="fontsmall">
+                                    ${str}                
+                                </tbody>
+                            </table>`;
+
+        container.innerHTML = tablemarcas;
+
+        try {
+            var table = $('#tblMarcasMunicipio').DataTable({
+                paging: false, 
+                bFilter:true
+            });    
+        } catch (error) {
+            
+        }
+ 
+
+};
+
+function getPieMarcasMunicipio(data){
+   
+    let container = document.getElementById('containerGraf1');
+    container.innerHTML = '';
+    container.innerHTML = '<canvas id="myChart" width="40" height="40"></canvas>';
+  
+    let label = []; let valor = []; let bgColor = [];
+    let total = 0;
+    data.map((r)=>{
+        total = total + Number(r.TOTALPRECIO);
+    });
+   
+    data.map((r)=>{
+            label.push(r.DESMARCA);
+            valor.push(Number(((Number(r.TOTALPRECIO)/total))*100).toFixed(2));
+            bgColor.push(getRandomColor())
+    })
+
+  
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        plugins: [ChartDataLabels],
+        type: 'doughnut',
+        data: {
+            labels: label,
+            datasets: [{
+                data:valor,
+                borderColor: 'white',
+                backgroundColor:bgColor
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                  },
+                  title: {
+                    display: true,
+                    text: 'Ventas por Marca: ' + funciones.setMoneda(total,'Q')
+                  },
+                // Change options for ALL labels of THIS CHART
+                datalabels: {
+                  anchor:'end',
+                  align:'end',
+                  listeners: {
+                    click: function(context) {
+                      // Receives `click` events only for labels of the first dataset.
+                      // The clicked label index is available in `context.dataIndex`.
+                      console.log(context);
+                    }
+                  },
+                  formatter: function(value) {
+                    return value + '%';
+                    // eq. return ['line1', 'line2', value]
+                  },
+                  color: function(context) {
+                    return context.dataset.backgroundColor;
+                  },
+                  borderColor: 'white',
+                  borderRadius: 25,
+                  borderWidth: 0,
+                  font: {
+                    weight: 'bold'
+                  }
+                }
+            }
+        }
+    });
+
+
+    
 
 };

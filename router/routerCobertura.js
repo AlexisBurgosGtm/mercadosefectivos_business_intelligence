@@ -9,20 +9,41 @@ router.post('/get_cobertura', async function(req,res){
 
     let qry = '';
 
-        qry = `SELECT DISTINCT CODSUCURSAL, ISNULL(CODMUN,0) AS CODMUNICIPIO, ISNULL(MUNICIPIO,'SN') AS MUNICIPIO, ISNULL(DEPARTAMENTO,'SN') AS DEPARTAMENTO, 
-        FORMAT(SUM(ISNULL(TOTALPRECIO,0)),'##.##') AS TOTALPRECIO, 
-        MAX(ISNULL(LAT,0)) AS LAT, MAX(ISNULL(LONG,0)) AS LONG
-        FROM BI_RPT_GENERAL
-       WHERE CODSUCURSAL IN(${empresas}) AND MES IN(${mes}) AND ANIO IN(${anio}) AND LAT<>0 
-       GROUP BY CODSUCURSAL, CODMUN,MUNICIPIO, DEPARTAMENTO
-ORDER BY MUNICIPIO, DEPARTAMENTO`
+        qry = `SELECT CODSUCURSAL, 
+                        ISNULL(CODMUN,0) AS CODMUNICIPIO, 
+                        ISNULL(MUNICIPIO,'SN') AS MUNICIPIO, 
+                        ISNULL(DEPARTAMENTO,'SN') AS DEPARTAMENTO, 
+                        FORMAT(SUM(ISNULL(TOTALPRECIO,0)),'##.##') AS TOTALPRECIO, 
+                        MAX(ISNULL(LAT,0)) AS LAT, 
+                        MAX(ISNULL(LONG,0)) AS LONG
+                    FROM BI_RPT_GENERAL
+                    WHERE CODSUCURSAL IN(${empresas}) AND MES IN(${mes}) AND ANIO IN(${anio}) 
+                    GROUP BY CODSUCURSAL, CODMUN,MUNICIPIO, DEPARTAMENTO
+                    ORDER BY MUNICIPIO, DEPARTAMENTO`
     
 
-      let xqry = `SELECT DISTINCT CODIGO, NOMBRECLIENTE, ISNULL(MUNICIPIO,'SN') AS MUNICIPIO, ISNULL(DEPARTAMENTO,'SN') AS DEPARTAMENTO, 
-       ISNULL(TOTALPRECIO,0) AS TOTALPRECIO, ISNULL(LAT,0) AS LAT, ISNULL(LONG,0) AS LONG
-       FROM BI_RPT_GENERAL
-      WHERE CODSUCURSAL IN(${empresas}) AND MES IN(${mes}) AND ANIO IN(${anio}) AND LAT<>0 `
+ 
 
+     execute.Query(res,qry);
+    
+});
+
+
+router.post('/get_marcas_municipio', async function(req,res){
+
+    const {empresas,anio,mes,codmun} = req.body;
+    let qry = '';
+
+        qry = `SELECT CODMARCA, DESMARCA, 
+                ROUND(SUM(ISNULL(TOTALCOSTO,0)),2) AS TOTALCOSTO, 
+                ROUND(SUM(ISNULL(TOTALPRECIO,0)),2) AS TOTALPRECIO,
+				COUNT(CODIGO) AS CLIENTES
+        FROM BI_RPT_GENERAL
+        WHERE (CODSUCURSAL = '${empresas}') AND (ANIO = ${anio}) AND (MES = ${mes}) AND CODMUN = ${codmun}
+        GROUP BY CODMARCA, DESMARCA
+        ORDER BY SUM(TOTALPRECIO) DESC`
+  
+    
      execute.Query(res,qry);
     
 });

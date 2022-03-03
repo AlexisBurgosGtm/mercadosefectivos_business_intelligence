@@ -7,7 +7,7 @@ router.post('/get_gen_marcas', async function(req,res){
 
     const {empresas,anio,mes} = req.body;
 
-    let qry = '';
+        let qry = '';
 
         qry = `SELECT CODMARCA, DESMARCA, SUM(FARDOS) AS FARDOS, 
         SUM(TOTALCOSTO) AS TOTALCOSTO, 
@@ -20,9 +20,7 @@ router.post('/get_gen_marcas', async function(req,res){
         GROUP BY CODMARCA, DESMARCA
         ORDER BY DESMARCA`
     
-        console.log(qry);
-
-     execute.Query(res,qry);
+        execute.Query(res,qry);
     
 });
 

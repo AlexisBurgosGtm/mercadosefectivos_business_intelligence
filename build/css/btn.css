@@ -2,6 +2,11 @@
   content: 'Q';
 }
 
+.fontsmall {
+    font-size: 90%;
+
+};
+
 .btn-bottom-right { 
   position: fixed;
   z-index: 1088;
