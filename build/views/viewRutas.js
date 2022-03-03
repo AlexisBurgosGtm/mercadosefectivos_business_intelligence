@@ -161,6 +161,11 @@ function mapaCobertura(idContenedor, lt, lg){
     .then((datos) => {
         const data = datos;
 
+        let totalventa = 0;
+        data.map((r)=>{
+            totalventa += Number(r.TOTALPRECIO);
+        });
+
         data.map((rows)=>{
                 //Carga el marker en el mapa
                 L.marker([rows.LAT, rows.LONG])
@@ -180,6 +185,7 @@ function mapaCobertura(idContenedor, lt, lg){
                                 <small class="negrita">${rows.DEPARTAMENTO}</small>
                             </td>
                             <td class="currSign">${funciones.setMoneda(rows.TOTALPRECIO,'')}</td>
+                            <td>${funciones.getParticipacion(Number(rows.TOTALPRECIO), totalventa)}</td>
                         </tr>`
         })
 
@@ -190,6 +196,7 @@ function mapaCobertura(idContenedor, lt, lg){
                                 <tr>
                                     <td>Municipio</td>
                                     <td>Importe</td>
+                                    <td>Part</td>
                                 </tr>
                             </thead>
                             <tbody id="">${str}</tbody>
