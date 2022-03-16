@@ -77,12 +77,12 @@ function getView(){
                                     
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-6">
+                                            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12">
                                                 <div class="table-responsive"  id="containerTblMarcas">
                                                     
                                                 </div>    
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12">
                                                 <div class="card card-rounded shadow p2" id="containerGraf1">
                                                 
                                                 </div>
