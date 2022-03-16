@@ -173,13 +173,13 @@ function mapaCobertura(idContenedor, lt, lg){
                 .bindPopup(`${rows.MUNICIPIO} <br><small>Vendido: ${funciones.setMoneda(rows.TOTALPRECIO,'Q')}</small>`, {closeOnClick: true, autoClose: true})   
                 .on('click', function(e){
                     console.log(e);
-                    getMenuMunicipio(rows.CODSUCURSAL.toString(),rows.CODMUNICIPIO, rows.MUNICIPIO, rows.TOTALPRECIO)
+                    getMenuMunicipio(rows.CODSUCURSAL.toString(),rows.CODMUNICIPIO, rows.MUNICIPIO, rows.CODDEPTO, rows.TOTALPRECIO)
                     //console.log(e.sourceTarget._leaflet_id);
                     //GlobalMarkerId = Number(e.sourceTarget._leaflet_id);
                     //getMenuCliente(rows.CODIGO,rows.NOMCLIE,rows.DIRCLIE,rows.TELEFONO,rows.LAT,rows.LONG,rows.NIT);
                 });
                 //dibuja la table
-                str += `<tr class="hand" onclick="getMenuMunicipio('${rows.CODSUCURSAL}','${rows.CODMUNICIPIO}', '${rows.MUNICIPIO}', '${rows.TOTALPRECIO}')">
+                str += `<tr class="hand" onclick="getMenuMunicipio('${rows.CODSUCURSAL}','${rows.CODMUNICIPIO}', '${rows.MUNICIPIO}', '${rows.CODDEPTO}', '${rows.TOTALPRECIO}')">
                             <td>${rows.MUNICIPIO}
                                 <br>
                                 <small class="negrita">${rows.DEPARTAMENTO}</small>
@@ -256,14 +256,14 @@ function getDataCobertura(){
 
 
 
-function getMenuMunicipio(sucursal,codmun, desmun, venta){
+function getMenuMunicipio(sucursal,codmun, desmun, coddepto,venta){
 
     $('#modalResumenMunicipio').modal('show');
 
     document.getElementById('lbMunicipio').innerText = `${desmun} - (${sucursal})`;
     document.getElementById('lbTotalVenta').innerText = funciones.setMoneda(venta,'Q');
 
-    getDataMunicipio(codmun,sucursal)
+    getDataMunicipio(codmun,coddepto,sucursal)
     .then((datos)=>{
         getTblMarcasMunicipio(datos);
         getPieMarcasMunicipio(datos);
@@ -273,7 +273,7 @@ function getMenuMunicipio(sucursal,codmun, desmun, venta){
 };
 
 
-function getDataMunicipio(codmun,sucursal){
+function getDataMunicipio(codmun,coddepto,sucursal){
 
     return new Promise((resolve, reject)=>{
       
@@ -281,7 +281,8 @@ function getDataMunicipio(codmun,sucursal){
                                                         empresas: sucursal, 
                                                         anio:parametrosAnio, 
                                                         mes:parametrosMes,
-                                                        codmun:codmun})
+                                                        codmun:codmun,
+                                                        coddepto:coddepto})
         .then(res => {
             const datos = res.data.recordset;
             resolve(datos);
