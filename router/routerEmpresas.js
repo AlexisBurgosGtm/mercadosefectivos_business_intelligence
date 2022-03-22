@@ -159,7 +159,7 @@ router.post("/getempresas", async function(req,res){
                 SUM(DEVOLUCIONES) AS DEVOLUCIONES,
                 SUM(UTILIDAD) AS UTILIDAD,
                 SUM(MARGEN) AS MARGEN,
-                0 AS OBJETIVO, 
+                SUM(ISNULL(OBJETIVO,0)) AS OBJETIVO, 
                 AVG(UNIVERSO) AS UNIVERSO,
                 MAX(LASTUPDATE) AS LASTUPDATE,
                 SUM(ISNULL(COMPRAS,0)) AS COMPRAS

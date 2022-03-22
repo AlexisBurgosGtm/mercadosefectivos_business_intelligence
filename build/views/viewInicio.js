@@ -489,24 +489,25 @@ function getCarsEmpresas(data){
     let container = document.getElementById('containerCardsResumen');
     let view = '';
 
-    let totalventa =0; let totaldevoluciones = 0;
+    let totalventa =0; let totaldevoluciones = 0; let totalobjetivo = 0;
     data.map((r)=>{
         totalventa += Number(r.VENTAS);
         totaldevoluciones += Number(r.DEVOLUCIONES);
+        totalobjetivo += Number(r.OBJETIVO);
         let dev = Number(r.DEVOLUCIONES);
         let vent = Number(r.VENTAS);
         let porcdev = ((dev * -1) / vent) * 100;
+        let objetivologrado = funciones.getParticipacion((Number(r.VENTAS)+Number(r.DEVOLUCIONES)),Number(r.OBJETIVO));
         view += `
         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6">
             <div class="card shadow card-rounded p-4 hand" style="font-size:80%" ondblclick="gotoEmpresa('${r.EMPNIT}','${r.VENTAS}','${r.DEVOLUCIONES}','${r.UNIVERSO}')">
                 <div class="row">
-                    <div class="col-9">
+                    <div class="col-7">
                         <span class="text-primary negrita">${r.EMPNIT}</span>   
-                        ${GlobalIconoDobleClick}
                     </div>
 
-                    <div class="col-3" style="font-size:20px">
-                        <i class="fal fa-chart-line text-secondary"></i>
+                    <div class="col-5 text-danger" style="font-size:11px;" >
+                        <b>${objetivologrado}</b>
                     </div>
                 </div>
                 <div class="row">
@@ -523,6 +524,13 @@ function getCarsEmpresas(data){
                                     <td><label>Total Bruto:</label></td><td><label class="negrita text-secondary">${funciones.setMoneda((Number(r.VENTAS)+Number(r.DEVOLUCIONES)),'Q')}</label></td>
                                 </tr>
                                 <tr>
+                                    <td><label>Objetivo:</label></td><td><label class="negrita text-info">${funciones.setMoneda(Number(r.OBJETIVO),'Q')}</label></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Logrado:</label></td>
+                                    <td><label class="negrita text-danger">${objetivologrado}</label></td>
+                                </tr>
+                                <tr>
                                     <td> <label>Total Compras:</label></td><td><label class="negrita text-success">${funciones.setMoneda(Number(r.COMPRAS),'Q')}</label></td>
                                 </tr>
                             </tbody>
@@ -531,7 +539,7 @@ function getCarsEmpresas(data){
             
                 </div>
                 <div class="row">
-                    <small>Updated: ${funciones.convertDateNormal(r.LASTUPDATE)}</small>
+                    <small>Updated: ${funciones.convertDateNormal(r.LASTUPDATE)}</small> ${GlobalIconoDobleClick}
                 </div>
             </div>
         </div>
@@ -554,7 +562,8 @@ function getCarsEmpresas(data){
                         <br>
                         <label>Total Bruto:</label>
                         <label class="negrita">${funciones.setMoneda((Number(totalventa)-Number(totaldevoluciones)),'Q')}</label>
-
+                        <br>
+                        <h5 class="negrita">Logro: ${funciones.getParticipacion((Number(totalventa)-Number(totaldevoluciones)),Number(totalobjetivo))}</h5>
                     </div>
                     <div class="col-3" style="font-size:50px">
                         <i class="fal fa-dollar-sign"></i>
