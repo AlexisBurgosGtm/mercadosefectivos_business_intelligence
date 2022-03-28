@@ -1,3 +1,16 @@
+/* SEMAFORO DE COLORES */
+.bgverde {
+  background-color: rgb(189, 252, 138);
+}
+
+.bgamarillo {
+  background-color: rgb(255, 255, 193);
+}
+
+.bgrojo {
+  background-color: rgb(255, 179, 179);
+}
+
 .currSign:before {
   content: 'Q';
 }

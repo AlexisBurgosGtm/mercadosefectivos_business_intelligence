@@ -485,25 +485,35 @@ function getBarCharUtilidades(data){
 };
 
 function getCarsEmpresas(data){
+    let f = new Date();
+
+    let dia = f.getUTCDate();
+    let porcentajeDiaActual = (dia / 30);
 
     let container = document.getElementById('containerCardsResumen');
     let view = '';
 
     let totalventa =0; let totaldevoluciones = 0; let totalobjetivo = 0;
     data.map((r)=>{
+        let strClassCard = '';
         totalventa += Number(r.VENTAS);
         totaldevoluciones += Number(r.DEVOLUCIONES);
         totalobjetivo += Number(r.OBJETIVO);
         let dev = Number(r.DEVOLUCIONES);
         let vent = Number(r.VENTAS);
         let porcdev = ((dev * -1) / vent) * 100;
+        let logrado = (Number(r.VENTAS)+Number(r.DEVOLUCIONES))/Number(r.OBJETIVO);
         let objetivologrado = funciones.getParticipacion((Number(r.VENTAS)+Number(r.DEVOLUCIONES)),Number(r.OBJETIVO));
+        let logroactual = (logrado / porcentajeDiaActual) * 100;
+        if(logroactual>94.99999){strClassCard='bgverde'};
+        if(logroactual>90 && logroactual<95){strClassCard='bgamarillo'};
+        if(logroactual<90){strClassCard='bgrojo'};
         view += `
         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6">
-            <div class="card shadow card-rounded p-4 hand" style="font-size:80%" ondblclick="gotoEmpresa('${r.EMPNIT}','${r.VENTAS}','${r.DEVOLUCIONES}','${r.UNIVERSO}')">
+            <div class="card shadow card-rounded p-4 hand ${strClassCard}" style="font-size:80%" ondblclick="gotoEmpresa('${r.EMPNIT}','${r.VENTAS}','${r.DEVOLUCIONES}','${r.UNIVERSO}')">
                 <div class="row">
                     <div class="col-7">
-                        <span class="text-primary negrita">${r.EMPNIT}</span>   
+                        <span class="text-primary negrita">${r.EMPNIT}</span>
                     </div>
 
                     <div class="col-5 text-danger" style="font-size:11px;" >
@@ -531,7 +541,7 @@ function getCarsEmpresas(data){
                                     <td><label class="negrita text-danger">${objetivologrado}</label></td>
                                 </tr>
                                 <tr>
-                                    <td> <label>Total Compras:</label></td><td><label class="negrita text-success">${funciones.setMoneda(Number(r.COMPRAS),'Q')}</label></td>
+                                    <td> <label>Total Compras:</label></td><td><label class="negrita">${funciones.setMoneda(Number(r.COMPRAS),'Q')}</label></td>
                                 </tr>
                             </tbody>
                         </table>
