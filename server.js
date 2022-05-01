@@ -11,7 +11,7 @@ var routerCobertura = require('./router/routerCobertura');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-const PORT = process.env.PORT || 4700;
+const PORT = process.env.PORT || 4701;
 
 app.use(bodyParser.json());
 
