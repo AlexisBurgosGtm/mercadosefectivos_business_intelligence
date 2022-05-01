@@ -9,7 +9,7 @@ router.post('/get_gen_marcas', async function(req,res){
 
         let qry = '';
 
-        qry = `SELECT CODMARCA, DESMARCA, SUM(FARDOS) AS FARDOS, 
+        qry = `SELECT ISNULL(CODMARCA,'0') AS CODMARCA, ISNULL(DESMARCA,'--') AS DESMARCA, SUM(FARDOS) AS FARDOS, 
         SUM(TOTALCOSTO) AS TOTALCOSTO, 
         SUM(TOTALPRECIO) AS TOTALPRECIO,
         (SUM(TOTALPRECIO) - SUM(TOTALCOSTO)) AS UTILIDAD
@@ -17,6 +17,7 @@ router.post('/get_gen_marcas', async function(req,res){
         WHERE (CODSUCURSAL IN(${empresas})) 
         AND (ANIO IN(${anio})) 
         AND (MES IN(${mes}))
+        AND DESMARCA IS NOT NULL
         GROUP BY CODMARCA, DESMARCA
         ORDER BY DESMARCA`
     
