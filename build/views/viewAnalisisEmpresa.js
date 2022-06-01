@@ -58,7 +58,7 @@ function getView(){
                 
                 <div class="col-sm-6 col-md-8 col-xl-9 col-lg-9">
                     ${GlobalIconoDobleClick}
-                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGrafE2"  ondblclick="expandir('containerGrafE2')">
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGrafMeses"  ondblclick="expandir('containerGrafMeses')">
                     
 
                     </div>
@@ -201,6 +201,14 @@ function getEmpresaData(){
     getDataEmpresaFechas()
     .then((datos)=>{
         getLineChartFechasEmpresa(datos);
+    })
+    .catch(()=>{
+        
+    });
+
+    getDataMesesSucursal()
+    .then((datos)=>{
+        getBarCharMesesGeneral(datos);
     })
     .catch(()=>{
         
@@ -405,3 +413,105 @@ function getLineChartFechasEmpresa(data){
 
 };
 // FECHAS -----------------
+
+
+
+
+
+function getDataMesesSucursal(){
+    return new Promise((resolve, reject)=>{
+        //obtiene los datos de la card empresas
+      
+        axios.get(`/empresas/getMesesSucursal?sucursal=${GlobalSelectedCodSucursal}&anio=${parametrosAnio}&mes=${parametrosMes}`)
+        .then(res => {
+            const datos = res.data.recordset;
+           
+            resolve(datos);
+        })
+        .catch(()=>{
+            reject();
+        })
+
+
+    })
+
+};
+
+
+function getBarCharMesesGeneral(data){
+   
+    let container = document.getElementById('containerGrafMeses');
+    container.innerHTML = '';
+    container.innerHTML = '<canvas id="myChart15" width="100" height="35"></canvas>';
+   
+  
+    let label = []; let valor = []; let bgColor = [];
+    let total = 0;
+    data.map((r)=>{
+        total = total + Number(r.TOTALPRECIO);
+    });
+   
+    data.map((r)=>{
+            label.push(r.NOMMES);
+            valor.push(Number(r.TOTALPRECIO).toFixed(2));
+            bgColor.push(getRandomColor())
+    })
+
+  
+    var ctx = document.getElementById('myChart15').getContext('2d');
+    var myChart = new Chart(ctx, {
+        plugins: [ChartDataLabels],
+        type: 'bar',
+        data: {
+            labels: label,
+            datasets: [{
+                data:valor,
+                borderColor: 'white',
+                backgroundColor:bgColor
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                  },
+                  title: {
+                    display: true,
+                    text: 'Ventas por Mes Sucursal: ' + funciones.setMoneda(total,'Q')
+                  },
+                // Change options for ALL labels of THIS CHART
+                datalabels: {
+                  anchor:'end',
+                  align:'end',
+                  listeners: {
+                    click: function(context) {
+                      // Receives `click` events only for labels of the first dataset.
+                      // The clicked label index is available in `context.dataIndex`.
+                      console.log(context);
+                    }
+                  },
+                  formatter: function(value) {
+                    return funciones.setMoneda2(Number(value));
+                    // eq. return ['line1', 'line2', value]
+                  },
+                  color: function(context) {
+                    return context.dataset.backgroundColor;
+                  },
+                  borderColor: 'white',
+                  borderRadius: 25,
+                  borderWidth: 0,
+                  font: {
+                    weight: 'bold'
+                  }
+                }
+            }
+        }
+    });
+    
+
+};

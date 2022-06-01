@@ -1563,7 +1563,6 @@ function getDataMesesSucursales(){
         axios.get(`/marcas/getHistorialVentaMarca?empresas=${parametrosEmpresas}&anio=${parametrosAnio}&codmarca=${GlobalSelectedCodMarca}`)
         .then(res => {
             const datos = res.data.recordset;
-           
             resolve(datos);
         })
         .catch(()=>{

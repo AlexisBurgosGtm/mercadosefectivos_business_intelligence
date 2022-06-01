@@ -49,7 +49,7 @@ router.get('/getMesesMarca', async function(req,res){
     SUM(TOTALPRECIO) AS TOTALPRECIO,
      (SUM(TOTALPRECIO)-SUM(TOTALCOSTO)) AS UTILIDAD
    FROM            BI_RPT_GENERAL
-   GROUP BY CODSUCURSAL, CODMARCA ANIO, MES
+   GROUP BY CODSUCURSAL, CODMARCA, ANIO, MES
    HAVING        (ANIO IN(${anio})) AND (CODSUCURSAL IN(${empresas})) AND (CODMARCA = ${codmarca})
    ORDER BY MES,ANIO
                 `

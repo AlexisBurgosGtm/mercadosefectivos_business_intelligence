@@ -3,6 +3,29 @@ const execute = require('./connection');
 const express = require('express');
 const router = express.Router();
 
+
+
+
+router.get('/getMesesSucursal', async function(req,res){
+
+    const {sucursal, anio, mes} = req.query;
+  
+    let qry = `SELECT CODSUCURSAL, CONCAT(MES, '-', ANIO) AS NOMMES, MES, ANIO,
+    SUM(TOTALCOSTO) AS TOTALCOSTO,
+    SUM(TOTALPRECIO) AS TOTALPRECIO,
+     (SUM(TOTALPRECIO)-SUM(TOTALCOSTO)) AS UTILIDAD
+   FROM            BI_RPT_GENERAL
+   GROUP BY CODSUCURSAL, ANIO, MES
+   HAVING        (ANIO IN(${anio})) AND (CODSUCURSAL ='${sucursal}') 
+   ORDER BY ANIO, MES
+                `
+
+    execute.Query(res,qry);
+    
+});
+
+
+
 router.post('/getVentasFechas', async function(req,res){
 
     const {empresa,anio,mes} = req.body;
