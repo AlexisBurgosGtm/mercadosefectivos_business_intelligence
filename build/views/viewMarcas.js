@@ -144,7 +144,8 @@ function getTblVentasMarcas(idcontainer){
         container.innerHTML = head + dat + foot
         $('#tblMarcas').DataTable({
                         paging: false,
-                        bFilter:false
+                        bFilter:false,
+                        order: [[3, 'desc']],
         });
 
         getCardsMarcas(totalcosto,totalventa,totalutilidad);
@@ -236,3 +237,6 @@ function getDetallesMarca(codmarca,desmarca){
     funciones.animateCSS('modalDetalles','backInRight');
 
 }
+
+
+

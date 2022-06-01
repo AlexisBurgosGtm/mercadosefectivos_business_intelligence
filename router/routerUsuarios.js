@@ -31,8 +31,12 @@ router.post('/insert_usuario', async function(req,res){
 
     const {tipo,nombre,clave, codmarca,sede} = req.body;
 
+    let marca = codmarca || 0;
+
     let qry = `INSERT INTO BI_USUARIOS (USUARIO,PASS,TIPO,CODMARCA,CODSUCURSAL) 
-                                    VALUES ('${nombre}','${clave}','${tipo}',${codmarca},'${sede}');`;
+                                    VALUES ('${nombre}','${clave}','${tipo}',${marca},'${sede}')`;
+
+    //console.log(qry);
 
     execute.Query(res,qry);
 

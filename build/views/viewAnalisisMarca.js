@@ -20,6 +20,9 @@ function getView(){
                     <button class="btn btn-outline-success" id="btnTab3">
                         <i class="fal fa-briefcase"></i>Routes
                     </button>
+                    <button class="btn btn-outline-success" id="btnTab4">
+                        <i class="fal fa-calendar"></i>Monthly
+                    </button>
                 </div>
             </div>
             <hr class="solid">
@@ -41,6 +44,9 @@ function getView(){
                     </div>
                     <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="pills-contact-tab">
                         ${view.routes()}
+                    </div>
+                    <div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="pills-contact-tab">
+                        ${view.month()}
                     </div>
                 </div>
             </div>
@@ -145,7 +151,28 @@ function getView(){
                     
             </div>
             `
+        },
+        month:()=>{
+            return `
+            <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGrafMesGen">
+                    
+            </div
+            <div class="row">
+                <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
+                    <div class="card shadow border-top-rounded border-bottom-rounded" id="">
+                    
+                    </div>   
+                </div>
+                <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
+                    <div class="table-responsive card shadow border-top-rounded border-bottom-rounded" id="">
+                        
+                    </div>            
+                </div>
+                    
+            </div>
+            `
         }
+
         
     }
 
@@ -161,6 +188,8 @@ function addListeners(){
         document.getElementById('tab1').classList.remove('show','active');
         document.getElementById('tab2').classList.remove('show','active');
         document.getElementById('tab3').classList.remove('show','active');
+        document.getElementById('tab4').classList.remove('show','active');
+        
 
       
     })
@@ -169,6 +198,7 @@ function addListeners(){
         document.getElementById('tab1').classList.add('show','active');
         document.getElementById('tab2').classList.remove('show','active');
         document.getElementById('tab3').classList.remove('show','active');
+        document.getElementById('tab4').classList.remove('show','active');
         
         //aplica el formato de datatable ya que no funciona si está oculto
         try {
@@ -185,7 +215,8 @@ function addListeners(){
         document.getElementById('tab1').classList.remove('show','active');
         document.getElementById('tab2').classList.add('show','active');
         document.getElementById('tab3').classList.remove('show','active');
-
+        document.getElementById('tab4').classList.remove('show','active');
+        
         try {
             //customers
             $('#tblVFMunicipios').DataTable({ paging: false, bFilter:false });
@@ -200,6 +231,9 @@ function addListeners(){
         document.getElementById('tab1').classList.remove('show','active');
         document.getElementById('tab2').classList.remove('show','active');
         document.getElementById('tab3').classList.add('show','active');
+        document.getElementById('tab4').classList.remove('show','active');
+        
+
         //routes
         try {
             $('#tblVVendedores').DataTable({paging: false, bFilter:false });    
@@ -209,6 +243,18 @@ function addListeners(){
         
     })
     
+    document.getElementById('btnTab4').addEventListener('click',()=>{
+        document.getElementById('tabHome').classList.remove('show','active');
+        document.getElementById('tab1').classList.remove('show','active');
+        document.getElementById('tab2').classList.remove('show','active');
+        document.getElementById('tab3').classList.remove('show','active');
+        document.getElementById('tab4').classList.add('show','active');
+        
+        getDataMesGeneral()
+        .then((datos)=>{
+            getBarCharMesesGeneral(datos);
+        })
+    });
 
     funciones.slideAnimationTabs();
 
@@ -1366,3 +1412,104 @@ function getTblMunicipiosProducto(codprod,desprod){
 
 
 
+
+
+
+//grafica de mes y años
+
+function getDataMesGeneral(){
+    return new Promise((resolve, reject)=>{
+        //obtiene los datos de la card empresas
+      
+        axios.get(`/marcas/getMesesMarcaGen?empresas=${parametrosEmpresas}&anio=${parametrosAnio}&mes=${parametrosMes}&codmarca=${GlobalSelectedCodMarca}`)
+        .then(res => {
+            const datos = res.data.recordset;
+           
+            resolve(datos);
+        })
+        .catch(()=>{
+            reject();
+        })
+
+
+    })
+
+};
+
+function getBarCharMesesGeneral(data){
+   
+    let container = document.getElementById('containerGrafMesGen');
+    container.innerHTML = '';
+    container.innerHTML = '<canvas id="myChart15" width="100" height="35"></canvas>';
+   
+  
+    let label = []; let valor = []; let bgColor = [];
+    let total = 0;
+    data.map((r)=>{
+        total = total + Number(r.TOTALPRECIO);
+    });
+   
+    data.map((r)=>{
+            label.push(r.NOMMES);
+            valor.push(Number(r.TOTALPRECIO).toFixed(2));
+            bgColor.push(getRandomColor())
+    })
+
+  
+    var ctx = document.getElementById('myChart15').getContext('2d');
+    var myChart = new Chart(ctx, {
+        plugins: [ChartDataLabels],
+        type: 'bar',
+        data: {
+            labels: label,
+            datasets: [{
+                data:valor,
+                borderColor: 'white',
+                backgroundColor:bgColor
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                  },
+                  title: {
+                    display: true,
+                    text: 'Ventas por Mes Generales: ' + funciones.setMoneda(total,'Q')
+                  },
+                // Change options for ALL labels of THIS CHART
+                datalabels: {
+                  anchor:'end',
+                  align:'end',
+                  listeners: {
+                    click: function(context) {
+                      // Receives `click` events only for labels of the first dataset.
+                      // The clicked label index is available in `context.dataIndex`.
+                      console.log(context);
+                    }
+                  },
+                  formatter: function(value) {
+                    return 'Q' + value;
+                    // eq. return ['line1', 'line2', value]
+                  },
+                  color: function(context) {
+                    return context.dataset.backgroundColor;
+                  },
+                  borderColor: 'white',
+                  borderRadius: 25,
+                  borderWidth: 0,
+                  font: {
+                    weight: 'bold'
+                  }
+                }
+            }
+        }
+    });
+    
+
+};
