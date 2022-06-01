@@ -156,20 +156,15 @@ function getView(){
             return `
             <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGrafMesGen">
                     
-            </div
-            <div class="row">
-                <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
-                    <div class="card shadow border-top-rounded border-bottom-rounded" id="">
-                    
-                    </div>   
-                </div>
-                <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
-                    <div class="table-responsive card shadow border-top-rounded border-bottom-rounded" id="">
-                        
-                    </div>            
-                </div>
-                    
             </div>
+            
+            <hr class="solid">
+
+            <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGrafMesesSucursales">
+                    
+
+            </div>   
+                
             `
         }
 
@@ -254,7 +249,14 @@ function addListeners(){
         getDataMesGeneral()
         .then((datos)=>{
             getBarCharMesesGeneral(datos);
-        })
+        });
+
+        getDataMesesSucursales()
+        .then((datos)=>{
+            getBarChartMesesSucursales(datos);
+        });
+
+
     });
 
     funciones.slideAnimationTabs();
@@ -306,6 +308,7 @@ function getDataMarca(){
         await getTblVendedores(datos);
     });
 
+   
     
 
 };
@@ -1518,3 +1521,152 @@ function getBarCharMesesGeneral(data){
     
 
 };
+
+
+function getDataMesSucursales(){
+    return new Promise((resolve, reject)=>{
+        //obtiene los datos de la card empresas
+      
+        axios.get(`/marcas/getMesesMarcaSuc?empresas=${parametrosEmpresas}&anio=${parametrosAnio}&mes=${parametrosMes}&codmarca=${GlobalSelectedCodMarca}`)
+        .then(res => {
+            const datos = res.data.recordset;
+           
+            resolve(datos);
+        })
+        .catch(()=>{
+            reject();
+        })
+
+
+    })
+
+};
+
+//esto posiblemente no sirva de nada
+function dsEmpresaData(obj){
+    console.log(obj);
+     let venta = [];
+     GlobalSelectedAnioMes.forEach(function(mes, index) {
+         obj.map((r)=>{
+             venta.push(Number(r.TOTALPRECIO.toFixed(2)));
+         })
+     })
+ };
+
+
+ 
+
+function getDataMesesSucursales(){
+    return new Promise((resolve, reject)=>{
+        //obtiene los datos de la card empresas
+      
+        axios.get(`/marcas/getHistorialVentaMarca?empresas=${parametrosEmpresas}&anio=${parametrosAnio}&codmarca=${GlobalSelectedCodMarca}`)
+        .then(res => {
+            const datos = res.data.recordset;
+           
+            resolve(datos);
+        })
+        .catch(()=>{
+            reject();
+        })
+
+
+    })
+
+};
+
+
+function getBarChartMesesSucursales(data){
+    
+     let container = document.getElementById('containerGrafMesesSucursales');
+     container.innerHTML = '';
+     container.innerHTML = '<canvas id="myChart16" width="100" height="35"></canvas>';
+   
+     //--------------------------------------------------------------
+     //--------------------------------------------------------------
+ 
+ 
+     let label = [];
+     let total = 0; 
+ 
+     let ds = [];
+     let datas = [];
+ 
+ 
+     GlobalSelectedEmpresas.forEach(function(empr, index) {
+         var V = []; 
+         data.map((r2)=>{
+             if(r2.CODSUCURSAL==empr){
+                
+                 V.push(Number(r2.TOTALPRECIO.toFixed(2)));
+             } 
+         });
+         let color = getRandomColor();
+         ds = {label: empr, borderColor:color, backgroundColor:color,data:V}
+         datas.push(ds);    
+     });
+    
+ 
+     //--------------------------------------------------------------
+     //--------------------------------------------------------------
+     
+     data.map((r)=>{
+         total = total + Number(r.TOTALPRECIO);
+         label.push(r.NOMMES);
+     });
+    
+    
+   
+     var ctx = document.getElementById('myChart16').getContext('2d');
+     var myChart = new Chart(ctx, {
+         plugins: [ChartDataLabels],
+         type: 'bar',
+         data: {
+             labels: GlobalSelectedAnioMes,
+             datasets: datas
+         },
+         options: {
+           responsive: true,
+           plugins: {
+             legend: {
+               position: 'top',
+             },
+             title: {
+               display: true,
+               text: 'Ventas por Mes y Sucursal. Total: ' + funciones.setMoneda(total,'Q')
+             },
+             // Change options for ALL labels of THIS CHART
+             datalabels: {
+                 anchor:'end',
+                 align:'end',
+                 listeners: {
+                   click: function(context) {
+                     // Receives `click` events only for labels of the first dataset.
+                     // The clicked label index is available in `context.dataIndex`.
+                     console.log(context);
+                   }
+                 },
+                 formatter: function(value) {
+                   return funciones.setMoneda(value,'Q');
+                   // eq. return ['line1', 'line2', value]
+                 },
+                 color: function(context) {
+                   return context.dataset.backgroundColor;
+                 },
+                 borderColor: 'white',
+                 borderRadius: 25,
+                 borderWidth: 0,
+                 font: {
+                   weight: 'bold'
+                 }
+               }
+           }
+         }
+     });
+ 
+ 
+ 
+};
+
+
+

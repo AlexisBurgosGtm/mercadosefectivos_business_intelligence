@@ -1,5 +1,5 @@
 ﻿
-const config = {
+const configx = {
 	user: 'db_a6478c_mercadosbi_admin',
 	password: 'razors1805',
 	server: 'sql5061.site4now.net',
@@ -9,10 +9,10 @@ const config = {
 
 
 
-const configx = {
+const config = {
 	user: 'iEx',
 	password: 'iEx',
-	server: 'DESKTOP-0F9UF5S\\SQLEXPRESS',
+	server: 'DESKTOP-HB3TMU8\\SQL14',
 	database: 'db_a6478c_mercadosbi',
 	pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
 };
