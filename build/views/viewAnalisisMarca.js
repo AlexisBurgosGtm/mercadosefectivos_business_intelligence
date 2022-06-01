@@ -202,7 +202,7 @@ function addListeners(){
         
         //aplica el formato de datatable ya que no funciona si está oculto
         try {
-            $('#tblMarcaProductos').DataTable({paging: false, bFilter:true });
+            $('#tblMarcaProductos').DataTable({paging: false, bFilter:true, order: [[4, 'desc']] });
             //$("#tblMarcaProductos").DataTable().fnDestroy();    
         } catch (error) {
             
@@ -219,7 +219,7 @@ function addListeners(){
         
         try {
             //customers
-            $('#tblVFMunicipios').DataTable({ paging: false, bFilter:false });
+            $('#tblVFMunicipios').DataTable({ paging: false, bFilter:false, order: [[3, 'desc']] });
         } catch (error) {
             
         }
@@ -236,7 +236,7 @@ function addListeners(){
 
         //routes
         try {
-            $('#tblVVendedores').DataTable({paging: false, bFilter:false });    
+            $('#tblVVendedores').DataTable({paging: false, bFilter:false, order: [[4, 'desc']] });    
         } catch (error) {
             
         }
@@ -1108,12 +1108,13 @@ function getTblVendedores(data){
 
     container.innerHTML = head + dat + foot 
 
-   
+
     return;
     let tim5 = setTimeout(() => {
         $('#tblVVendedores').DataTable({
             paging: false,
-            bFilter:false
+            bFilter:false,
+            order: [[4, 'desc']]
         });
         clearTimeout(tim5);
     },3000)
@@ -1307,9 +1308,10 @@ function getTblProductos(data){
 
     container.innerHTML = head + dat + foot 
 
+    
     return;
     let tim = setTimeout(() => {
-        $('#tblMarcaProductos').DataTable({paging: false, bFilter:true });
+        $('#tblMarcaProductos').DataTable({paging: false, bFilter:true, order: [[4, 'desc']] });
         clearTimeout(tim);
     }, 5000);
 
@@ -1494,7 +1496,7 @@ function getBarCharMesesGeneral(data){
                     }
                   },
                   formatter: function(value) {
-                    return 'Q' + value;
+                    return funciones.setMoneda2(Number(value));
                     // eq. return ['line1', 'line2', value]
                   },
                   color: function(context) {
