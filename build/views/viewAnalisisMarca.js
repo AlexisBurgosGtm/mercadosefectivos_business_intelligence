@@ -202,7 +202,7 @@ function addListeners(){
         
         //aplica el formato de datatable ya que no funciona si está oculto
         try {
-            $('#tblMarcaProductos').DataTable({paging: false, bFilter:true, order: [[4, 'desc']] });
+            $('#tblMarcaProductos').DataTable({paging: false, bFilter:true, order: [[6, 'desc']] });
             //$("#tblMarcaProductos").DataTable().fnDestroy();    
         } catch (error) {
             
@@ -219,7 +219,7 @@ function addListeners(){
         
         try {
             //customers
-            $('#tblVFMunicipios').DataTable({ paging: false, bFilter:false, order: [[3, 'desc']] });
+            $('#tblVFMunicipios').DataTable({ paging: false, bFilter:false, order: [[5, 'desc']] });
         } catch (error) {
             
         }
@@ -236,7 +236,7 @@ function addListeners(){
 
         //routes
         try {
-            $('#tblVVendedores').DataTable({paging: false, bFilter:false, order: [[4, 'desc']] });    
+            $('#tblVVendedores').DataTable({paging: false, bFilter:false, order: [[6, 'desc']] });    
         } catch (error) {
             
         }
@@ -244,6 +244,7 @@ function addListeners(){
     })
     
     document.getElementById('btnTab4').addEventListener('click',()=>{
+       
         document.getElementById('tabHome').classList.remove('show','active');
         document.getElementById('tab1').classList.remove('show','active');
         document.getElementById('tab2').classList.remove('show','active');

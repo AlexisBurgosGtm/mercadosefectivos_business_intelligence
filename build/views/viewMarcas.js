@@ -145,7 +145,7 @@ function getTblVentasMarcas(idcontainer){
         $('#tblMarcas').DataTable({
                         paging: false,
                         bFilter:false,
-                        order: [[3, 'desc']],
+                        order: [[5, 'desc']],
         });
 
         getCardsMarcas(totalcosto,totalventa,totalutilidad);
