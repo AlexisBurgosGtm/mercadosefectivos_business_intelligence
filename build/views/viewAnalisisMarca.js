@@ -1005,7 +1005,8 @@ function getDataProductosMunicipio(departamento,municipio){
 
         $('#tblVProductosM').DataTable({
             paging: false,
-            bFilter:false
+            bFilter:false, 
+            order: [[3,'desc']]
         });
 
     })
@@ -1200,7 +1201,7 @@ function getDataProductosVendedor(codruta,nomven){
            
             $('#tblVProductosV').DataTable({
                 paging: false,
-                bFilter:true
+                bFilter:true, order: [[6,'desc']]
             });
             clearTimeout(tim2);
         }, 3000);
@@ -1400,8 +1401,9 @@ function getTblMunicipiosProducto(codprod,desprod){
         container.innerHTML = head + dat + foot 
 
         $('#tblVFMunicipiosP').DataTable({
-        paging: false,
-        bFilter:false
+                paging: false,
+                bFilter:false, 
+                order: [[6, 'desc']]
         });
 
     })
