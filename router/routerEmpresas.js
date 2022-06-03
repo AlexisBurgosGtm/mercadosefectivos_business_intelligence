@@ -194,7 +194,7 @@ router.post("/getempresas", async function(req,res){
     
     const {empresas,anio,mes} = req.body;
 
-    let qry = `SELECT EMPNIT, NOMBRE, 
+    let qryX = `SELECT EMPNIT, NOMBRE, 
                 SUM(COSTO) AS COSTO,
                 SUM(VENTAS) AS VENTAS,
                 SUM(COSTODEV) AS COSTODEV,
@@ -209,6 +209,19 @@ router.post("/getempresas", async function(req,res){
                 WHERE EMPNIT IN(${empresas})
                  AND MES IN(${mes}) AND ANIO IN(${anio})
                 GROUP BY EMPNIT,NOMBRE`
+
+
+    let qry = `
+                SELECT  BI_EMPRESAS_RESUMEN.EMPNIT, BI_EMPRESAS_RESUMEN.NOMBRE, SUM(BI_EMPRESAS_RESUMEN.COSTO) AS COSTO, SUM(BI_EMPRESAS_RESUMEN.VENTAS) AS VENTAS, SUM(BI_EMPRESAS_RESUMEN.COSTODEV)
+                                    AS COSTODEV, SUM(BI_EMPRESAS_RESUMEN.DEVOLUCIONES) AS DEVOLUCIONES, SUM(BI_EMPRESAS_RESUMEN.UTILIDAD) AS UTILIDAD, SUM(BI_EMPRESAS_RESUMEN.MARGEN) AS MARGEN, 
+                                    SUM(ISNULL(BI_EMPRESAS_RESUMEN.OBJETIVO, 0)) AS OBJETIVO, AVG(BI_EMPRESAS_RESUMEN.UNIVERSO) AS UNIVERSO, MAX(BI_EMPRESAS_RESUMEN.LASTUPDATE) AS LASTUPDATE, 
+                                    SUM(ISNULL(BI_EMPRESAS_RESUMEN.COMPRAS, 0)) AS COMPRAS, BI_SUCURSALES.ID
+                FROM BI_EMPRESAS_RESUMEN LEFT OUTER JOIN
+                                    BI_SUCURSALES ON BI_EMPRESAS_RESUMEN.CODSUCURSAL = BI_SUCURSALES.CODSUCURSAL
+                WHERE (BI_EMPRESAS_RESUMEN.EMPNIT IN (${empresas})) AND (BI_EMPRESAS_RESUMEN.MES IN (${mes})) AND (BI_EMPRESAS_RESUMEN.ANIO IN (${anio}))
+                GROUP BY BI_EMPRESAS_RESUMEN.EMPNIT, BI_EMPRESAS_RESUMEN.NOMBRE, BI_SUCURSALES.ID
+                ORDER BY BI_SUCURSALES.ID
+    `
     
     execute.Query(res,qry);
 });
