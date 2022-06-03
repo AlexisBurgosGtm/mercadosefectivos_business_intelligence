@@ -8,7 +8,7 @@ router.post('/login', async function(req,res){
 
     const {tipo,nombre,clave} = req.body;
 
-    let qry = `SELECT ID, USUARIO FROM BI_USUARIOS 
+    let qry = `SELECT ID, USUARIO, CODSUCURSAL FROM BI_USUARIOS 
         WHERE USUARIO='${nombre}' AND PASS='${clave}' AND TIPO='${tipo}'; `;
 
     execute.Query(res,qry);

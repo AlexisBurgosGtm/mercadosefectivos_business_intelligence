@@ -2,6 +2,7 @@ let Navegar = {
     login:()=>{
         funciones.loadScript('../views/viewLogin.js','root')
         .then(()=>{
+            GlobalSelectedTipoUsuario = '';
             titulo.innerHTML = `MERCADOS EFECTIVOS`;
             GlobalSelectedForm = 'LOGIN';
             btnFiltro.style='visibility:hidden';
@@ -72,7 +73,12 @@ let Navegar = {
             GlobalSelectedForm = 'ANALISIS_MARCA';
             btnFiltro.style='visibility:visible';
             btnFiltroCerrar.style='visibility:visible';
-            btnMenu.style='visibility:visible';
+            if(GlobalSelectedTipoUsuario=="GERENTE"){
+                btnMenu.style='visibility:visible';
+            }else{
+                btnMenu.style='visibility:hidden';
+            }
+
             initView(data);
         })
     },
@@ -87,15 +93,21 @@ let Navegar = {
             initView(data);
         })
     },
-    analisis_empresa:(codsucursal,ventas,devoluciones,universo)=>{
+    analisis_empresa:(ventas,devoluciones,universo)=>{
         funciones.loadScript('../views/viewAnalisisEmpresa.js','root')
         .then(()=>{
             titulo.innerHTML = `COMPANY ANALYSIS`;
             GlobalSelectedForm = 'ANALISIS_EMPRESA';
+            
             btnFiltro.style='visibility:visible';
             btnFiltroCerrar.style='visibility:visible';
-            btnMenu.style='visibility:visible';
-            initView(codsucursal,ventas,devoluciones,universo);
+            if(GlobalSelectedTipoUsuario=="GERENTE"){
+                btnMenu.style='visibility:visible';
+            }else{
+                btnMenu.style='visibility:hidden';
+            }
+
+            initView(ventas,devoluciones,universo);
         })
     }
 }

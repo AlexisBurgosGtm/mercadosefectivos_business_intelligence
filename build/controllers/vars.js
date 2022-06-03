@@ -9,6 +9,7 @@ let btnMenuHome = document.getElementById('circularMenu');
 let map; //mapa de leaflet
 
 let GlobalSelectedCodSucursal = '';
+let GlobalSelectedTipoUsuario = '';
 let GlobalSelectedCodMarca = 0;
 let GlobalSelectedDesMarca = '';
 let GlobalSelectedFecha ='';

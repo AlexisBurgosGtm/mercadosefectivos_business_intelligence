@@ -93,13 +93,20 @@ function login(tipo,nombre,pass,element){
         }else{
             switch (tipo) {
                 case "GERENTE":
+                    GlobalSelectedTipoUsuario = 'GERENTE';
                     Navegar.inicio();        
                     break;
                 case "PROVEEDOR":
+                    GlobalSelectedTipoUsuario = 'PROVEEDOR';
                     Navegar.analisis_marca();
                     break;
                 case "SUPERVISOR":
-                    Navegar.analisis_empresa();
+                   
+                    GlobalSelectedTipoUsuario = 'SUPERVISOR';
+                    GlobalSelectedCodSucursal = resp.recordset[0].CODSUCURSAL;
+                   
+                    Navegar.analisis_empresa(0,0,0);
+
                     break;
                 default:
                     break;
@@ -108,7 +115,8 @@ function login(tipo,nombre,pass,element){
         }
       
     })
-    .catch(()=>{
+    .catch((error)=>{
+        console.log(error);
         funciones.AvisoError('Usuario o contraseña incorrecta')
         event.innerHTML = `<i class="fal fa-lock"></i> Ingresar`;
         event.disabled = false;

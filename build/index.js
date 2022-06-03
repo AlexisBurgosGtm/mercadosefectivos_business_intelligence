@@ -61,7 +61,7 @@ btnFiltroAceptar.addEventListener('click',()=>{
             try {
               getEmpresaData();
             } catch (error) {
-                
+                console.log(error);
             }
             break;
         case 'MARCAS': 
@@ -327,3 +327,15 @@ funciones.instalationHandlers('btnInstalarApp');
 
 //anulo las alert para evitar el error por los datatables
 window.alert = function(){};
+
+getParametros();
+
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF'.split('');
+  var color = '#';
+  for (var i = 0; i < 6; i++ ) {
+      color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+};

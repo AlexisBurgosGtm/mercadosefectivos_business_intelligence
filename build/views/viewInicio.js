@@ -113,7 +113,7 @@ function getView(){
 function addListeners(){
 
 
-    getParametros();
+    //getParametros();
    
     viewInicioObtenerDatos();
 
@@ -602,7 +602,7 @@ function getCarsEmpresas(data){
 function gotoEmpresa(codsucursal,ventas,devoluciones,universo){
 
     GlobalSelectedCodSucursal = codsucursal;
-    Navegar.analisis_empresa(codsucursal,ventas,devoluciones,universo);
+    Navegar.analisis_empresa(ventas,devoluciones,universo);
 
 };
 
@@ -764,17 +764,6 @@ function getLineChartFechas(data){
 
 };
 
-
-
-
-function getRandomColor() {
-    var letters = '0123456789ABCDEF'.split('');
-    var color = '#';
-    for (var i = 0; i < 6; i++ ) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-};
 
 
 function getTblVentasFecha(data){

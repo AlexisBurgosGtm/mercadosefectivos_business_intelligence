@@ -186,17 +186,31 @@ function addListeners(){
     
 };
 
-function initView(codsucursal,ventas,devoluciones,universo){
+function initView(ventas,devoluciones,universo){
     getView();
     addListeners();
 
     getCardInicio(ventas,devoluciones,universo);
+
+
+ 
 
     getEmpresaData();
 
 };
 
 function getEmpresaData(){
+
+     
+    getDataMesesSucursal()
+    .then((datos)=>{
+        getBarCharMesesGeneral(datos);
+    })
+    .catch(()=>{
+        
+    });
+
+  
 
     getDataEmpresaFechas()
     .then((datos)=>{
@@ -205,14 +219,7 @@ function getEmpresaData(){
     .catch(()=>{
         
     });
-
-    getDataMesesSucursal()
-    .then((datos)=>{
-        getBarCharMesesGeneral(datos);
-    })
-    .catch(()=>{
-        
-    });
+   
 
 
 };
@@ -440,10 +447,13 @@ function getDataMesesSucursal(){
 
 function getBarCharMesesGeneral(data){
    
+    
+
     let container = document.getElementById('containerGrafMeses');
     container.innerHTML = '';
     container.innerHTML = '<canvas id="myChart15" width="100" height="35"></canvas>';
    
+    
   
     let label = []; let valor = []; let bgColor = [];
     let total = 0;
@@ -451,13 +461,14 @@ function getBarCharMesesGeneral(data){
         total = total + Number(r.TOTALPRECIO);
     });
    
+ 
     data.map((r)=>{
             label.push(r.NOMMES);
             valor.push(Number(r.TOTALPRECIO).toFixed(2));
             bgColor.push(getRandomColor())
     })
 
-  
+ 
     var ctx = document.getElementById('myChart15').getContext('2d');
     var myChart = new Chart(ctx, {
         plugins: [ChartDataLabels],
@@ -515,3 +526,4 @@ function getBarCharMesesGeneral(data){
     
 
 };
+
