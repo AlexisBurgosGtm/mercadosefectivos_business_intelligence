@@ -100,6 +100,11 @@ function getView(){
         },
         compras:()=>{
             return `
+            
+            <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGrafMesGenCompras">
+                    
+            </div>
+
             <div class="row">
                 <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
 
@@ -184,12 +189,9 @@ function getView(){
             
             <hr class="solid">
 
-            <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGrafMesGenCompras">
-                    
-            </div>
+           
             
-            <hr class="solid">
-
+           
             <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGrafMesesSucursales">
                     
 
@@ -230,6 +232,13 @@ function addListeners(){
         } catch (error) {
             
         }
+
+        getDataMesGeneralCompras()
+        .then((datos)=>{
+            getBarCharMesesGeneralCompras(datos);
+        });
+
+
     })
 
     document.getElementById('btnTab1').addEventListener('click',()=>{
@@ -293,12 +302,7 @@ function addListeners(){
             getBarCharMesesGeneral(datos);
         });
 
-        getDataMesGeneralCompras()
-        .then((datos)=>{
-            getBarCharMesesGeneralCompras(datos);
-        });
-
-
+      
         getDataMesesSucursales()
         .then((datos)=>{
             getBarChartMesesSucursales(datos);
