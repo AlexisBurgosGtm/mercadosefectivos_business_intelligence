@@ -3,13 +3,16 @@ function getView(){
         header: ()=>{
             return `
             <div class="row shadow p-2 border-top-rounded border-bottom-rounded">
-                <div class="col-sm-12 col-md-6 col-xl-6 col-lg-6">
+                <div class="col-sm-12 col-md-5 col-xl-5 col-lg-5">
                     <h3 class="text-danger">${GlobalSelectedDesMarca}</h3>
                 </div>
                 
-                <div class="col-sm-12 col-md-6 col-xl-6 col-lg-6">
+                <div class="col-sm-12 col-md-7 col-xl-7 col-lg-7">
                     <button class="btn btn-outline-secondary" id="btnTabHome">
                         <i class="fal fa-chart-pie"></i>Sales Overview
+                    </button>
+                    <button class="btn btn-outline-warning" id="btnTab0">
+                        <i class="fal fa-tag"></i>Sell In
                     </button>
                     <button class="btn btn-outline-danger" id="btnTab1">
                         <i class="fal fa-shopping-cart"></i>Products
@@ -20,7 +23,7 @@ function getView(){
                     <button class="btn btn-outline-success" id="btnTab3">
                         <i class="fal fa-briefcase"></i>Routes
                     </button>
-                    <button class="btn btn-outline-success" id="btnTab4">
+                    <button class="btn btn-outline-primary" id="btnTab4">
                         <i class="fal fa-calendar"></i>Monthly
                     </button>
                 </div>
@@ -35,6 +38,9 @@ function getView(){
                 <div class="tab-content col-12" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="tabHome" role="tabpanel" aria-labelledby="pills-home-tab">
                         ${view.home()}
+                    </div>
+                    <div class="tab-pane fade" id="tab0" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        ${view.compras()}
                     </div>
                     <div class="tab-pane fade" id="tab1" role="tabpanel" aria-labelledby="pills-profile-tab">
                         ${view.products()}
@@ -91,6 +97,24 @@ function getView(){
                 <div class="card shadow border-top-rounded border-bottom-rounded col-12" id="containerGraf1"  ondblclick="expandir('containerGraf1')">
                 </div>
             </div>`
+        },
+        compras:()=>{
+            return `
+            <div class="row">
+                <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
+
+                    <div class="card shadow table-responsive col-12"  id="containerTableProductosComprados">
+                    
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
+
+                    <div class="card shadow table-responsive col-12"  id="">
+                    
+                    </div>
+                </div>
+            </div>
+           `
         },
         products:()=>{
             return `
@@ -180,6 +204,7 @@ function addListeners(){
     
     document.getElementById('btnTabHome').addEventListener('click',()=>{
         document.getElementById('tabHome').classList.add('show','active');
+        document.getElementById('tab0').classList.remove('show','active');
         document.getElementById('tab1').classList.remove('show','active');
         document.getElementById('tab2').classList.remove('show','active');
         document.getElementById('tab3').classList.remove('show','active');
@@ -188,8 +213,26 @@ function addListeners(){
 
       
     })
+    document.getElementById('btnTab0').addEventListener('click',()=>{
+        document.getElementById('tabHome').classList.remove('show','active');
+        document.getElementById('tab0').classList.add('show','active');
+        document.getElementById('tab1').classList.remove('show','active');
+        document.getElementById('tab2').classList.remove('show','active');
+        document.getElementById('tab3').classList.remove('show','active');
+        document.getElementById('tab4').classList.remove('show','active');
+        
+        //aplica el formato de datatable ya que no funciona si está oculto
+        try {
+            $('#tblMarcasProductosComprados').DataTable({paging: false, bFilter:true, order: [[6, 'desc']] });
+        } catch (error) {
+            
+        }
+         
+
+    })
     document.getElementById('btnTab1').addEventListener('click',()=>{
         document.getElementById('tabHome').classList.remove('show','active');
+        document.getElementById('tab0').classList.remove('show','active');
         document.getElementById('tab1').classList.add('show','active');
         document.getElementById('tab2').classList.remove('show','active');
         document.getElementById('tab3').classList.remove('show','active');
@@ -207,6 +250,7 @@ function addListeners(){
     })
     document.getElementById('btnTab2').addEventListener('click',()=>{
         document.getElementById('tabHome').classList.remove('show','active');
+        document.getElementById('tab0').classList.remove('show','active');
         document.getElementById('tab1').classList.remove('show','active');
         document.getElementById('tab2').classList.add('show','active');
         document.getElementById('tab3').classList.remove('show','active');
@@ -223,6 +267,7 @@ function addListeners(){
     })
     document.getElementById('btnTab3').addEventListener('click',()=>{
         document.getElementById('tabHome').classList.remove('show','active');
+        document.getElementById('tab0').classList.remove('show','active');
         document.getElementById('tab1').classList.remove('show','active');
         document.getElementById('tab2').classList.remove('show','active');
         document.getElementById('tab3').classList.add('show','active');
@@ -241,6 +286,7 @@ function addListeners(){
     document.getElementById('btnTab4').addEventListener('click',()=>{
        
         document.getElementById('tabHome').classList.remove('show','active');
+        document.getElementById('tab0').classList.remove('show','active');
         document.getElementById('tab1').classList.remove('show','active');
         document.getElementById('tab2').classList.remove('show','active');
         document.getElementById('tab3').classList.remove('show','active');
@@ -308,7 +354,11 @@ function getDataMarca(){
         await getTblVendedores(datos);
     });
 
-   
+    
+    getDataProductosComprados()
+    .then(async(datos)=>{
+        await getTblProductosComprados(datos);
+    });
     
 
 };
@@ -1640,6 +1690,109 @@ function getBarChartMesesSucursales(data){
  
  
 };
+
+
+
+
+//SELL IN
+function getDataProductosComprados(){
+    return new Promise((resolve, reject)=>{
+        //obtiene los datos de la card empresas
+      
+        axios.get(`/marcas/getProductosMarcaComprados?empresas=${parametrosEmpresas}&anio=${parametrosAnio}&mes=${parametrosMes}&codmarca=${GlobalSelectedCodMarca}`)
+        .then(res => {
+            const datos = res.data.recordset;
+           
+            resolve(datos);
+        })
+        .catch(()=>{
+            reject();
+        })
+
+
+    })
+
+};
+
+function getTblProductosComprados(data){
+
+         
+    let container = document.getElementById('containerTableProductosComprados');
+    container.innerHTML = ''; //getLoader();
+    let totalventa = 0;
+    let totalcosto = 0;
+    let totalutilidad = 0;
+    let totalcajas = 0;
+
+    let head = `<h5>PRODUCTOS COMPRADOS</h5>
+                <div class="col-3">
+                    <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('tab0')">Expandir</button>
+                </div>
+                   
+                <table class="table table-responsive" style="font-size:90%;" id="tblMarcaProductos">
+                    <thead class="bg-warning">
+                        <tr>
+                            <td>PRODUCTO</td>
+                            <td>FARDOS</td>
+                            <td>COSTO</td>
+                            <td>VENTA</td>
+                            <td>UTILIDAD</td>
+                            <td>MARG</td>
+                            <td>PART</td>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+ 
+
+    let dat = '';
+
+    data.map((r)=>{
+        totalcajas += Number(r.FARDOS);
+        totalventa += Number(r.TOTALPRECIO);
+        totalcosto += Number(r.TOTALCOSTO);
+        totalutilidad += Number(r.UTILIDAD);
+    })
+
+    data.map((r)=>{
+        dat += `
+            <tr class="hand border-bottom border-secondary" onclick="">
+                <td><i class="fal fa-hand-point-up"></i>${r.PRODUCTO}
+                    <br>
+                    <small class="negrita text-danger">${r.CODPRODUCTO}</small>
+                </td>
+                <td>${Number(r.FARDOS).toFixed(2)}</td>
+                <td class="currSign">${funciones.setMoneda(r.TOTALCOSTO,'')}</td>
+                <td class="currSign">${funciones.setMoneda(r.TOTALPRECIO,'')}</td>
+                <td class="currSign">${funciones.setMoneda(r.UTILIDAD,'')}</td>
+                <td>${funciones.getMargenUtilidad(Number(r.TOTALPRECIO),Number(r.TOTALCOSTO))}</td>
+                <td>${funciones.getParticipacion(Number(r.TOTALPRECIO),totalventa)}</td>
+            </tr>
+        `
+    })
+
+    let foot = `</tbody>
+                    <tfoot class="negrita bg-foot-table text-danger">
+                        <tr>
+                            <td></td>
+                            <td>${totalcajas.toFixed(2)}</td>
+                            <td>${funciones.setMoneda(totalcosto,'Q')}</td>
+                            <td>${funciones.setMoneda(totalventa,'Q')}</td>
+                            <td>${funciones.setMoneda(totalutilidad,'Q')}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                `
+
+    container.innerHTML = head + dat + foot 
+    
+
+};
+
+
+
 
 
 //ORIGINAL CON LABELS, LA QUE QUEDÓ, LE QUITÉ LOS DATALABELS

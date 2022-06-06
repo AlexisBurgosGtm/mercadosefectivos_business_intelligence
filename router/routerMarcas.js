@@ -413,5 +413,31 @@ router.post('/get_catalogo_marcas', async function(req,res){
 });
 
 
+
+
+router.get('/getProductosMarcaComprados', async function(req,res){
+
+    const {empresas, codmarca, anio, mes} = req.query;
+  
+    let qry = `SELECT CODPRODUCTO, PRODUCTO, 
+                SUM(FARDOS) AS FARDOS, 
+                SUM(TOTALCOSTO) AS TOTALCOSTO, 
+                SUM(TOTALPRECIO) AS TOTALPRECIO,
+                (SUM(TOTALPRECIO)-SUM(TOTALCOSTO)) AS UTILIDAD
+                FROM  BI_RPT_GENERAL_COMPRAS
+                WHERE (CODMARCA = ${codmarca}) 
+                    AND (CODSUCURSAL IN(${empresas})) 
+                    AND (ANIO IN(${anio})) 
+                    AND (MES IN(${mes}))
+                GROUP BY CODPRODUCTO, PRODUCTO, CODMARCA
+                `
+
+    execute.Query(res,qry);
+    
+});
+
+
+
+
 module.exports = router;
 
