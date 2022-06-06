@@ -165,7 +165,7 @@ function getTblVentasVendedores(data){
 
     container.innerHTML = head + dat + foot
     $('#tblTablaVendedores').DataTable({
-                    paging: true,
+                    paging: true, order: [[5, 'desc']]
     });
 
     getCardsEmpleados(totalventa,totaldevoluciones,totalutilidad);
