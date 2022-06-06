@@ -109,7 +109,7 @@ function getView(){
                 </div>
                 <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
 
-                    <div class="card shadow table-responsive col-12"  id="">
+                    <div class="table-responsive col-12"  id="containerSellIn2">
                     
                     </div>
                 </div>
@@ -208,28 +208,24 @@ function addListeners(){
         document.getElementById('tab1').classList.remove('show','active');
         document.getElementById('tab2').classList.remove('show','active');
         document.getElementById('tab3').classList.remove('show','active');
-        document.getElementById('tab4').classList.remove('show','active');
-        
-
-      
+        document.getElementById('tab4').classList.remove('show','active');      
     })
+
     document.getElementById('btnTab0').addEventListener('click',()=>{
         document.getElementById('tabHome').classList.remove('show','active');
         document.getElementById('tab0').classList.add('show','active');
         document.getElementById('tab1').classList.remove('show','active');
         document.getElementById('tab2').classList.remove('show','active');
         document.getElementById('tab3').classList.remove('show','active');
-        document.getElementById('tab4').classList.remove('show','active');
-        
+        document.getElementById('tab4').classList.remove('show','active');    
         //aplica el formato de datatable ya que no funciona si está oculto
         try {
-            $('#tblMarcasProductosComprados').DataTable({paging: false, bFilter:true, order: [[6, 'desc']] });
+            $('#tblMarcaProductosComprados').DataTable({paging: false, bFilter:true, order: [[3, 'desc']] });
         } catch (error) {
             
         }
-         
-
     })
+
     document.getElementById('btnTab1').addEventListener('click',()=>{
         document.getElementById('tabHome').classList.remove('show','active');
         document.getElementById('tab0').classList.remove('show','active');
@@ -245,9 +241,8 @@ function addListeners(){
         } catch (error) {
             
         }
-         
-
     })
+
     document.getElementById('btnTab2').addEventListener('click',()=>{
         document.getElementById('tabHome').classList.remove('show','active');
         document.getElementById('tab0').classList.remove('show','active');
@@ -262,9 +257,8 @@ function addListeners(){
         } catch (error) {
             
         }
-
-   
     })
+
     document.getElementById('btnTab3').addEventListener('click',()=>{
         document.getElementById('tabHome').classList.remove('show','active');
         document.getElementById('tab0').classList.remove('show','active');
@@ -272,19 +266,15 @@ function addListeners(){
         document.getElementById('tab2').classList.remove('show','active');
         document.getElementById('tab3').classList.add('show','active');
         document.getElementById('tab4').classList.remove('show','active');
-        
-
         //routes
         try {
             $('#tblVVendedores').DataTable({paging: false, bFilter:false, order: [[6, 'desc']] });    
         } catch (error) {
             
         }
-        
     })
     
     document.getElementById('btnTab4').addEventListener('click',()=>{
-       
         document.getElementById('tabHome').classList.remove('show','active');
         document.getElementById('tab0').classList.remove('show','active');
         document.getElementById('tab1').classList.remove('show','active');
@@ -301,9 +291,9 @@ function addListeners(){
         .then((datos)=>{
             getBarChartMesesSucursales(datos);
         });
-
-
     });
+
+
 
     funciones.slideAnimationTabs();
 
@@ -1719,25 +1709,23 @@ function getTblProductosComprados(data){
          
     let container = document.getElementById('containerTableProductosComprados');
     container.innerHTML = ''; //getLoader();
-    let totalventa = 0;
+    
     let totalcosto = 0;
-    let totalutilidad = 0;
     let totalcajas = 0;
+    let conteo = 0;
+
 
     let head = `<h5>PRODUCTOS COMPRADOS</h5>
                 <div class="col-3">
                     <button class="btn btn-sm btn-outline-warning hand" onclick="expandir('tab0')">Expandir</button>
                 </div>
                    
-                <table class="table table-responsive" style="font-size:90%;" id="tblMarcaProductos">
+                <table class="table table-responsive" style="font-size:90%;" id="tblMarcaProductosComprados">
                     <thead class="bg-warning">
                         <tr>
                             <td>PRODUCTO</td>
                             <td>FARDOS</td>
                             <td>COSTO</td>
-                            <td>VENTA</td>
-                            <td>UTILIDAD</td>
-                            <td>MARG</td>
                             <td>PART</td>
                         </tr>
                     </thead>
@@ -1749,12 +1737,11 @@ function getTblProductosComprados(data){
 
     data.map((r)=>{
         totalcajas += Number(r.FARDOS);
-        totalventa += Number(r.TOTALPRECIO);
         totalcosto += Number(r.TOTALCOSTO);
-        totalutilidad += Number(r.UTILIDAD);
     })
 
     data.map((r)=>{
+        conteo += 1;
         dat += `
             <tr class="hand border-bottom border-secondary" onclick="">
                 <td><i class="fal fa-hand-point-up"></i>${r.PRODUCTO}
@@ -1763,10 +1750,7 @@ function getTblProductosComprados(data){
                 </td>
                 <td>${Number(r.FARDOS).toFixed(2)}</td>
                 <td class="currSign">${funciones.setMoneda(r.TOTALCOSTO,'')}</td>
-                <td class="currSign">${funciones.setMoneda(r.TOTALPRECIO,'')}</td>
-                <td class="currSign">${funciones.setMoneda(r.UTILIDAD,'')}</td>
-                <td>${funciones.getMargenUtilidad(Number(r.TOTALPRECIO),Number(r.TOTALCOSTO))}</td>
-                <td>${funciones.getParticipacion(Number(r.TOTALPRECIO),totalventa)}</td>
+                <td>${funciones.getParticipacion(Number(r.TOTALCOSTO),totalcosto)}</td>
             </tr>
         `
     })
@@ -1777,9 +1761,6 @@ function getTblProductosComprados(data){
                             <td></td>
                             <td>${totalcajas.toFixed(2)}</td>
                             <td>${funciones.setMoneda(totalcosto,'Q')}</td>
-                            <td>${funciones.setMoneda(totalventa,'Q')}</td>
-                            <td>${funciones.setMoneda(totalutilidad,'Q')}</td>
-                            <td></td>
                             <td></td>
                         </tr>
                     </tfoot>
@@ -1787,10 +1768,63 @@ function getTblProductosComprados(data){
                 `
 
     container.innerHTML = head + dat + foot 
-    
+    getCardsSellInn(conteo, totalcosto,totalcajas)
 
 };
 
+function getCardsSellInn(conteo,totalcosto,totalcajas){
+    let container = document.getElementById('containerSellIn2');
+    container.innerHTML = GlobalLoader;
+
+
+    let view = `
+            <div class="row">
+                <div class="card shadow border-top-rounded border-bottom-rounded p-4 col-12">
+                    <div class="row">
+                        <div class="col-9">
+                            <h6>Total Compras:</h6>
+                            <h5 class="text-success">${funciones.setMoneda(totalcosto,'Q')}</h5>
+                        </div>
+                        <div class="col-3" style="font-size:40px">
+                            <i class="fal fa-tag text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="card shadow border-top-rounded border-bottom-rounded p-4 col-12">
+                    <div class="row">
+                        <div class="col-9">
+                            <h6>Total Fardos:</h6>
+                            <h5 class="text-danger">${totalcajas}</h5>
+                        </div>
+                        <div class="col-3" style="font-size:40px">
+                            <i class="fal fa-box text-danger"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="card shadow border-top-rounded border-bottom-rounded p-4 col-12">
+                    <div class="row">
+                        <div class="col-9">
+                            <h6>Total Skus:</h6>
+                            <h5 class="text-info">${conteo}</h5>
+                        </div>
+                        <div class="col-3" style="font-size:40px">
+                            <i class="fal fa-list text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                `
+
+        container.innerHTML = view;
+
+};
 
 
 
