@@ -184,6 +184,12 @@ function getView(){
             
             <hr class="solid">
 
+            <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGrafMesGenCompras">
+                    
+            </div>
+            
+            <hr class="solid">
+
             <div class="card shadow border-top-rounded border-bottom-rounded" id="containerGrafMesesSucursales">
                     
 
@@ -286,6 +292,12 @@ function addListeners(){
         .then((datos)=>{
             getBarCharMesesGeneral(datos);
         });
+
+        getDataMesGeneralCompras()
+        .then((datos)=>{
+            getBarCharMesesGeneralCompras(datos);
+        });
+
 
         getDataMesesSucursales()
         .then((datos)=>{
@@ -1791,7 +1803,7 @@ function getCardsSellInn(conteo,totalcosto,totalcajas){
                     </div>
                 </div>
             </div>
-            <br>
+            <hr class="solid">
             <div class="row">
                 <div class="card shadow border-top-rounded border-bottom-rounded p-4 col-12">
                     <div class="row">
@@ -1805,7 +1817,7 @@ function getCardsSellInn(conteo,totalcosto,totalcajas){
                     </div>
                 </div>
             </div>
-            <br>
+            <hr class="solid">
             <div class="row">
                 <div class="card shadow border-top-rounded border-bottom-rounded p-4 col-12">
                     <div class="row">
@@ -1819,13 +1831,112 @@ function getCardsSellInn(conteo,totalcosto,totalcajas){
                     </div>
                 </div>
             </div>
-
+            <hr class="solid">
                 `
 
         container.innerHTML = view;
 
 };
 
+
+//grafica de mes y años SELL IN
+
+function getDataMesGeneralCompras(){
+    return new Promise((resolve, reject)=>{
+        //obtiene los datos de la card empresas
+      
+        axios.get(`/marcas/getMesesMarcaGenCompras?empresas=${parametrosEmpresas}&anio=${parametrosAnio}&mes=${parametrosMes}&codmarca=${GlobalSelectedCodMarca}`)
+        .then(res => {
+            const datos = res.data.recordset;
+           
+            resolve(datos);
+        })
+        .catch(()=>{
+            reject();
+        })
+
+
+    })
+
+};
+
+function getBarCharMesesGeneralCompras(data){
+   
+    let container = document.getElementById('containerGrafMesGenCompras');
+    container.innerHTML = '';
+    container.innerHTML = '<canvas id="myChart22" width="100" height="35"></canvas>';
+   
+  
+    let label = []; let valor = []; let bgColor = [];
+    let total = 0;
+    data.map((r)=>{
+        total = total + Number(r.TOTALPRECIO);
+    });
+   
+    data.map((r)=>{
+            label.push(r.NOMMES);
+            valor.push(Number(r.TOTALPRECIO).toFixed(2));
+            bgColor.push(getRandomColor())
+    })
+
+  
+    var ctx = document.getElementById('myChart22').getContext('2d');
+    var myChart = new Chart(ctx, {
+        plugins: [ChartDataLabels],
+        type: 'bar',
+        data: {
+            labels: label,
+            datasets: [{
+                data:valor,
+                borderColor: 'white',
+                backgroundColor:bgColor
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                  },
+                  title: {
+                    display: true,
+                    text: 'Compras por Mes Generales: ' + funciones.setMoneda(total,'Q')
+                  },
+                // Change options for ALL labels of THIS CHART
+                datalabels: {
+                  anchor:'end',
+                  align:'end',
+                  listeners: {
+                    click: function(context) {
+                      // Receives `click` events only for labels of the first dataset.
+                      // The clicked label index is available in `context.dataIndex`.
+                      console.log(context);
+                    }
+                  },
+                  formatter: function(value) {
+                    return funciones.setMoneda2(Number(value));
+                    // eq. return ['line1', 'line2', value]
+                  },
+                  color: function(context) {
+                    return context.dataset.backgroundColor;
+                  },
+                  borderColor: 'white',
+                  borderRadius: 25,
+                  borderWidth: 0,
+                  font: {
+                    weight: 'bold'
+                  }
+                }
+            }
+        }
+    });
+    
+
+};
 
 
 

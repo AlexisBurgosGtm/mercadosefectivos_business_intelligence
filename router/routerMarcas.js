@@ -22,6 +22,26 @@ router.get('/getMesesMarcaGen', async function(req,res){
     
 });
 
+router.get('/getMesesMarcaGenCompras', async function(req,res){
+
+    const {empresas,codmarca, anio, mes} = req.query;
+  
+    let qry = `SELECT CODMARCA, CONCAT(MES, '-', ANIO) AS NOMMES, MES, ANIO,
+    SUM(TOTALCOSTO) AS TOTALCOSTO,
+    SUM(TOTALPRECIO) AS TOTALPRECIO,
+     (SUM(TOTALPRECIO)-SUM(TOTALCOSTO)) AS UTILIDAD
+   FROM BI_RPT_GENERAL_COMPRAS
+   WHERE (CODSUCURSAL IN(${empresas}))
+   GROUP BY  CODMARCA, ANIO, MES
+   HAVING        (ANIO IN(${anio})) AND (CODMARCA = ${codmarca})
+   ORDER BY MES,ANIO
+                `
+
+    execute.Query(res,qry);
+    
+});
+
+
 router.get('/getHistorialVentaMarca', async function(req,res){
 
     const {empresas,anio,codmarca} = req.query;
