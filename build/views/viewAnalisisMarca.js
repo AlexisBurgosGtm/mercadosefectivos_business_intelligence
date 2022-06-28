@@ -1874,12 +1874,12 @@ function getBarCharMesesGeneralCompras(data){
     let label = []; let valor = []; let bgColor = [];
     let total = 0;
     data.map((r)=>{
-        total = total + Number(r.TOTALPRECIO);
+        total = total + Number(r.TOTALCOSTO);
     });
    
     data.map((r)=>{
             label.push(r.NOMMES);
-            valor.push(Number(r.TOTALPRECIO).toFixed(2));
+            valor.push(Number(r.TOTALCOSTO).toFixed(2));
             bgColor.push(getRandomColor())
     })
 

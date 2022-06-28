@@ -7,28 +7,27 @@ function getView(){
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link btn-md active" data-toggle="tab" href="#tabHome" role="tab">
-                            <i class="fal fa-home mr-1"></i>Overview
+                            <i class="fal fa-home mr-1"></i>Map
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link btn-md" data-toggle="tab" href="#tab3" role="tab">
-                            <i class="fal fa-calendar-alt mr-1"></i>Locations
+                            <i class="fal fa-calendar-alt mr-1"></i>2
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link btn-md" data-toggle="tab" href="#tab4" role="tab">
-                            <i class="fal fa-chart-bar mr-1"></i>
+                            <i class="fal fa-chart-bar mr-1"></i>3
                         </a>
                     </li>
                    
                 </ul>
                 <div class="tab-content border border-top-0 border-bottom-0 border-right-0 border-left-0 p-3">
                     <div class="tab-pane fade show active"  id="tabHome"  role="tabpanel">
-                      
-                    
+                       ${view.home()}
                     </div>
                     <div class="tab-pane fade" id="tab3" role="tabpanel">            
-                        ${view.home()}
+                        
                     </div>
                     <div class="tab-pane fade" id="tab4" role="tabpanel">            
                         
