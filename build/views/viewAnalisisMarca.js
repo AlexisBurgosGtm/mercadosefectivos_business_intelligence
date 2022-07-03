@@ -1536,6 +1536,10 @@ function getBarCharMesesGeneral(data){
             scales: {
                 y: {
                     beginAtZero: true
+                },
+                x: {
+                   
+                    
                 }
             },
             plugins: {
@@ -1544,7 +1548,8 @@ function getBarCharMesesGeneral(data){
                   },
                   title: {
                     display: true,
-                    text: 'Ventas por Mes Generales: ' + funciones.setMoneda(total,'Q')
+                    text: 'Ventas por Mes Generales: ' + funciones.setMoneda(total,'Q'),
+                    font: {size: 30}
                   },
                 // Change options for ALL labels of THIS CHART
                 datalabels: {
@@ -1568,7 +1573,8 @@ function getBarCharMesesGeneral(data){
                   borderRadius: 25,
                   borderWidth: 0,
                   font: {
-                    weight: 'bold'
+                    weight: 'bold',
+                    size: 20
                   }
                 }
             }
