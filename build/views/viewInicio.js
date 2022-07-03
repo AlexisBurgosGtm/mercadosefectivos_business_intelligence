@@ -498,13 +498,16 @@ function getBarCharUtilidades(data){
 function getCarsEmpresas(data){
     let f = new Date();
 
-    let dia = f.getUTCDate();
+    let dia = f.getDate();
+    //let dia = f.getDate();
+    console.log(f.getDate())
+
     let porcentajeDiaActual = (dia / 30);
 
     let container = document.getElementById('containerCardsResumen');
     let view = '';
 
-    let totalventa =0; let totaldevoluciones = 0; let totalobjetivo = 0;
+    let totalventa =0; let totaldevoluciones = 0; let totalobjetivo = 0; let totalproyeccionmes = 0;
     data.map((r)=>{
         let strClassCard = '';
         totalventa += Number(r.VENTAS);
@@ -516,6 +519,9 @@ function getCarsEmpresas(data){
         let logrado = (Number(r.VENTAS)+Number(r.DEVOLUCIONES))/Number(r.OBJETIVO);
         let objetivologrado = funciones.getParticipacion((Number(r.VENTAS)+Number(r.DEVOLUCIONES)),Number(r.OBJETIVO));
         let logroactual = (logrado / porcentajeDiaActual) * 100;
+        let proyeccionmes = ((vent + dev) / dia) * 30
+        totalproyeccionmes += proyeccionmes;
+        let porcProyeccionMes = ((proyeccionmes / Number(r.OBJETIVO)) * 100).toFixed(2)
         if(logroactual>94.99999){strClassCard='bgverde'};
         if(logroactual>90 && logroactual<95){strClassCard='bgamarillo'};
         if(logroactual<90){strClassCard='bgrojo'};
@@ -552,6 +558,10 @@ function getCarsEmpresas(data){
                                     <td><label class="negrita text-danger">${objetivologrado}</label></td>
                                 </tr>
                                 <tr>
+                                    <td><label>Proyección (30ds):</label></td>
+                                    <td><label class="negrita text-danger">${funciones.setMoneda(proyeccionmes,'Q')} (${porcProyeccionMes}%)</label></td>
+                                </tr>
+                                <tr>
                                     <td> <label>Total Compras:</label></td><td><label class="negrita">${funciones.setMoneda(Number(r.COMPRAS),'Q')}</label></td>
                                 </tr>
                             </tbody>
@@ -585,6 +595,9 @@ function getCarsEmpresas(data){
                         <label class="negrita">${funciones.setMoneda((Number(totalventa)-Number(totaldevoluciones)),'Q')}</label>
                         <br>
                         <h5 class="negrita">Logro: ${funciones.getParticipacion((Number(totalventa)-Number(totaldevoluciones)),Number(totalobjetivo))}</h5>
+                        <br>
+                        <label>Proyección:</label>
+                        <label class="negrita">${funciones.setMoneda(totalproyeccionmes,'Q')} (${((totalproyeccionmes / totalobjetivo)*100).toFixed(2)}%)</label>
                     </div>
                     <div class="col-3" style="font-size:50px">
                         <i class="fal fa-dollar-sign"></i>
