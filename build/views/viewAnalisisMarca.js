@@ -1574,7 +1574,7 @@ function getBarCharMesesGeneral(data){
                   borderWidth: 0,
                   font: {
                     weight: 'bold',
-                    size: 20
+                    size: 15
                   }
                 }
             }
@@ -1693,7 +1693,8 @@ function getBarChartMesesSucursales(data){
              },
              title: {
                display: true,
-               text: 'Ventas por Mes y Sucursal. Total: ' + funciones.setMoneda(total,'Q')
+               text: 'Ventas por Mes y Sucursal. Total: ' + funciones.setMoneda(total,'Q'),
+               font: {size: 30}
              }
            }
          }
@@ -1914,7 +1915,8 @@ function getBarCharMesesGeneralCompras(data){
                   },
                   title: {
                     display: true,
-                    text: 'Compras por Mes Generales: ' + funciones.setMoneda(total,'Q')
+                    text: 'Compras por Mes Generales: ' + funciones.setMoneda(total,'Q'),
+                    font: {size: 30}
                   },
                 // Change options for ALL labels of THIS CHART
                 datalabels: {
@@ -1938,7 +1940,8 @@ function getBarCharMesesGeneralCompras(data){
                   borderRadius: 25,
                   borderWidth: 0,
                   font: {
-                    weight: 'bold'
+                    weight: 'bold',
+                    size: 15
                   }
                 }
             }

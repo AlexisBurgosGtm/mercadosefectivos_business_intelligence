@@ -385,7 +385,8 @@ function getLineChartFechasEmpresa(data){
             },
             title: {
               display: true,
-              text: 'Ventas por Fecha. Total: ' + funciones.setMoneda(total,'Q')
+              text: 'Ventas por Fecha. Total: ' + funciones.setMoneda(total,'Q'),
+              font: {size: 30}
             },
             // Change options for ALL labels of THIS CHART
             datalabels: {
@@ -493,7 +494,8 @@ function getBarCharMesesGeneral(data){
                   },
                   title: {
                     display: true,
-                    text: 'Ventas por Mes Sucursal: ' + funciones.setMoneda(total,'Q')
+                    text: 'Ventas por Mes Sucursal: ' + funciones.setMoneda(total,'Q'),
+                    font: {size: 30}
                   },
                 // Change options for ALL labels of THIS CHART
                 datalabels: {

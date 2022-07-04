@@ -86,6 +86,8 @@ function getTblVentasMarcas(idcontainer){
     let totalcosto = 0; let totalventa = 0; let totalutilidad = 0;
     let conteo = 0;
 
+    let dia = f.getDate();
+
 
     axios.post(`/marcas/get_gen_marcas`,{empresas:parametrosEmpresas,anio:parametrosAnio,mes:parametrosMes})
     .then(res => {
@@ -101,6 +103,7 @@ function getTblVentasMarcas(idcontainer){
                                 <td>UTILIDAD</td>
                                 <td>MARG</td>
                                 <td>PART</td>
+                                <td>PROYECCION</td>
                             </tr>
                         </thead>
                         <tbody>`;
@@ -123,6 +126,7 @@ function getTblVentasMarcas(idcontainer){
                     <td class="currSign">${funciones.setMoneda(r.UTILIDAD,'')}</td>
                     <td>${funciones.setMargen(((Number(r.UTILIDAD)/Number(r.TOTALPRECIO))*100).toFixed(2),'%')}</td>
                     <td>${((Number(r.TOTALPRECIO)/totalventa)*100).toFixed(2)}%</td>
+                    <td>${funciones.setMoneda(((Number(r.TOTALPRECIO)/dia)*30).toFixed(2),'Q')}</td>
                 </tr>
             `
         })
@@ -136,6 +140,7 @@ function getTblVentasMarcas(idcontainer){
                                 <td>${funciones.setMoneda(totalutilidad,'Q')}</td>
                                 <td></td>
                                 <td></td>
+                                <td>${funciones.setMoneda((totalventa/dia)*30,'Q')}</td>
                             </tr>
                         </tfoot>
                     </table>
