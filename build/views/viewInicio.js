@@ -5,16 +5,16 @@ function getView(){
             <div class="panel-content">
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link btn-md active" data-toggle="tab" href="#tabHome" role="tab">
+                        <a class="nav-link btn-md active" data-toggle="tab" href="#tabHome" role="tab"  id="tabm1">
                             <i class="fal fa-home mr-1"></i>Quick View
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn-md" data-toggle="tab" href="#tab3" role="tab">
+                        <a class="nav-link btn-md" data-toggle="tab" href="#tab3" role="tab" id="tabm2"
                             <i class="fal fa-calendar-alt mr-1"></i>Daily
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="tabm3">
                         <a class="nav-link btn-md" data-toggle="tab" href="#tab4" role="tab">
                             <i class="fal fa-chart-bar mr-1"></i>Monthly
                         </a>
