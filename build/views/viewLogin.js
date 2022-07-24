@@ -2,15 +2,15 @@ function getView(){
     let view = { 
         login:()=>{
             return `
-          
+        <div class="row">
             <div id="cardLogin" class="card card-rounded shadow col-sm-12 col-lg-4 col-xl-4 col-md-6">
                     <div  class="card-header bg-white text-center">                        
                         <img class="" width="70" height="70" src="./favicon.png">
                     </div>
 
-                    <div class="card-body">
+                    <div class="card-body p-4">
                         <div class="form-group">          
-                            <select class="form-control" id="cmbTipo">
+                            <select class="form-control border-seconday" id="cmbTipo">
                                 <option value="GERENTE">GERENTE</option>
                                 <option value="SUPERVISOR">SUPERVISOR</option>
                                 <option value="PROVEEDOR">PROVEEDOR</option>
@@ -18,19 +18,19 @@ function getView(){
                         </div>
                         
                         <div class="form-group">
-                            <input type="text" name="username" id="txtU" class="form-control" placeholder="Usuario..">
+                            <input type="text" name="username" id="txtU" class="form-control border-seconday" placeholder="Usuario..">
                         </div>
                         
                         <div class="form-group">
-                            <input type="password" name="password" id="txtP" class="form-control" placeholder="Contraseña">
+                            <input type="password" name="password" id="txtP" class="form-control border-seconday" placeholder="Contraseña">
                         </div>
                                  
                         <div class="row">
                             <div class="col-6">
                             </div>
                             <div class="col-6 text-right">
-                                <button class="btn btn-lg btn-info btn-rounded shadow" id="btnIngresar">
-                                    <i class="fal fa-lock"></i> Ingresar
+                                <button class="btn btn-xl btn-secondary btn-circle shadow" id="btnIngresar">
+                                    <i class="fal fa-lock"></i>
                                 </button>        
                             </div>
                             
@@ -41,10 +41,17 @@ function getView(){
             
             </div>
 
-            <!-- Footer -->
-            <div class="footer" style="font-size:10px">
-                Por <a href="https://api.whatsapp.com/send?phone=50257255092&text=Hola%20Alexis%2C%20puedes%20ayudarme%20...." target="_blank">Alexis Burgos (v.2.2022)</a>
-            </div>
+            <div id="" class="card card-rounded shadow col-sm-0 col-lg-8 col-xl-8 col-md-6" style="background:
+                        url(./img/fondo.png) top/100% auto no-repeat;
+                        background-repeat:no-repeat;">
+                                </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="footer" style="font-size:10px">
+                Por <a href="https://api.whatsapp.com/send?phone=50257255092&text=Hola%20Alexis%2C%20puedes%20ayudarme%20...." target="_blank">Alexis Burgos (v.7.2022)</a>
+        </div>
             `
         }
     }
@@ -55,12 +62,18 @@ function getView(){
 }
 
 function addListeners(){
+
+
+    let root
+
     let tipo = document.getElementById('cmbTipo');
     let u = document.getElementById('txtU');
     let p = document.getElementById('txtP');
 
     let btnIngresar = document.getElementById('btnIngresar');
-    btnIngresar.addEventListener('click',()=>{
+    btnIngresar.addEventListener('click', ()=>{
+
+       
         login(tipo.value,u.value,p.value,'btnIngresar')
     });
 
@@ -88,7 +101,7 @@ function login(tipo,nombre,pass,element){
       const resp = res.data;
         if(Number(resp.rowsAffected[0])==0){
             funciones.AvisoError('Usuario o contraseña incorrecta')
-            event.innerHTML = `<i class="fal fa-lock"></i> Ingresar`;
+            event.innerHTML = `<i class="fal fa-lock"></i>`;
             event.disabled = false;
         }else{
             switch (tipo) {
