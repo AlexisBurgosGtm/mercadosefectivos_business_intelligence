@@ -366,8 +366,8 @@ window.onload=function(){
 
     switch (GlobalSelectedForm) {
       case 'INICIO':
-        if(movimiento=='swl'){document.getElementById('tabm2').click()}
-        if(movimiento=='swr'){document.getElementById('tabm1').click()}
+        //if(movimiento=='swl'){document.getElementById('tabm2').click()}
+        //if(movimiento=='swr'){document.getElementById('tabm1').click()}
         break;
     
       default:
