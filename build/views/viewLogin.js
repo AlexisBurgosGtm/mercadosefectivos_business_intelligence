@@ -41,7 +41,7 @@ function getView(){
             
             </div>
 
-            <div id="" class="card card-rounded shadow col-sm-0 col-lg-8 col-xl-8 col-md-6" style="background:
+            <div id="" class="card card-rounded shadow col-sm-12 col-lg-8 col-xl-8 col-md-6" style="background:
                         url(./img/fondo.png) top/100% auto no-repeat;
                         background-repeat:no-repeat;">
                                 </div>
