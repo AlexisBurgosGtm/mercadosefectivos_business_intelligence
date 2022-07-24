@@ -3,12 +3,12 @@ function getView(){
         login:()=>{
             return `
         <div class="row">
-            <div id="cardLogin" class="card card-rounded shadow col-sm-12 col-lg-4 col-xl-4 col-md-6">
+                <div id="cardLogin" class="card card-rounded shadow col-sm-12 col-lg-4 col-xl-4 col-md-6">
                     <div  class="card-header bg-white text-center">                        
                         <img class="" width="70" height="70" src="./favicon.png">
                     </div>
 
-                    <div class="card-body p-4">
+                    <div class="card-body p-6">
                         <div class="form-group">          
                             <select class="form-control border-seconday" id="cmbTipo">
                                 <option value="GERENTE">GERENTE</option>
@@ -33,24 +33,21 @@ function getView(){
                                     <i class="fal fa-lock"></i>
                                 </button>        
                             </div>
-                            
-                            
                         </div>
                                     
                     </div>
+
+                    <div class="footer>
+                        <small class="negrita text-right">por Alexis Burgos (v7.2022)</small>
+                    </div>
             
-            </div>
+                </div>
 
-            <div id="" class="card card-rounded shadow col-sm-12 col-lg-8 col-xl-8 col-md-6" style="background:
-                        url(./img/fondo.png) top/100% auto no-repeat;
-                        background-repeat:no-repeat;">
-                                </div>
+                <div id="" class="card card-rounded shadow col-sm-12 col-lg-8 col-xl-8 col-md-6" style="background:
+                                                                                                url(./img/fondo.png) top/100% auto no-repeat;
+                                                                                                background-repeat:no-repeat;">
+                </div>
 
-        </div>
-
-        <!-- Footer -->
-        <div class="footer" style="font-size:10px">
-                Por <a href="https://api.whatsapp.com/send?phone=50257255092&text=Hola%20Alexis%2C%20puedes%20ayudarme%20...." target="_blank">Alexis Burgos (v.7.2022)</a>
         </div>
             `
         }
