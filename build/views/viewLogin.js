@@ -10,7 +10,7 @@ function getView(){
 
                     <div class="card-body p-6">
                         <div class="form-group">          
-                            <select class="form-control border-seconday" id="cmbTipo">
+                            <select class="form-control border-seconday border-top-0 border-right-0 negrita" id="cmbTipo">
                                 <option value="GERENTE">GERENTE</option>
                                 <option value="SUPERVISOR">SUPERVISOR</option>
                                 <option value="PROVEEDOR">PROVEEDOR</option>
@@ -18,11 +18,11 @@ function getView(){
                         </div>
                         
                         <div class="form-group">
-                            <input type="text" name="username" id="txtU" class="form-control border-seconday" placeholder="Usuario..">
+                            <input type="text" name="username" id="txtU" class="form-control border-seconday border-top-0 border-right-0 negrita" placeholder="Usuario..">
                         </div>
                         
                         <div class="form-group">
-                            <input type="password" name="password" id="txtP" class="form-control border-seconday" placeholder="Contraseña">
+                            <input type="password" name="password" id="txtP" class="form-control border-seconday border-top-0 border-right-0 negrita" placeholder="Contraseña">
                         </div>
                                  
                         <div class="row">

@@ -4,7 +4,24 @@ function getView(){
         body:()=>{
             return `
             <div class="panel-content">
-                <ul class="nav nav-tabs" role="tablist">
+            
+                <div class="tab-content border border-top-0 border-bottom-0 border-right-0 border-left-0 p-3">
+                    <div class="tab-pane fade show active"  id="tabHome"  role="tabpanel">
+
+                        ${view.home()}
+                    
+                    </div>
+                    <div class="tab-pane fade" id="tab3" role="tabpanel">            
+                    
+                       
+
+                    </div>
+                    <div class="tab-pane fade" id="tab4" role="tabpanel">            
+                        
+                    </div>
+                </div>
+                
+                <ul class="nav nav-tabs hidden" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link btn-md active" data-toggle="tab" href="#tabHome" role="tab">
                             <i class="fal fa-home mr-1"></i>Overview
@@ -20,24 +37,53 @@ function getView(){
                             <i class="fal fa-chart-bar mr-1"></i>
                         </a>
                     </li>
-                   
+                
                 </ul>
-                <div class="tab-content border border-top-0 border-bottom-0 border-right-0 border-left-0 p-3">
-                    <div class="tab-pane fade show active"  id="tabHome"  role="tabpanel">
-                      
-                    
-                    </div>
-                    <div class="tab-pane fade" id="tab3" role="tabpanel">            
-                        ${view.home()}
-                    </div>
-                    <div class="tab-pane fade" id="tab4" role="tabpanel">            
-                        
-                    </div>
-                </div>
             </div>
             `
         },
         home:()=>{
+            return `
+                <div class="row">
+                    <div class="col-4">
+                        <div class="card card-rounded shadow" id="graf001" ondblclick="expandir('graf001')"></div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card card-rounded shadow" id="graf002" ondblclick="expandir('graf002')"></div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card card-rounded shadow" id="graf003" ondblclick="expandir('graf003')"></div> 
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-4"></div>
+                    <div class="col-4"></div>
+                </div>
+
+              <div class="row">
+
+                    * CLIENTES ATENDIDOS // GRAFICA DE CLIENTES ATENDIDOS POR MES
+                    * CLIENTES PERDIDOS // GRAFICA DE CLIENTES NO VISITADOS POR MES
+                    * CLIENTES POR MARCA // GRAFICA DE CLIENTES POR MARCA
+                    * CARDS DE CLIENTES VISITADOS POR EMPRESA (VISITADOS, UNIVERSO, NO VISITADOS)
+                    * TABLA DE CLIENTES POR DEPARTAMENTO / MUNICIPIO
+                    * 
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+  
+                      <div class="card shadow card-rounded" id="">
+                      </div>
+                  
+                  </div>
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <div class="card shadow card-rounded" id="">
+                         
+                      </div>
+                  </div>
+              </div>                  
+            `
+        },
+        mapa:()=>{
           return `
             <div class="row">
                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -116,18 +162,10 @@ function getView(){
 
 function addListeners(){
 
-    /*
-    funciones.showLocation()
-    .then((location)=>{
-            let lat = location.coords.latitude.toString();
-            let longg = location.coords.longitude.toString();
-            
-            mapaCobertura('mapContenedor', lat, longg);
-    });    
-    */
+   
 
     //carga los datos con una latitud y longitud en el centro del mapa
-    mapaCobertura('mapContenedor',15.8037849,-89.8683734);
+    //mapaCobertura('mapContenedor',15.8037849,-89.8683734);
 
    
     funciones.slideAnimationTabs();

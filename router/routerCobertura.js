@@ -3,6 +3,36 @@ const express = require('express');
 const router = express.Router();
 
 
+
+
+router.post('/get_clientes_efectivos', async function(req,res){
+
+    
+
+    const {empresas, anio, mes} = req.body;
+  
+    let qry = `SELECT BI_RPT_GENERAL.CODSUCURSAL, 
+                COUNT(DISTINCT BI_RPT_GENERAL.CODIGO) AS CONTEO, 
+                AVG(BI_EMPRESAS_RESUMEN.UNIVERSO) AS UNIVERSO,
+                SUM(TOTALPRECIO) AS TOTALPRECIO
+    FROM            BI_RPT_GENERAL LEFT OUTER JOIN
+                             BI_EMPRESAS_RESUMEN ON BI_RPT_GENERAL.MES = BI_EMPRESAS_RESUMEN.MES AND BI_RPT_GENERAL.ANIO = BI_EMPRESAS_RESUMEN.ANIO AND 
+                             BI_RPT_GENERAL.CODSUCURSAL = BI_EMPRESAS_RESUMEN.CODSUCURSAL
+    WHERE  (BI_RPT_GENERAL.CODSUCURSAL IN (${empresas})) 
+        AND (BI_RPT_GENERAL.ANIO IN (${anio})) 
+        AND (BI_RPT_GENERAL.MES IN (${mes})) 
+        AND (BI_RPT_GENERAL.TIPO = 'FAC')
+    GROUP BY BI_RPT_GENERAL.CODSUCURSAL
+    ORDER BY BI_RPT_GENERAL.CODSUCURSAL`
+
+    execute.Query(res,qry);
+    
+});
+
+
+
+
+
 router.post('/get_cobertura', async function(req,res){
 
     const {empresas, anio, mes} = req.body;
