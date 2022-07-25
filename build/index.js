@@ -73,7 +73,8 @@ btnFiltroAceptar.addEventListener('click',()=>{
             break;
         case 'RUTAS': 
             try {
-              mapaCobertura('mapContenedor',15.8037849,-89.8683734)
+              //mapaCobertura('mapContenedor',15.8037849,-89.8683734)
+              getDataRoutes();
             } catch (error) {
                 
             }

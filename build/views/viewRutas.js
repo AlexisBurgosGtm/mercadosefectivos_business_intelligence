@@ -44,6 +44,11 @@ function getView(){
         },
         home:()=>{
             return `
+            <div class="row">
+                <div class="card card-rounded shadow bg-info text-white col-12">
+                    <h3>Customer's analsys</h3>
+                </div>
+            </div>
                 <div class="row">
                     <div class="col-4">
                         <div class="card card-rounded shadow" id="graf001" ondblclick="expandir('graf001')"></div>
@@ -55,7 +60,7 @@ function getView(){
                         <div class="card card-rounded shadow" id="graf003" ondblclick="expandir('graf003')"></div> 
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-4"></div>
                     <div class="col-4"></div>
@@ -167,16 +172,135 @@ function addListeners(){
     //carga los datos con una latitud y longitud en el centro del mapa
     //mapaCobertura('mapContenedor',15.8037849,-89.8683734);
 
-   
+    getDataRoutes();
+
     funciones.slideAnimationTabs();
 
 };
-
 
 function initView(){
     getView();
     addListeners();
 };
+
+
+
+async function getDataRoutes(){
+    
+    await getDataClientes()
+    .then((datos)=>{
+        getBarCharClientesAlcanzados(datos)
+    })
+    .catch(()=>{
+        
+    });
+
+}
+
+
+
+function getDataClientes(){
+
+    return new Promise((resolve, reject)=>{
+        //obtiene los datos de la card empresas
+      
+        axios.post(`/cobertura/get_clientes_efectivos`,{empresas:parametrosEmpresas,anio:parametrosAnio,mes:parametrosMes})
+        .then(res => {
+            const empresas = res.data.recordset;    
+            resolve(empresas);
+        })
+        .catch(()=>{
+            reject();
+        })
+
+
+    })
+     
+};
+
+function getBarCharClientesAlcanzados(data){
+   
+    let container = document.getElementById('graf001');
+    container.innerHTML = '';
+    container.innerHTML = '<canvas id="myChartR1" width="40" height="40"></canvas>';
+  
+    let label = []; let valor = []; let bgColor = [];
+    let total = 0;
+    data.map((r)=>{
+        total = total + Number(r.CONTEO);
+    });
+   
+    data.map((r)=>{
+            label.push(r.CODSUCURSAL);
+            valor.push(Number(((Number(r.CONTEO)/Number(r.UNIVERSO)))*100).toFixed(2));
+            bgColor.push(getRandomColor())
+    })
+
+  
+    var ctx = document.getElementById('myChartR1').getContext('2d');
+    var myChart = new Chart(ctx, {
+        plugins: [ChartDataLabels],
+        type: 'doughnut',
+        data: {
+            labels: label,
+            datasets: [{
+                data:valor,
+                borderColor: 'white',
+                backgroundColor:bgColor
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                  },
+                  title: {
+                    display: true,
+                    text: 'Efectividad de Clientes. Total: ' + total.toString()
+                  },
+                // Change options for ALL labels of THIS CHART
+                datalabels: {
+                  anchor:'end',
+                  align:'end',
+                  listeners: {
+                    click: function(context) {
+                      // Receives `click` events only for labels of the first dataset.
+                      // The clicked label index is available in `context.dataIndex`.
+                      console.log(context);
+                    }
+                  },
+                  formatter: function(value) {
+                    return value + '%';
+                    // eq. return ['line1', 'line2', value]
+                  },
+                  color: function(context) {
+                    return context.dataset.backgroundColor;
+                  },
+                  borderColor: 'white',
+                  borderRadius: 25,
+                  borderWidth: 0,
+                  font: {
+                    weight: 'bold'
+                  }
+                }
+            }
+        }
+    });
+  
+
+};
+
+
+
+
+
+
+
 
 
 function mapaCobertura(idContenedor, lt, lg){
