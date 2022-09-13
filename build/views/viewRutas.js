@@ -50,20 +50,20 @@ function getView(){
                 </div>
             </div>
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
                         <div class="card card-rounded shadow" id="graf001" ondblclick="expandir('graf001')"></div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
                         <div class="card card-rounded shadow" id="graf002" ondblclick="expandir('graf002')"></div>
-                    </div>
-                    <div class="col-4">
-                        <div class="card card-rounded shadow" id="graf003" ondblclick="expandir('graf003')"></div> 
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-4"></div>
-                    <div class="col-4"></div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="table-responsive" id="tblClientesAlcanzados">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"></div>
                 </div>
 
               <div class="row">
@@ -189,7 +189,8 @@ async function getDataRoutes(){
     
     await getDataClientes()
     .then((datos)=>{
-        getBarCharClientesAlcanzados(datos)
+        getBarCharClientesAlcanzados(datos);
+        getTblClientesAlcanzados(datos);
     })
     .catch(()=>{
         
@@ -293,6 +294,39 @@ function getBarCharClientesAlcanzados(data){
     });
   
 
+};
+
+function getTblClientesAlcanzados(data){
+    
+    let container = document.getElementById('tblClientesAlcanzados');
+    container.innerHTML = getLoader();
+
+    let str = '';
+
+    data.map((r)=>{
+        str += `
+            <tr>
+                <td>${r.CODSUCURSAL}</td>
+                <td>${r.CONTEO}</td>
+                <td>${r.UNIVERSO}</td>
+                <td>${Number(((Number(r.CONTEO)/Number(r.UNIVERSO)))*100).toFixed(2)} %</td>
+            </tr>
+        `
+    })
+    let tbl = `
+        <table class="table table-responsive table-striped">
+            <thead class="bg-info text-white">
+                <tr>
+                    <td>SUCURSAL</td>
+                    <td>ALCANZADOS</td>
+                    <td>UNIVERSO</td>
+                    <td>LOGRO</td>
+                </tr>
+            </thead>
+            <tbody>${str}</tbody>
+        </table>
+    `;
+    container.innerHTML = tbl;
 };
 
 
