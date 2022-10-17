@@ -38,7 +38,8 @@ function getView(){
                     </div>
 
                     <div class="footer>
-                        <small class="negrita text-right">por Alexis Burgos (v9.2022)</small>
+                        <small class="negrita text-right" style="font-size:70%">por Alexis Burgos (v9.2022)</small>
+                        <br>
                     </div>
             
                 </div>

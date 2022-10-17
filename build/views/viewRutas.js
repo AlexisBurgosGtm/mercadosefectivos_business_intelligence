@@ -4,7 +4,24 @@ function getView(){
         body:()=>{
             return `
             <div class="panel-content">
-            
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link btn-md active" data-toggle="tab" href="#tabHome" role="tab">
+                            <i class="fal fa-home mr-1"></i>Overview
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-md" data-toggle="tab" href="#tab3" role="tab" id="btnTabMapa">
+                            <i class="fal fa-calendar-alt mr-1"></i>Locations
+                        </a>
+                    </li>
+                    <li class="nav-item hidden">
+                        <a class="nav-link btn-md" data-toggle="tab" href="#tab4" role="tab">
+                            <i class="fal fa-chart-bar mr-1"></i>
+                        </a>
+                    </li>
+                
+                </ul>
                 <div class="tab-content border border-top-0 border-bottom-0 border-right-0 border-left-0 p-3">
                     <div class="tab-pane fade show active"  id="tabHome"  role="tabpanel">
 
@@ -13,7 +30,7 @@ function getView(){
                     </div>
                     <div class="tab-pane fade" id="tab3" role="tabpanel">            
                     
-                       
+                        ${view.mapa() + view.modalMunicipio()}
 
                     </div>
                     <div class="tab-pane fade" id="tab4" role="tabpanel">            
@@ -21,24 +38,7 @@ function getView(){
                     </div>
                 </div>
                 
-                <ul class="nav nav-tabs hidden" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link btn-md active" data-toggle="tab" href="#tabHome" role="tab">
-                            <i class="fal fa-home mr-1"></i>Overview
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn-md" data-toggle="tab" href="#tab3" role="tab">
-                            <i class="fal fa-calendar-alt mr-1"></i>Locations
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn-md" data-toggle="tab" href="#tab4" role="tab">
-                            <i class="fal fa-chart-bar mr-1"></i>
-                        </a>
-                    </li>
-                
-                </ul>
+             
             </div>
             `
         },
@@ -93,8 +93,9 @@ function getView(){
             <div class="row">
                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
 
-                    <div class="card shadow card-rounded" id="mapContenedor">
-                    </div>
+                        <div class="card shadow card-rounded col-12" id="mapContenedor">
+
+                        </div>
                 
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -173,6 +174,13 @@ function addListeners(){
     //mapaCobertura('mapContenedor',15.8037849,-89.8683734);
 
     getDataRoutes();
+
+
+    document.getElementById('btnTabMapa').addEventListener('click',()=>{
+        //carga los datos con una latitud y longitud en el centro del mapa
+        mapaCobertura('mapContenedor',15.8037849,-89.8683734);
+    })
+     
 
     funciones.slideAnimationTabs();
 
@@ -331,12 +339,6 @@ function getTblClientesAlcanzados(data){
 
 
 
-
-
-
-
-
-
 function mapaCobertura(idContenedor, lt, lg){
 
     let container = document.getElementById(idContenedor);
@@ -410,15 +412,8 @@ function mapaCobertura(idContenedor, lt, lg){
         }
         
 
-        //RE-AJUSTA EL MAPA A LA PANTALLA
-        setTimeout(function () {
-            console.log('timer mapa 1')
-            try {
-                map.invalidateSize();    
-            } catch (error) {
-                
-            }
-        }, 500);
+        funciones.ajustarMapa();
+
 
     }, (error) => {
         funciones.AvisoError('Error en la solicitud');

@@ -1,4 +1,16 @@
 let funciones = {
+  ajustarMapa:()=>{
+
+      //RE-AJUSTA EL MAPA A LA PANTALLA
+      setTimeout(function () {
+          try {
+              map.invalidateSize();    
+          } catch (error) {
+              
+          }
+      }, 500);
+
+  },
   setMoneda2:(number)=>{
       let valor = new Intl.NumberFormat('en-GB', { style:'currency', currency:'GTQ' }).format(number);
       return valor;
