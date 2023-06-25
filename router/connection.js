@@ -9,21 +9,13 @@ const config = {
 
 
 
-const configx = {
-	user: 'iEx',
-	password: 'iEx',
-	server: 'DESKTOP-HB3TMU8\\SQL14',
-	database: 'db_a6478c_mercadosbi',
-	pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
-};
-
 
 const sql = require('mssql');
 
 let execute = {
 	Query : (res,sqlqry)=>{	
 		
-		//console.log('ejecutando consulta... ' + sqlqry);		
+		console.log('ejecutando consulta... ' + sqlqry);		
 
 		try {
 		  const pool1 = new sql.ConnectionPool(config, err => {

@@ -1,3 +1,4 @@
+let versionlog = 'Act 06.2023';
 let root = document.getElementById('root');
 let GlobalSelectedForm = 'LOGIN';
 
@@ -7,6 +8,7 @@ let titulo = document.getElementById('titulo');
 let btnMenuHome = document.getElementById('circularMenu');
 
 let map; //mapa de leaflet
+
 
 let GlobalSelectedCodSucursal = '';
 let GlobalSelectedTipoUsuario = '';

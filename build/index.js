@@ -214,6 +214,15 @@ function getParametros(){
     if(document.getElementById('paramA2028').checked==true){parametrosAnio += `2028,`;anio.push(2028);};
     if(document.getElementById('paramA2029').checked==true){parametrosAnio += `2029,`;anio.push(2029);};
     if(document.getElementById('paramA2030').checked==true){parametrosAnio += `2030,`;anio.push(2030);};
+    if(document.getElementById('paramA2031').checked==true){parametrosAnio += `2031,`;anio.push(2031);};
+    if(document.getElementById('paramA2032').checked==true){parametrosAnio += `2032,`;anio.push(2032);};
+    if(document.getElementById('paramA2033').checked==true){parametrosAnio += `2033,`;anio.push(2033);};
+    if(document.getElementById('paramA2034').checked==true){parametrosAnio += `2034,`;anio.push(2034);};
+    if(document.getElementById('paramA2035').checked==true){parametrosAnio += `2035,`;anio.push(2035);};
+    if(document.getElementById('paramA2036').checked==true){parametrosAnio += `2036,`;anio.push(2036);};
+    if(document.getElementById('paramA2037').checked==true){parametrosAnio += `2037,`;anio.push(2037);};
+    if(document.getElementById('paramA2038').checked==true){parametrosAnio += `2038,`;anio.push(2038);};
+
 
     var n = parametrosAnio.lastIndexOf(",");
     parametrosAnio = parametrosAnio.substring(0,n); 

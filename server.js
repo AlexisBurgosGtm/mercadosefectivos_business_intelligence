@@ -11,30 +11,26 @@ var routerCobertura = require('./router/routerCobertura');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-const PORT = process.env.PORT || 4700;
+const PORT = process.env.PORT || 4000;
 
 app.use(bodyParser.json());
 
 app.use(express.static('build'));
 
+const cors = require("cors");
+app.use(cors({
+  origin: "*" //["url1","url2"]
+}));
+
 var path = __dirname + '/'
 
 //manejador de rutas
 app.use(function (req,res,next) {
-      // Website you wish to allow to connect
-      //res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:3000');
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      //res.setHeader('Access-Control-Allow-Origin', 'https://business-intelligence-mercados.herokuapp.com');
-      
-      // Request methods you wish to allow
-      res.setHeader('Access-Control-Allow-Methods', 'GET');
-      res.setHeader('Access-Control-Allow-Methods', 'POST');
-        // Request headers you wish to allow
-      res.setHeader('Access-Control-Allow-Headers', 'Content-Type,X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name, pplication/json');
-        // Set to true if you need the website to include cookies in the requests sent
-      res.setHeader('Access-Control-Allow-Credentials', true);
-  
-  //console.log("/" + req.toString());
+      //res.setHeader('Access-Control-Allow-Origin', '*');
+      //res.setHeader('Access-Control-Allow-Methods', 'GET');
+      //res.setHeader('Access-Control-Allow-Methods', 'POST');
+      //res.setHeader('Access-Control-Allow-Headers', 'Content-Type,X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name, pplication/json');
+      //res.setHeader('Access-Control-Allow-Credentials', true);
   next();
 });
 
