@@ -7,10 +7,14 @@ function getView(){
                 
                 <div class="tab-content border border-top-0 border-bottom-0 border-right-0 border-left-0 p-3">
                     <div class="tab-pane fade show active"  id="uno"  role="tabpanel">
-                       ${view.mapa()}
+
+                        ${view.home()}
+                    
                     </div>
                     <div class="tab-pane fade" id="dos" role="tabpanel">            
-                        ${view.municipios()}
+                    
+                        ${view.mapa() + view.modalMunicipio()}
+
                     </div>
                     <div class="tab-pane fade" id="tres" role="tabpanel">            
                         
@@ -19,42 +23,84 @@ function getView(){
                 <ul class="nav nav-tabs hidden" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link btn-md active" data-toggle="tab" href="#uno" role="tab" id="tab-uno">
-                            <i class="fal fa-home mr-1"></i>Map
+                            <i class="fal fa-home mr-1"></i>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn-md" data-toggle="tab" href="#dos" role="tab" id="tab-dos">
-                            <i class="fal fa-calendar-alt mr-1"></i>2
+                        <a class="nav-link btn-md" data-toggle="tab" href="#dos" role="tab"  id="tab-dos">
+                            <i class="fal fa-calendar-alt mr-1"></i>Locations
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item hidden">
                         <a class="nav-link btn-md" data-toggle="tab" href="#tres" role="tab"  id="tab-tres">
-                            <i class="fal fa-chart-bar mr-1"></i>3
+                            <i class="fal fa-chart-bar mr-1"></i>
                         </a>
                     </li>
-                   
+                
                 </ul>
-
+                
+             
             </div>
+            `
+        },
+        home:()=>{
+            return `
+            <div class="row">
+                <div class="card card-rounded shadow bg-info text-white col-12">
+                    <h3>Customer's analsys</h3>
+                </div>
+            </div>
+                <div class="row">
+                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
+                        <div class="card card-rounded shadow" id="graf001" ondblclick="expandir('graf001')"></div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
+                        <div class="card card-rounded shadow" id="graf002" ondblclick="expandir('graf002')"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="table-responsive" id="tblClientesAlcanzados">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"></div>
+                </div>
+
+              <div class="row">
+
+                    * CLIENTES ATENDIDOS // GRAFICA DE CLIENTES ATENDIDOS POR MES
+                    * CLIENTES PERDIDOS // GRAFICA DE CLIENTES NO VISITADOS POR MES
+                    * CLIENTES POR MARCA // GRAFICA DE CLIENTES POR MARCA
+                    * CARDS DE CLIENTES VISITADOS POR EMPRESA (VISITADOS, UNIVERSO, NO VISITADOS)
+                    * TABLA DE CLIENTES POR DEPARTAMENTO / MUNICIPIO
+                    * 
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+  
+                      <div class="card shadow card-rounded" id="">
+                      </div>
+                  
+                  </div>
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <div class="card shadow card-rounded" id="">
+                         
+                      </div>
+                  </div>
+              </div>                  
             `
         },
         mapa:()=>{
           return `
             <div class="row">
-                <div class="col-12">
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
 
-                    <div class="card shadow card-rounded" id="mapContenedor">
-                    </div>
+                        <div class="card shadow card-rounded col-12" id="mapContenedor">
+
+                        </div>
                 
                 </div>
-            </div>                  
-          `
-        },
-        municipios:()=>{
-            return `
-            <div class="row">
                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="card shadow card-rounded p-2 col-12" id="">
+                    <div class="card shadow card-rounded" id="">
                         <div class="card-body">
                             <h3 class="text-danger">Total por Municipio/Departamento</h3>
 
@@ -64,11 +110,8 @@ function getView(){
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-            
-                </div>
-            </div>
-            `
+            </div>                  
+          `
         },
         modalMunicipio:()=>{
             return `
@@ -126,15 +169,23 @@ function getView(){
 
 function addListeners(){
 
+   
 
     //carga los datos con una latitud y longitud en el centro del mapa
-    mapaCobertura('mapContenedor',15.8037849,-89.8683734);
+    //mapaCobertura('mapContenedor',15.8037849,-89.8683734);
 
-   
+    getDataRoutes();
+
+
+    document.getElementById('btnTabMapa').addEventListener('click',()=>{
+        //carga los datos con una latitud y longitud en el centro del mapa
+        mapaCobertura('mapContenedor',15.8037849,-89.8683734);
+    })
+     
+
     funciones.slideAnimationTabs();
 
 };
-
 
 function initView(){
     getView();
@@ -142,16 +193,162 @@ function initView(){
 };
 
 
+
+async function getDataRoutes(){
+    
+    await getDataClientes()
+    .then((datos)=>{
+        getBarCharClientesAlcanzados(datos);
+        getTblClientesAlcanzados(datos);
+    })
+    .catch(()=>{
+        
+    });
+
+}
+
+
+
+function getDataClientes(){
+
+    return new Promise((resolve, reject)=>{
+        //obtiene los datos de la card empresas
+      
+        axios.post(`/cobertura/get_clientes_efectivos`,{empresas:parametrosEmpresas,anio:parametrosAnio,mes:parametrosMes})
+        .then(res => {
+            const empresas = res.data.recordset;    
+            resolve(empresas);
+        })
+        .catch(()=>{
+            reject();
+        })
+
+
+    })
+     
+};
+
+function getBarCharClientesAlcanzados(data){
+   
+    let container = document.getElementById('graf001');
+    container.innerHTML = '';
+    container.innerHTML = '<canvas id="myChartR1" width="40" height="40"></canvas>';
+  
+    let label = []; let valor = []; let bgColor = [];
+    let total = 0;
+    data.map((r)=>{
+        total = total + Number(r.CONTEO);
+    });
+   
+    data.map((r)=>{
+            label.push(r.CODSUCURSAL);
+            valor.push(Number(((Number(r.CONTEO)/Number(r.UNIVERSO)))*100).toFixed(2));
+            bgColor.push(getRandomColor())
+    })
+
+  
+    var ctx = document.getElementById('myChartR1').getContext('2d');
+    var myChart = new Chart(ctx, {
+        plugins: [ChartDataLabels],
+        type: 'doughnut',
+        data: {
+            labels: label,
+            datasets: [{
+                data:valor,
+                borderColor: 'white',
+                backgroundColor:bgColor
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                  },
+                  title: {
+                    display: true,
+                    text: 'Efectividad de Clientes. Total: ' + total.toString()
+                  },
+                // Change options for ALL labels of THIS CHART
+                datalabels: {
+                  anchor:'end',
+                  align:'end',
+                  listeners: {
+                    click: function(context) {
+                      // Receives `click` events only for labels of the first dataset.
+                      // The clicked label index is available in `context.dataIndex`.
+                      console.log(context);
+                    }
+                  },
+                  formatter: function(value) {
+                    return value + '%';
+                    // eq. return ['line1', 'line2', value]
+                  },
+                  color: function(context) {
+                    return context.dataset.backgroundColor;
+                  },
+                  borderColor: 'white',
+                  borderRadius: 25,
+                  borderWidth: 0,
+                  font: {
+                    weight: 'bold'
+                  }
+                }
+            }
+        }
+    });
+  
+
+};
+
+function getTblClientesAlcanzados(data){
+    
+    let container = document.getElementById('tblClientesAlcanzados');
+    container.innerHTML = getLoader();
+
+    let str = '';
+
+    data.map((r)=>{
+        str += `
+            <tr>
+                <td>${r.CODSUCURSAL}</td>
+                <td>${r.CONTEO}</td>
+                <td>${r.UNIVERSO}</td>
+                <td>${Number(((Number(r.CONTEO)/Number(r.UNIVERSO)))*100).toFixed(2)} %</td>
+            </tr>
+        `
+    })
+    let tbl = `
+        <table class="table table-responsive table-striped">
+            <thead class="bg-info text-white">
+                <tr>
+                    <td>SUCURSAL</td>
+                    <td>ALCANZADOS</td>
+                    <td>UNIVERSO</td>
+                    <td>LOGRO</td>
+                </tr>
+            </thead>
+            <tbody>${str}</tbody>
+        </table>
+    `;
+    container.innerHTML = tbl;
+};
+
+
+
 function mapaCobertura(idContenedor, lt, lg){
 
     let container = document.getElementById(idContenedor);
     container.innerHTML = GlobalLoader;
     
-    let tbl = `<div class="mapcontainer6" id="mapcontainer"></div>`;  
+    let tbl = `<div class="mapcontainer4" id="mapcontainer"></div>`;  
     
     let containerTabla = document.getElementById('containerMunicipios');
     containerTabla.innerHTML = GlobalLoader;
-    
     let str = '';
     
     container.innerHTML = tbl;
@@ -216,15 +413,8 @@ function mapaCobertura(idContenedor, lt, lg){
         }
         
 
-        //RE-AJUSTA EL MAPA A LA PANTALLA
-        setTimeout(function () {
-            console.log('timer mapa 1')
-            try {
-                map.invalidateSize();    
-            } catch (error) {
-                
-            }
-        }, 500);
+        funciones.ajustarMapa();
+
 
     }, (error) => {
         funciones.AvisoError('Error en la solicitud');
@@ -430,124 +620,5 @@ function getPieMarcasMunicipio(data){
 
 
     
-
-};
-
-
-
-
-
-
-function BACKUP_mapaCobertura(idContenedor, lt, lg){
-
-    let container = document.getElementById(idContenedor);
-    container.innerHTML = GlobalLoader;
-    
-    let tbl = `<div class="mapcontainer4" id="mapcontainer"></div>`;  
-    
-    let containerTabla = document.getElementById('containerMunicipios');
-    containerTabla.innerHTML = GlobalLoader;
-    let str = '';
-    
-    container.innerHTML = tbl;
-    
-    let mapcargado = 0;
-    var map;
-    map = funciones.Lmap(lt, lg);
-
-    getDataCobertura()
-    .then((datos) => {
-        const data = datos;
-
-        let totalventa = 0;
-        data.map((r)=>{
-            totalventa += Number(r.TOTALPRECIO);
-        });
-
-        data.map((rows)=>{
-                //Carga el marker en el mapa
-                L.marker([rows.LAT, rows.LONG])
-                .addTo(map)
-                .bindPopup(`${rows.MUNICIPIO} <br><small>Vendido: ${funciones.setMoneda(rows.TOTALPRECIO,'Q')}</small>`, {closeOnClick: true, autoClose: true})   
-                .on('click', function(e){
-                    console.log(e);
-                    getMenuMunicipio(rows.CODSUCURSAL.toString(),rows.CODMUNICIPIO, rows.MUNICIPIO, rows.CODDEPTO, rows.TOTALPRECIO)
-                    //console.log(e.sourceTarget._leaflet_id);
-                    //GlobalMarkerId = Number(e.sourceTarget._leaflet_id);
-                    //getMenuCliente(rows.CODIGO,rows.NOMCLIE,rows.DIRCLIE,rows.TELEFONO,rows.LAT,rows.LONG,rows.NIT);
-                });
-                //dibuja la table
-                str += `<tr class="hand" onclick="getMenuMunicipio('${rows.CODSUCURSAL}','${rows.CODMUNICIPIO}', '${rows.MUNICIPIO}', '${rows.CODDEPTO}', '${rows.TOTALPRECIO}')">
-                            <td>${rows.MUNICIPIO}
-                                <br>
-                                <small class="negrita">${rows.DEPARTAMENTO}</small>
-                            </td>
-                            <td class="currSign">${funciones.setMoneda(rows.TOTALPRECIO,'')}</td>
-                            <td>${funciones.getParticipacion(Number(rows.TOTALPRECIO), totalventa)}</td>
-                        </tr>`
-        })
-
-        //carga la tabla
-        let tablamun = `
-                        <table class="table table-responsive table-hover" id="tblMunicipiosDep">
-                            <thead>
-                                <tr>
-                                    <td>Municipio</td>
-                                    <td>Importe</td>
-                                    <td>Part</td>
-                                </tr>
-                            </thead>
-                            <tbody id="">${str}</tbody>
-                        </table>
-        `
-        containerTabla.innerHTML = tablamun;
-        try {
-            var table = $('#tblMunicipiosDep').DataTable({
-                paging: false, 
-                bFilter:true
-            });    
-        } catch (error) {
-            
-        }
-        
-
-        //RE-AJUSTA EL MAPA A LA PANTALLA
-        setTimeout(function () {
-            console.log('timer mapa 1')
-            try {
-                map.invalidateSize();    
-            } catch (error) {
-                
-            }
-        }, 500);
-
-    }, (error) => {
-        funciones.AvisoError('Error en la solicitud');
-        container.innerHTML = '';
-    })
-    .catch((error)=>{
-        console.log('Error al cargar mapa..')
-        console.log(error);
-    })
-       
-};
-
-
-function BACKUP_getDataCobertura(){
-
-    return new Promise((resolve, reject)=>{
-      
-        axios.post(`/cobertura/get_cobertura`, {empresas: parametrosEmpresas, anio:parametrosAnio, mes:parametrosMes})
-        .then(res => {
-            const datos = res.data.recordset;
-            resolve(datos);
-        })
-        .catch(()=>{
-            reject();
-        })
-
-
-    })
-     
 
 };

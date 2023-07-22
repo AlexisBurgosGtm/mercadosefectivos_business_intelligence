@@ -1,4 +1,4 @@
-let versionlog = 'Act 06.2023';
+let versionlog = 'Act 07.2023';
 let root = document.getElementById('root');
 let GlobalSelectedForm = 'LOGIN';
 

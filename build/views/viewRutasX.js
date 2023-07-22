@@ -7,42 +7,95 @@ function getView(){
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link btn-md active" data-toggle="tab" href="#tabHome" role="tab">
-                            <i class="fal fa-home mr-1"></i>Map
+                            <i class="fal fa-home mr-1"></i>Overview
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn-md" data-toggle="tab" href="#tab3" role="tab">
-                            <i class="fal fa-calendar-alt mr-1"></i>2
+                        <a class="nav-link btn-md" data-toggle="tab" href="#tab3" role="tab" id="btnTabMapa">
+                            <i class="fal fa-calendar-alt mr-1"></i>Locations
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item hidden">
                         <a class="nav-link btn-md" data-toggle="tab" href="#tab4" role="tab">
-                            <i class="fal fa-chart-bar mr-1"></i>3
+                            <i class="fal fa-chart-bar mr-1"></i>
                         </a>
                     </li>
-                   
+                
                 </ul>
                 <div class="tab-content border border-top-0 border-bottom-0 border-right-0 border-left-0 p-3">
                     <div class="tab-pane fade show active"  id="tabHome"  role="tabpanel">
-                       ${view.home()}
+
+                        ${view.home()}
+                    
                     </div>
                     <div class="tab-pane fade" id="tab3" role="tabpanel">            
-                        
+                    
+                        ${view.mapa() + view.modalMunicipio()}
+
                     </div>
                     <div class="tab-pane fade" id="tab4" role="tabpanel">            
                         
                     </div>
                 </div>
+                
+             
             </div>
             `
         },
         home:()=>{
+            return `
+            <div class="row">
+                <div class="card card-rounded shadow bg-info text-white col-12">
+                    <h3>Customer's analsys</h3>
+                </div>
+            </div>
+                <div class="row">
+                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
+                        <div class="card card-rounded shadow" id="graf001" ondblclick="expandir('graf001')"></div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6">
+                        <div class="card card-rounded shadow" id="graf002" ondblclick="expandir('graf002')"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="table-responsive" id="tblClientesAlcanzados">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"></div>
+                </div>
+
+              <div class="row">
+
+                    * CLIENTES ATENDIDOS // GRAFICA DE CLIENTES ATENDIDOS POR MES
+                    * CLIENTES PERDIDOS // GRAFICA DE CLIENTES NO VISITADOS POR MES
+                    * CLIENTES POR MARCA // GRAFICA DE CLIENTES POR MARCA
+                    * CARDS DE CLIENTES VISITADOS POR EMPRESA (VISITADOS, UNIVERSO, NO VISITADOS)
+                    * TABLA DE CLIENTES POR DEPARTAMENTO / MUNICIPIO
+                    * 
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+  
+                      <div class="card shadow card-rounded" id="">
+                      </div>
+                  
+                  </div>
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <div class="card shadow card-rounded" id="">
+                         
+                      </div>
+                  </div>
+              </div>                  
+            `
+        },
+        mapa:()=>{
           return `
             <div class="row">
                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
 
-                    <div class="card shadow card-rounded" id="mapContenedor">
-                    </div>
+                        <div class="card shadow card-rounded col-12" id="mapContenedor">
+
+                        </div>
                 
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -115,29 +168,175 @@ function getView(){
 
 function addListeners(){
 
-    /*
-    funciones.showLocation()
-    .then((location)=>{
-            let lat = location.coords.latitude.toString();
-            let longg = location.coords.longitude.toString();
-            
-            mapaCobertura('mapContenedor', lat, longg);
-    });    
-    */
+   
 
     //carga los datos con una latitud y longitud en el centro del mapa
-    mapaCobertura('mapContenedor',15.8037849,-89.8683734);
+    //mapaCobertura('mapContenedor',15.8037849,-89.8683734);
 
-   
+    getDataRoutes();
+
+
+    document.getElementById('btnTabMapa').addEventListener('click',()=>{
+        //carga los datos con una latitud y longitud en el centro del mapa
+        mapaCobertura('mapContenedor',15.8037849,-89.8683734);
+    })
+     
+
     funciones.slideAnimationTabs();
 
 };
-
 
 function initView(){
     getView();
     addListeners();
 };
+
+
+
+async function getDataRoutes(){
+    
+    await getDataClientes()
+    .then((datos)=>{
+        getBarCharClientesAlcanzados(datos);
+        getTblClientesAlcanzados(datos);
+    })
+    .catch(()=>{
+        
+    });
+
+}
+
+
+
+function getDataClientes(){
+
+    return new Promise((resolve, reject)=>{
+        //obtiene los datos de la card empresas
+      
+        axios.post(`/cobertura/get_clientes_efectivos`,{empresas:parametrosEmpresas,anio:parametrosAnio,mes:parametrosMes})
+        .then(res => {
+            const empresas = res.data.recordset;    
+            resolve(empresas);
+        })
+        .catch(()=>{
+            reject();
+        })
+
+
+    })
+     
+};
+
+function getBarCharClientesAlcanzados(data){
+   
+    let container = document.getElementById('graf001');
+    container.innerHTML = '';
+    container.innerHTML = '<canvas id="myChartR1" width="40" height="40"></canvas>';
+  
+    let label = []; let valor = []; let bgColor = [];
+    let total = 0;
+    data.map((r)=>{
+        total = total + Number(r.CONTEO);
+    });
+   
+    data.map((r)=>{
+            label.push(r.CODSUCURSAL);
+            valor.push(Number(((Number(r.CONTEO)/Number(r.UNIVERSO)))*100).toFixed(2));
+            bgColor.push(getRandomColor())
+    })
+
+  
+    var ctx = document.getElementById('myChartR1').getContext('2d');
+    var myChart = new Chart(ctx, {
+        plugins: [ChartDataLabels],
+        type: 'doughnut',
+        data: {
+            labels: label,
+            datasets: [{
+                data:valor,
+                borderColor: 'white',
+                backgroundColor:bgColor
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                  },
+                  title: {
+                    display: true,
+                    text: 'Efectividad de Clientes. Total: ' + total.toString()
+                  },
+                // Change options for ALL labels of THIS CHART
+                datalabels: {
+                  anchor:'end',
+                  align:'end',
+                  listeners: {
+                    click: function(context) {
+                      // Receives `click` events only for labels of the first dataset.
+                      // The clicked label index is available in `context.dataIndex`.
+                      console.log(context);
+                    }
+                  },
+                  formatter: function(value) {
+                    return value + '%';
+                    // eq. return ['line1', 'line2', value]
+                  },
+                  color: function(context) {
+                    return context.dataset.backgroundColor;
+                  },
+                  borderColor: 'white',
+                  borderRadius: 25,
+                  borderWidth: 0,
+                  font: {
+                    weight: 'bold'
+                  }
+                }
+            }
+        }
+    });
+  
+
+};
+
+function getTblClientesAlcanzados(data){
+    
+    let container = document.getElementById('tblClientesAlcanzados');
+    container.innerHTML = getLoader();
+
+    let str = '';
+
+    data.map((r)=>{
+        str += `
+            <tr>
+                <td>${r.CODSUCURSAL}</td>
+                <td>${r.CONTEO}</td>
+                <td>${r.UNIVERSO}</td>
+                <td>${Number(((Number(r.CONTEO)/Number(r.UNIVERSO)))*100).toFixed(2)} %</td>
+            </tr>
+        `
+    })
+    let tbl = `
+        <table class="table table-responsive table-striped">
+            <thead class="bg-info text-white">
+                <tr>
+                    <td>SUCURSAL</td>
+                    <td>ALCANZADOS</td>
+                    <td>UNIVERSO</td>
+                    <td>LOGRO</td>
+                </tr>
+            </thead>
+            <tbody>${str}</tbody>
+        </table>
+    `;
+    container.innerHTML = tbl;
+};
+
 
 
 function mapaCobertura(idContenedor, lt, lg){
@@ -213,15 +412,8 @@ function mapaCobertura(idContenedor, lt, lg){
         }
         
 
-        //RE-AJUSTA EL MAPA A LA PANTALLA
-        setTimeout(function () {
-            console.log('timer mapa 1')
-            try {
-                map.invalidateSize();    
-            } catch (error) {
-                
-            }
-        }, 500);
+        funciones.ajustarMapa();
+
 
     }, (error) => {
         funciones.AvisoError('Error en la solicitud');
