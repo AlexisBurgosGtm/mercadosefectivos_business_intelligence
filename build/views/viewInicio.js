@@ -526,7 +526,7 @@ function getCarsEmpresas(data){
         if(logroactual>90 && logroactual<95){strClassCard='bgamarillo'};
         if(logroactual<90){strClassCard='bgrojo'};
         view += `
-        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6">
+        <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12">
             <div class="card shadow card-rounded p-4 hand ${strClassCard}" style="font-size:80%" ondblclick="gotoEmpresa('${r.EMPNIT}','${r.VENTAS}','${r.DEVOLUCIONES}','${r.UNIVERSO}')">
                 <div class="row">
                     <div class="col-7">

@@ -93,6 +93,9 @@ function getView(){
             return `
             <div id="" class="card card-rounded shadow">
                 <div class="card-body p-6">
+                    <div id="parallax_logo">
+                        <img data-depth="1.0"  src="./favicon.png" widht="50px" height="50px">
+                    </div>
                     <br>        
                     <div class="form-group">
                             <label class="negrita text-secondary">Usuario:</label>
@@ -179,6 +182,8 @@ function addListeners(){
     //funciones.animateCSS('cardLogin','backInRight');
     document.getElementById('tab-uno').click();
 
+    var parallax_logo = document.getElementById('parallax_logo');
+    var parallaxInstance = new Parallax(parallax_logo);
 };
 
 function initView(){
