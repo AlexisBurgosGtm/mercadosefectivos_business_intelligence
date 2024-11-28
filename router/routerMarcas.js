@@ -93,6 +93,7 @@ router.post('/get_gen_marcas', async function(req,res){
         SUM(ISNULL(TOTALCOSTO,0)) AS TOTALCOSTO, 
         SUM(ISNULL(TOTALPRECIO,0)) AS TOTALPRECIO,
         (SUM(ISNULL(TOTALPRECIO,0)) - SUM(ISNULL(TOTALCOSTO,0))) AS UTILIDAD
+        FROM BI_RPT_GENERAL
         WHERE (CODSUCURSAL IN(${empresas})) 
         AND (ANIO IN(${anio})) 
         AND (MES IN(${mes}))
