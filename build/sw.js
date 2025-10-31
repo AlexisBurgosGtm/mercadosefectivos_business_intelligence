@@ -1,5 +1,5 @@
 
-var CACHE = 'mercadosefectivosbi4';
+var CACHE = 'mercadosefectivosbi5';
 const staticAssets = [  
   './index.js',
   './favicon.png',

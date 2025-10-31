@@ -48,6 +48,31 @@ router.post('/get_cobertura', async function(req,res){
             (BI_RPT_GENERAL.CODSUCURSAL IN (${empresas})) 
             AND (BI_RPT_GENERAL.MES IN (${mes})) 
             AND (BI_RPT_GENERAL.ANIO IN (${anio}))
+            AND (BI_GENERALES_MUNICIPIOS.CODMUNICIPIO IS NOT NULL)
+        GROUP BY BI_RPT_GENERAL.CODSUCURSAL, BI_GENERALES_MUNICIPIOS.CODMUNICIPIO, 
+        BI_GENERALES_MUNICIPIOS.DESMUNICIPIO
+        ORDER BY BI_GENERALES_MUNICIPIOS.DESMUNICIPIO`
+            
+ 
+
+     execute.Query(res,qry);
+    
+});
+router.post('/BACKUP_get_cobertura', async function(req,res){
+
+    const {empresas, anio, mes} = req.body;
+
+    let qry = '';
+
+        qry = `SELECT        BI_RPT_GENERAL.CODSUCURSAL, BI_GENERALES_MUNICIPIOS.CODMUNICIPIO, BI_GENERALES_MUNICIPIOS.DESMUNICIPIO AS MUNICIPIO, 0 AS CODDEPTO, 'SN' AS DEPARTAMENTO, 
+        FORMAT(SUM(ISNULL(BI_RPT_GENERAL.TOTALPRECIO, 0)), '##.##') AS TOTALPRECIO, MAX(BI_GENERALES_MUNICIPIOS.LATITUD) AS LAT, MAX(BI_GENERALES_MUNICIPIOS.LONGITUD) AS LONG, 
+        BI_GENERALES_MUNICIPIOS.CODMUNICIPIO AS CODMUN, BI_GENERALES_MUNICIPIOS.DESMUNICIPIO AS MUNICIPIO, 0 AS CODDEPTO, 'SN' AS DEPARTAMENTO
+        FROM            BI_RPT_GENERAL LEFT OUTER JOIN
+                BI_GENERALES_MUNICIPIOS ON BI_RPT_GENERAL.CODMUN = BI_GENERALES_MUNICIPIOS.CODMUNICIPIO AND BI_RPT_GENERAL.CODSUCURSAL = BI_GENERALES_MUNICIPIOS.CODSUCURSAL
+        WHERE    
+            (BI_RPT_GENERAL.CODSUCURSAL IN (${empresas})) 
+            AND (BI_RPT_GENERAL.MES IN (${mes})) 
+            AND (BI_RPT_GENERAL.ANIO IN (${anio}))
         GROUP BY BI_RPT_GENERAL.CODSUCURSAL, BI_GENERALES_MUNICIPIOS.CODMUNICIPIO, 
         BI_GENERALES_MUNICIPIOS.DESMUNICIPIO
         ORDER BY BI_GENERALES_MUNICIPIOS.DESMUNICIPIO`
@@ -59,32 +84,6 @@ router.post('/get_cobertura', async function(req,res){
 });
 
 
-
-router.post('/BACKUP_get_cobertura', async function(req,res){
-
-    const {empresas, anio, mes} = req.body;
-
-    let qry = '';
-
-        qry = `SELECT CODSUCURSAL, 
-                        ISNULL(CODMUN,0) AS CODMUNICIPIO, 
-                        ISNULL(MUNICIPIO,'SN') AS MUNICIPIO,
-                        ISNULL(CODDEPTO,0) AS CODDEPTO, 
-                        ISNULL(DEPARTAMENTO,'SN') AS DEPARTAMENTO, 
-                        FORMAT(SUM(ISNULL(TOTALPRECIO,0)),'##.##') AS TOTALPRECIO, 
-                        MAX(ISNULL(LAT,0)) AS LAT, 
-                        MAX(ISNULL(LONG,0)) AS LONG
-                    FROM BI_RPT_GENERAL
-                    WHERE CODSUCURSAL IN(${empresas}) AND MES IN(${mes}) AND ANIO IN(${anio}) 
-                    GROUP BY CODSUCURSAL, CODMUN,MUNICIPIO, CODDEPTO, DEPARTAMENTO
-                    ORDER BY MUNICIPIO, DEPARTAMENTO`
-    
-
- 
-
-     execute.Query(res,qry);
-    
-});
 
 
 
